@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.3.6
+Current release: 1.3.7
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -29,6 +29,30 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.3.7 — 2026-10-02 — Dedicated category report tabs
+
+### Added
+
+- Fix first, SEO, AEO and GEO buttons open a dedicated full-width report tab.
+- Issue groups start collapsed and expand affected elements with the existing sticky guidance workspace.
+- Browser-session snapshots reuse the current audit without a new scan; popup/storage errors are explained.
+
+### Changed
+
+- Category summary buttons open report tabs instead of changing the dashboard filter.
+
+### Removed
+
+None.
+
+### Validation
+
+TypeScript checks, audit fixtures, report rendering checks, snapshot/selection checks and production build.
+
+### Remaining limits
+
+New tabs hold a snapshot, not a live re-audit. Their report URLs only work within the transferred browser tab session.
 
 ## 1.3.6 — 2026-10-02 — Clearer score gauges and evidence links
 
