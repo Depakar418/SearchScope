@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.3.8
+Current release: 1.3.9
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -29,6 +29,31 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.3.9 — 2026-10-01 — Clearer report controls and summary cards
+
+### Added
+
+- Finding-group summary cards explain their count and offer a clear filter action.
+- Selected summary cards expose their filter state.
+
+### Changed
+
+- Report menu, search and status filter share one desktop toolbar, wrapping on smaller screens.
+- The active report tab uses a filled bordered button with 4px corners.
+- All five summary cards use the same label, count and action layout.
+
+### Removed
+
+- Partial left severity borders on finding rows.
+
+### Validation
+
+TypeScript checking, audit fixtures, report rendering checks and production build.
+
+### Remaining limits
+
+Summary counts represent finding groups, not affected-element counts; checklist scores remain source heuristics.
 
 ## 1.3.8 — 2026-10-02 — Unified page report navigation
 

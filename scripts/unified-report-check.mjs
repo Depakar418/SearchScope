@@ -20,6 +20,11 @@ try{
   assert.match(html,/aria-selected="true"[^>]*>Fix first/);
   assert.match(html,/Back to website pages/);
   assert.equal((html.match(/role="tab"/g)||[]).length,6);
+  assert.equal((html.match(/class="issue-total issue-total--/g)||[]).length,5);
+  assert.equal((html.match(/aria-pressed="false"/g)||[]).length,5);
+  assert.match(html,/Counts represent finding groups/);
+  assert.ok(html.indexOf('class="report-navigation"')<html.indexOf('aria-label="Search findings"'));
+  assert.ok(html.indexOf('aria-label="Search findings"')<html.indexOf('id="report-section"'));
   assert.equal((html.match(/Open Fix first report in new tab/g)||[]).length,1);
   assert.doesNotMatch(html,/class="action-plan"/);
   assert.doesNotMatch(html,/class="finding-workspace"/); // findings begin collapsed
