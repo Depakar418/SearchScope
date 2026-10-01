@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.3.7
+Current release: 1.3.8
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -29,6 +29,33 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.3.8 — 2026-10-02 — Unified page report navigation
+
+### Added
+
+- One report menu: All issues, Fix first, SEO, AEO, GEO and Page details, with Fix first selected by default.
+- All issues stacks category cards without additional new-tab buttons.
+- Page details uses collapsed arrow-toggle cards for metadata, phrase usage, headings and meta tags.
+- Back to website pages preserves the current inventory and filters.
+
+### Changed
+
+- Website page reports remain in Audit workspace; Content analyzer stays a separate input workflow.
+- Priority findings share the same accordion workspace as other categories.
+
+### Removed
+
+- The separate Fix first report block above the category navigation.
+- Automatic scrolling when a finding is expanded in the unified report.
+
+### Validation
+
+TypeScript checking, audit fixtures, report rendering, report-tab checks and production build.
+
+### Remaining limits
+
+Report tabs still use session snapshots. Scores remain source-check heuristics, not search performance measurements.
 
 ## 1.3.7 — 2026-10-02 — Dedicated category report tabs
 
