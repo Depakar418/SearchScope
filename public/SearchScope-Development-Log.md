@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.3.4
+Current release: 1.3.5
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -29,6 +29,29 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.3.5 — 2026-10-02 — Fix first inline accordion workspace
+
+### Added
+
+- Fix first items now expand their full evidence-and-guidance workspace directly inside the Fix first card.
+- The same finding details component is reused so evidence stays left and issue/solution guidance stays right.
+
+### Changed
+
+- Fix first actions no longer move the user to a separate findings section; category tabs continue to use the same expandable finding rows.
+
+### Removed
+
+None.
+
+### Validation
+
+TypeScript checking, audit fixtures, server-rendered report checks and production build.
+
+### Remaining limits
+
+One Fix first item is expanded at a time. Report data remains session-scoped.
 
 ## 1.3.4 — 2026-10-02 — Simpler sticky guidance scrolling
 

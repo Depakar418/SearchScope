@@ -16,7 +16,7 @@ function sample(){setError('');setFindingHash(null);setExpanded(null);setReport(
 function openPageReport(page:Report){setFindingHash(null);setExpanded(null);setReport(page);setSection('Content analyzer');setTab('Overview');setFilter('Needs attention');setSearch('');setError('');}
 function setFindingHash(id:string|null){if(typeof window==='undefined')return;const next=id?'#finding-'+encodeURIComponent(id):window.location.pathname+window.location.search;window.history.replaceState(null,'',next);}
 function focusFinding(id:string){requestAnimationFrame(()=>document.getElementById('finding-'+id)?.scrollIntoView({behavior:'smooth',block:'start'}));}
-function openFinding(finding:Report['checks'][number]){setTab('Overview');setFilter('Needs attention');setExpanded(finding.id);setFindingHash(finding.id);focusFinding(finding.id);}
+function openFinding(finding:Report['checks'][number],scroll=true){setTab('Overview');setFilter('Needs attention');setFindingHash(finding.id);setExpanded(scroll?finding.id:null);if(scroll)focusFinding(finding.id);}
 function toggleFinding(id:string){const next=expanded===id?null:id;setExpanded(next);setFindingHash(next);if(next)focusFinding(next);}
 function saveFile(data:string,name:string,type:string){const href=URL.createObjectURL(new Blob([data],{type}));const a=document.createElement('a');a.href=href;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(href),1000);}
 function download(kind:'json'|'csv'|'md'){if(!report)return;saveFile(kind==='json'?JSON.stringify(report,null,2):kind==='csv'?reportCSV(report):reportMarkdown(report),'searchscope-audit.'+kind,kind==='json'?'application/json':kind==='csv'?'text/csv':'text/markdown');}
