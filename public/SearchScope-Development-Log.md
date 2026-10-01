@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.3.11
+Current release: 1.3.12
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -29,6 +29,29 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.3.12 — 2026-10-02 — Consistent website summary cards
+
+### Added
+
+- Passed, All checks and Needs attention website summary totals.
+
+### Changed
+
+- Website page-list overview uses Errors, Warnings, Passed, All checks and Needs attention cards.
+- Audited, selected and discovered page totals remain in the overview heading.
+
+### Removed
+
+- Dedicated Opportunities card and Audited pages count card from the website overview.
+
+### Validation
+
+TypeScript, aggregate summary rendering checks, audit fixtures and production build.
+
+### Remaining limits
+
+Website cards sum finding groups across completed page reports; repeated groups on different pages count separately. Unmeasured checks remain separate from actual errors.
 
 ## 1.3.11 — 2026-10-02 — Finding filters and heading evidence placement
 

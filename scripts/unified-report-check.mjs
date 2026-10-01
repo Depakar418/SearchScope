@@ -25,7 +25,11 @@ try{
   const overview=renderToStaticMarkup(React.createElement(WebsiteOverview,{pages:[{status:'completed',report},{status:'failed',report:null}],discovered:10,selected:2}));
   assert.equal((overview.match(/role="meter"/g)||[]).length,4);
   assert.match(overview,/10% audited/);
-  assert.match(overview,/Based on 1 audited page of 10 discovered/);
+  assert.match(overview,/Based on 1 audited page · 2 selected · 10 discovered/);
+  assert.equal((overview.match(/class="website-stat website-stat--/g)||[]).length,5);
+  assert.doesNotMatch(overview,/website-stat--opportunity|website-stat--unavailable/);
+  assert.match(overview,/Source checks that passed/);
+  assert.match(overview,/Includes unmeasured checks/);
   assert.deepEqual(REPORT_MENU,['All issues','Fix first','SEO','AEO','GEO','Page details']);
   const html=renderToStaticMarkup(React.createElement(AuditReport,{report,onBack:()=>{}}));
   assert.match(html,/aria-selected="true"[^>]*>Fix first/);
