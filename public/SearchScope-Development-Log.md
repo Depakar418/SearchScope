@@ -41,6 +41,7 @@ This document is versioned with the application. It records implemented scope an
 - Discovery uses bounded 5-second sitemap requests and a 25-second overall safety window.
 - Progress counts completed and failed reports instead of hiding undiscovered pending pages.
 - Image evidence truncates inline data URIs and previews safe public image URLs when available.
+- Finding details now use severity-colored issue/solution cards, clearer evidence columns and a stronger expanded-row hierarchy.
 
 ### Removed
 
