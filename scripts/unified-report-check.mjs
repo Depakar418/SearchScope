@@ -57,7 +57,7 @@ try{
   assert.doesNotMatch(headingEvidence,/Structure check passed/);
   const allCategory=renderToStaticMarkup(React.createElement(CategoryExplanation,{report,category:'SEO',showAction:false}));
   assert.doesNotMatch(allCategory,/new tab/);
-  const source=await fs.readFile('app/page.tsx','utf8');
+  const source=await fs.readFile('app/legacy-workspace.tsx','utf8');
   assert.match(source,/function openPageReport\(page:Report\)[^\n]+setSection\('Audit workspace'\)/);
   assert.match(source,/<div hidden=\{!!report\}><WebsiteManager/);
   console.log('PASS: unified menu order/default, collapsed findings, new-tab button placement, four collapsed Page details accordions and audit navigation wiring. Live browser interaction not validated.');

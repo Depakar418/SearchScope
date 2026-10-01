@@ -1,5 +1,7 @@
 # Sprint 1: foundation reliability
 
+This document records the v1.4.0 implementation. The expanded project-based specification and current acceptance status are documented in [SPRINT1-v1.4.1.md](SPRINT1-v1.4.1.md); v1.4.0 alone did not complete that expanded specification.
+
 Release: 1.4.0. Previous baseline: 1.3.12.
 
 ## Architecture review and plan

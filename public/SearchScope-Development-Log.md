@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.4.0
+Current release: 1.4.1
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -8,6 +8,8 @@ This document is versioned with the application. It records implemented scope an
 
 | Area | Feature | First release | Status | Scope |
 | --- | --- | --- | --- | --- |
+| Projects | Website projects, scoped audit navigation and run comparisons | 1.4.1 | Available | Owner and project scoped saved data. Explicit legacy import; archived projects retain history. Only Website projects are supported. |
+| Foundation | Normalized page documents, section context and structured fetch evidence | 1.4.1 | Available | Initial HTML with classified heading inventory and attributes. Canonical/link HTTP observations and within-crawl link relationships do not change checklist scores. |
 | Foundation | DOM content extraction, selector evidence and cross-page comparisons | 1.4.0 | Available | Semantic content extraction from initial HTML; explicit evidence and comparison methods. No rendered-browser validation. |
 | Inputs | Public URL, pasted HTML and pasted text audits | 1.0.0 | Available | One page at a time; initial HTML only. |
 | SEO | Page title, description, H1, canonical, robots directives, image alt, language, viewport and target phrase | 1.0.0 | Available | Source markup checks. Does not establish actual index status. |
@@ -30,6 +32,33 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.4.1 — 2026-10-02 — Project-scoped foundation and richer evidence
+
+### Added
+
+- Website project CRUD with archive retention and owner/project isolation.
+- Project-specific overview, audits, pages, issues, content analysis, opportunities, reports, history and settings.
+- Additive legacy import and separate-run comparisons with scope-aware fix counts.
+- PageDocument, classified heading inventory, fetch failure records, URL normalization, canonical observations and within-crawl link graph.
+
+### Changed
+
+- Existing 29 checks and weighting preserved; main-content evidence enriched.
+- Project issues aggregate existing findings by affected page and retain expandable evidence/fix guides.
+- Meaningful query parameters retained; common tracking parameters removed.
+
+### Removed
+
+- Hardcoded personal workspace labels in the legacy interface.
+
+### Validation
+
+TypeScript, existing 29-check regression suite, SQLite migration/CRUD/isolation fixtures, fetch and DOM fixtures, scoped report rendering and production build.
+
+### Remaining limits
+
+Initial HTML only; browser UI QA unavailable in this session. Crawl and link budgets are explicit. Workspace sharing of saved projects is not implemented; projects are user-owned. Run comparisons do not count failed or changed-scope reports as fixed.
 
 ## 1.4.0 — 2026-10-02 — Sprint 1 foundation reliability
 
@@ -472,4 +501,4 @@ Single page, source only, session-only reports. No third-party search/performanc
 
 ## Report interpretation
 
-Errors are observed source problems such as missing titles, duplicate titles, conflicting/malformed canonicals or invalid JSON-LD. Warnings need contextual review; opportunities are optional editorial or presentation improvements. Passed means the specific source check passed, not that the site has no SEO problems. Unavailable checks were not measured. HTML extraction remains a lightweight source scan. Every applicable check is weighted equally (pass 1, review 0.5, fail 0); unavailable checks are excluded. SEO/AEO/GEO scores are checklist summaries, not rank or citation forecasts.
+Errors are observed source problems such as missing titles, duplicate titles, conflicting/malformed canonicals or invalid JSON-LD. Warnings need contextual review; opportunities are optional editorial or presentation improvements. Passed means the specific source check passed, not that the site has no SEO problems. Unavailable checks were not measured. HTML extraction uses DOM parsing and structural main-content classification; rendering remains untested. Every applicable check is weighted equally (pass 1, review 0.5, fail 0); unavailable checks are excluded. SEO/AEO/GEO scores are checklist summaries, not rank or citation forecasts.

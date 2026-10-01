@@ -1,0 +1,10 @@
+'use client';
+import {useState} from 'react';
+import {analyze,SAMPLE,type Report} from '../lib/audit';
+import AuditReport from './audit-report';
+import {projectRequest} from './page';
+export function ContentAnalyzer({project}:{project:string}){
+ const[mode,setMode]=useState('text'),[input,setInput]=useState(''),[keyword,setKeyword]=useState(''),[report,setReport]=useState<Report|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState('');
+ async function run(event:React.FormEvent){event.preventDefault();setBusy(true);setError('');try{if(new TextEncoder().encode(input).length>1000000)throw Error('Content must be under 1 MB.');if(!input.trim())throw Error('Enter a URL or paste content.');setReport(mode==='url'?await projectRequest<Report>('/api/audit',{method:'POST',body:JSON.stringify({url:/^https?:\/\//.test(input)?input:'https://'+input,keyword,project})}):analyze(input,mode==='html'?'Pasted HTML':'Pasted text',keyword,mode));}catch(e){setError(e instanceof Error?e.message:'Analysis failed.');}finally{setBusy(false);}}
+ return <div><section className="panel"><h2>Content Analyzer</h2><p>Analyze a section, article or HTML independently. These results do not alter the project’s saved website audit.</p><form className="project-form" onSubmit={run}><label>Input type<select value={mode} onChange={e=>setMode(e.target.value)}><option value="text">Text</option><option value="html">HTML</option><option value="url">Public URL</option></select></label><label>{mode==='url'?'Page URL':'Content'}<textarea value={input} onChange={e=>setInput(e.target.value)} rows={mode==='url'?2:8}/></label><label>Optional target phrase<input value={keyword} maxLength={200} onChange={e=>setKeyword(e.target.value)}/></label><div className="project-actions"><button className="primary" disabled={busy}>{busy?'Analyzing…':'Analyze content'}</button><button type="button" className="secondary" onClick={()=>setReport(analyze(SAMPLE,'Sample · Content Analyzer','compliance training','html'))}>Try sample</button></div></form>{error&&<p role="alert">{error}</p>}</section>{report&&<AuditReport report={report} onBack={()=>setReport(null)}/>}</div>;
+}
