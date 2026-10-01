@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.3.1
+Current release: 1.3.2
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -27,6 +27,30 @@ This document is versioned with the application. It records implemented scope an
 | Projects | Persistent audit history, scheduled audits and automatic site changes | — | Not implemented | Results are in the current browser session. No automatic website edits. |
 | Crawl | Partial discovery fallback and visible pending-page queue | 1.3.0 | Available | Uses sitemap, homepage links and optional WordPress REST URLs; each selected page appears before its report finishes. |
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
+| Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
+
+## 1.3.2 — 2026-10-02 — Usable image evidence links
+
+### Added
+
+- Image evidence now resolves data-src, lazy-load and source-set URLs when the visible src is an inline placeholder.
+- Direct image inspection links remain available alongside the audited-page link.
+
+### Changed
+
+- Image rows show a public asset URL and preview whenever the audited markup exposes one.
+
+### Removed
+
+None.
+
+### Validation
+
+TypeScript checking, audit fixtures, server-rendered report checks and production build.
+
+### Remaining limits
+
+If a page only exposes an inline image and no public fallback URL, the audited-page link remains the reliable inspection path.
 
 ## 1.3.1 — 2026-10-02 — Persistent guidance and clearer fix steps
 
