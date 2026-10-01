@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.3.2
+Current release: 1.3.3
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -28,6 +28,31 @@ This document is versioned with the application. It records implemented scope an
 | Crawl | Partial discovery fallback and visible pending-page queue | 1.3.0 | Available | Uses sitemap, homepage links and optional WordPress REST URLs; each selected page appears before its report finishes. |
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
+| Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.3.3 — 2026-10-02 — Clearer finding navigation
+
+### Added
+
+- Fix-first actions open the exact finding inline with its error name and solution context.
+- Finding hashes make expanded reports directly reopenable from a copied URL.
+- Sticky guidance is preserved by allowing the report panel to overflow without trapping the sticky pane.
+
+### Changed
+
+- Opening or closing a finding updates the URL hash and keeps the evidence-and-guidance workspace synchronized.
+
+### Removed
+
+None.
+
+### Validation
+
+TypeScript checking, audit fixtures, server-rendered report checks and production build.
+
+### Remaining limits
+
+The hash reopens a finding only while the current report contains that finding; report data remains session-scoped.
 
 ## 1.3.2 — 2026-10-02 — Usable image evidence links
 
