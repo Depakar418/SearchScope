@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.3.5
+Current release: 1.3.6
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -29,6 +29,28 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.3.6 — 2026-10-02 — Clearer score gauges and evidence links
+
+### Added
+
+- Animated semicircle SEO, AEO and GEO checklist gauges with a shared red–orange–green scale and reduced-motion support.
+
+### Changed
+
+- One audited-page link appears above the evidence list; individual rows keep only relevant image and destination links.
+
+### Removed
+
+- Repeated audited-page links in every evidence row.
+
+### Validation
+
+TypeScript checks, report rendering checks and production build.
+
+### Remaining limits
+
+Scores remain source-check summaries, not measured rankings or AI visibility.
 
 ## 1.3.5 — 2026-10-02 — Fix first inline accordion workspace
 
