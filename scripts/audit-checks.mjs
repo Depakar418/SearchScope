@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import ts from 'typescript';
+const temp=await fs.mkdtemp(path.join(os.tmpdir(),'searchscope-tests-'));
+const compile=async(source,name)=>{const raw=await fs.readFile(source,'utf8');await fs.writeFile(path.join(temp,name),ts.transpileModule(raw.replace("'../../../lib/audit'","'./audit.mjs'").replace("'../../../lib/url-safety'","'./url-safety.mjs'"),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText);};
+try{
+await compile('lib/audit.ts','audit.mjs');await compile('lib/url-safety.ts','url-safety.mjs');await compile('app/api/audit/route.ts','route.mjs');
+const {analyze,SAMPLE}=await import(path.join(temp,'audit.mjs'));const {robotsAllowed,publicURL}=await import(path.join(temp,'url-safety.mjs'));const {POST}=await import(path.join(temp,'route.mjs'));
+const r=analyze(SAMPLE,'Sample','compliance training','html');assert.equal(r.missingAlt,1);assert.equal(r.scores.SEO,94);assert.equal(r.checks.find(c=>c.id==='alt').status,'review');
+const plain=analyze('What is compliance?\n\nAuthor: Depakar\n- Training\nhttps://source.example/path','Text','','text');assert.equal(plain.scores.SEO,null);assert.equal(plain.checks.find(c=>c.id==='title').status,'na');
+assert.equal(analyze('<script type="application/ld+json">{broken}</script>','HTML').checks.find(c=>c.id==='schema').status,'fail');
+assert.deepEqual(analyze('<script type="application/ld+json">{"@graph":[{"@type":"Article"}]}</script>','HTML').schemas,['Article']);
+assert.equal(analyze('<script>const data="<img src=x>";</script>','HTML').images,0);
+assert.equal(robotsAllowed('User-agent: *\nDisallow: /private\nAllow: /private/public','/private/public'),true);assert.equal(robotsAllowed('User-agent: *\nDisallow: /private','/private'),false);assert.equal(robotsAllowed('User-agent: SearchScopeAudit\nUser-agent: otherbot\nDisallow: /\nUser-agent: *\nAllow: /','/page'),false);
+for(const url of ['http://localhost','http://127.0.0.1','http://[::1]','http://user:password@site.com','https://site.com:8443','file:///etc/passwd','http://2130706433'])assert.throws(()=>publicURL(url));
+const original=globalThis.fetch;let blocked=false;let privateDNS=false;let xrobots=false;let big=false;let moved=false;let requests=0;
+globalThis.fetch=async(input)=>{requests++;const u=new URL(String(input));if(u.hostname==='cloudflare-dns.com')return Response.json({Answer:u.searchParams.get('type')==='A'?[{type:1,data:privateDNS?'127.0.0.1':'93.184.216.34'}]:[]});if(u.pathname==='/robots.txt')return new Response(blocked?'User-agent: *\nDisallow: /':'User-agent: *\nAllow: /');if(moved)return new Response(null,{status:302,headers:{location:'http://127.0.0.1/admin'}});return new Response(big?'a'.repeat(1000001):SAMPLE,{headers:{'content-type':'text/html',...(xrobots?{'x-robots-tag':'noindex'}:{})}});};
+const request=(body)=>new Request('https://app.local/api/audit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+let res=await POST(request({url:'https://publicsite.com/page',keyword:'training'}));assert.equal(res.status,200);assert.equal((await res.json()).status,200);
+xrobots=true;res=await POST(request({url:'https://publicsite.com/page'}));assert.equal((await res.json()).checks.find(c=>c.id==='index').status,'review');xrobots=false;
+blocked=true;res=await POST(request({url:'https://publicsite.com/page'}));assert.equal(res.status,400);assert.match((await res.json()).error,/disallows/);blocked=false;
+privateDNS=true;res=await POST(request({url:'https://publicsite.com/page'}));assert.equal(res.status,400);assert.match((await res.json()).error,/Private/);privateDNS=false;
+moved=true;res=await POST(request({url:'https://publicsite.com/page'}));assert.equal(res.status,400);moved=false;
+big=true;res=await POST(request({url:'https://publicsite.com/page'}));assert.equal(res.status,400);assert.match((await res.json()).error,/too large/);big=false;
+res=await POST(request({url:'https://publicsite.com/page',keyword:42}));assert.equal(res.status,400);
+globalThis.fetch=original;
+console.log('PASS: audit extraction, text exclusions, JSON-LD, script isolation, robots groups, URL safety, DNS safety, HTTP audit success, header directives, redirects, size limits, invalid input.');
+}finally{await fs.rm(temp,{recursive:true,force:true});}
