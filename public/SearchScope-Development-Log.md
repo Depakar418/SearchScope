@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.3.0
+Current release: 1.3.1
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -26,6 +26,30 @@ This document is versioned with the application. It records implemented scope an
 | AI visibility | Measured mentions, citations and competitor visibility in AI answers | — | Not implemented | Checklist scores do not measure these outcomes. |
 | Projects | Persistent audit history, scheduled audits and automatic site changes | — | Not implemented | Results are in the current browser session. No automatic website edits. |
 | Crawl | Partial discovery fallback and visible pending-page queue | 1.3.0 | Available | Uses sitemap, homepage links and optional WordPress REST URLs; each selected page appears before its report finishes. |
+| Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
+
+## 1.3.1 — 2026-10-02 — Persistent guidance and clearer fix steps
+
+### Added
+
+- Sticky desktop guidance panel keeps issue explanations and solutions visible while evidence is reviewed.
+- Check-mark improvement steps make each action easier to scan.
+
+### Changed
+
+- Responsive layouts disable sticky positioning on smaller screens to preserve natural scrolling.
+
+### Removed
+
+None.
+
+### Validation
+
+TypeScript checking, audit fixtures, server-rendered report checks and production build.
+
+### Remaining limits
+
+Sticky positioning applies to the report workspace; browser layout and long-page behavior still require live visual validation.
 
 ## 1.3.0 — 2026-10-01 — Resilient discovery and clearer issue solutions
 
