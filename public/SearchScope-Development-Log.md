@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.3.3
+Current release: 1.3.4
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -29,6 +29,28 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.3.4 — 2026-10-02 — Simpler sticky guidance scrolling
+
+### Added
+
+- Sticky guidance now uses the page scroll instead of a nested internal scrollbar.
+
+### Changed
+
+- Removed the guidance column max-height and overflow rules so long fix instructions remain part of one continuous page flow.
+
+### Removed
+
+- Nested scrollbar inside the sticky guidance panel.
+
+### Validation
+
+TypeScript checking, audit fixtures, server-rendered report checks and production build.
+
+### Remaining limits
+
+On very small screens the guidance column remains in normal document flow.
 
 ## 1.3.3 — 2026-10-02 — Clearer finding navigation
 
