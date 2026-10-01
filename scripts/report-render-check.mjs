@@ -1,0 +1,8 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import ts from 'typescript';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+const dir=await fs.mkdtemp(path.join(process.cwd(),'.sites-runtime','report-render-'));
+try{for(const [source,name] of [['lib/finding-guides.ts','finding-guides'],['lib/audit.ts','audit'],['lib/releases.ts','releases'],['app/report-panels.tsx','panels']]){const raw=(await fs.readFile(source,'utf8')).replace("'./finding-guides'","'./finding-guides.mjs'").replace("'../lib/releases'","'./releases.mjs'");await fs.writeFile(path.join(dir,name+'.mjs'),ts.transpileModule(raw,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText);}const {analyze,SAMPLE}=await import(path.join(dir,'audit.mjs'));const {IssueSummary,FindingDetails,DevelopmentLog}=await import(path.join(dir,'panels.mjs'));const report=analyze(SAMPLE,'Sample');const summary=renderToStaticMarkup(React.createElement(IssueSummary,{report,onFilter:()=>{}}));assert.match(summary,/Errors/);assert.match(summary,/Fix first/);const detail=renderToStaticMarkup(React.createElement(FindingDetails,{finding:report.checks.find(c=>c.id==='alt')}));assert.match(detail,/Why it matters/);assert.match(detail,/team.webp/);assert.match(detail,/How to verify the fix/);const doc=renderToStaticMarkup(React.createElement(DevelopmentLog,{onDownload:()=>{}}));assert.match(doc,/Feature inventory/);assert.match(doc,/Removed/);assert.match(doc,/1.1.0/);console.log('PASS: server-rendered issue summary, detailed findings and development log. Browser interaction and layout not validated.');}finally{await fs.rm(dir,{recursive:true,force:true});}

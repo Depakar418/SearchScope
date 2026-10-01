@@ -10,6 +10,12 @@ A private, single-page SEO/AEO/GEO audit workspace built with React, TypeScript,
 4. Optionally set a target phrase, run the analysis and filter **Needs attention**.
 5. Export CSV for a task list or JSON for the full report. Reports are session-only; export before leaving.
 
+## Release 1.1.0
+
+The app now exposes 29 applicable/conditional checks, separate error/warning/opportunity totals, a fix-first plan, detailed per-finding guidance and detailed CSV/Markdown/JSON exports.
+
+The feature inventory and release history live in `lib/releases.ts` and the application’s **Features & development** view. Update that source for each release and run `node scripts/generate-development-doc.mjs` to refresh the downloadable `public/SearchScope-Development-Log.md`. Record added, changed, removed, validation and remaining limitations honestly.
+
 ## Current capabilities
 
 - Public single-page initial-HTML retrieval, with robots.txt handling, timeouts, public-DNS validation, redirect checks and bounded response bodies.
