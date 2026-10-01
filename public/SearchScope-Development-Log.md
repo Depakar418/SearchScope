@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.3.9
+Current release: 1.3.10
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -29,6 +29,30 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.3.10 — 2026-10-02 — Website score overview
+
+### Added
+
+- Overall, SEO, AEO and GEO animated website checklist gauges.
+- Audited coverage and measured-page counts explain the score scope.
+
+### Changed
+
+- Website issue totals use consistent labeled cards with severity icons and descriptions.
+- Scores update from the current completed page reports without additional requests.
+
+### Removed
+
+- Ambiguous website issue-type count labels.
+
+### Validation
+
+TypeScript checks, aggregate score fixtures, report rendering and production build.
+
+### Remaining limits
+
+Category scores average measured page scores equally; overall averages available category means. Failed, pending and unavailable results are excluded. Partial audits do not represent the full website.
 
 ## 1.3.9 — 2026-10-01 — Clearer report controls and summary cards
 

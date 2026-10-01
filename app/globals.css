@@ -30,3 +30,23 @@
 .unified-report .check .check-row,.standalone-report .check .check-row{box-shadow:none}
 @media(max-width:1150px){.unified-report .report-navigation{flex-wrap:wrap}.unified-report .report-navigation .unified-controls{margin-left:auto}}
 @media(max-width:600px){.unified-report .report-navigation{gap:14px}.unified-report .report-navigation .report-tabs{width:100%}.unified-report .report-navigation .unified-controls{width:100%;margin:0}.unified-report .report-navigation .search-field{width:auto;flex:1;min-width:0}.unified-report .report-navigation select{max-width:155px}.unified-report .issue-summary .issue-total{padding:14px}.unified-report .issue-summary .issue-total:last-child{grid-column:1/-1}}
+/* Website overview scores and audit counts */
+.website-overview{display:flex;flex-direction:column;gap:16px}
+.website-overview-heading{display:flex;justify-content:space-between;align-items:center;gap:18px}
+.website-overview-heading h3{font-size:18px;margin:0;color:#314b52}
+.website-overview-heading p{font-size:13px;color:#71858b;margin:7px 0 0;line-height:1.6}
+.website-coverage{background:#e8f3ee;color:#187863;border:1px solid #cfe4db;border-radius:4px;padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap}
+.website-score-grid{margin:0}
+.website-score-grid .score-card{min-width:0;padding:20px;gap:10px}
+.website-score-grid .score-card p{font-size:12px;line-height:1.5}
+.website-score-grid .score-gauge{width:112px;flex-shrink:0}
+.website-score-note{font-size:12px;color:#71858b;line-height:1.65;margin:0}
+.website-stat-cards .website-stat{padding:20px;border-radius:8px;border-top:3px solid var(--stat-color);min-width:0;background:#fff}
+.website-stat--error{--stat-color:#aa473a}.website-stat--warning{--stat-color:#9f7427}.website-stat--opportunity{--stat-color:#546ca4}.website-stat--pass{--stat-color:#297c60}
+.website-stat-cards .website-stat-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--stat-color)}
+.website-stat-cards .website-stat-heading span{font-size:14px;font-weight:600;color:inherit;margin:0}
+.website-stat-cards .website-stat strong{font-size:30px;line-height:1.1;color:#314b52;margin-top:17px}
+.website-stat p{font-size:13px;color:#647b83;line-height:1.5;margin:10px 0 4px}
+.website-stat small{font-size:11px;color:#819198;line-height:1.5}
+@media(max-width:1250px){.website-score-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.website-overview-heading{align-items:flex-start}.website-score-grid{grid-template-columns:1fr}.website-stat-cards .website-stat{padding:16px}.website-coverage{padding:7px 9px}}

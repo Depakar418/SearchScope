@@ -6,7 +6,7 @@ import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 const dir=await fs.mkdtemp(path.join(process.cwd(),'.sites-runtime','unified-report-'));
 try{
-  const files=['lib/finding-guides.ts','lib/page-metrics.ts','lib/report-tabs.ts','lib/report-export.ts','lib/audit.ts','lib/releases.ts','app/page-detail.tsx','app/report-panels.tsx','app/score-gauge.tsx','app/audit-report.tsx'];
+  const files=['lib/finding-guides.ts','lib/page-metrics.ts','lib/report-tabs.ts','lib/report-export.ts','lib/audit.ts','lib/releases.ts','lib/website-scores.ts','app/website-overview.tsx','app/page-detail.tsx','app/report-panels.tsx','app/score-gauge.tsx','app/audit-report.tsx'];
   for(const file of files){
     const raw=(await fs.readFile(file,'utf8')).replace(/(['"])(?:\.\.\/lib\/|\.\/)([\w-]+)\1/g,(_,quote,name)=>`${quote}./${name}.mjs${quote}`);
     await fs.writeFile(path.join(dir,path.basename(file).replace(/\.tsx?$/,'.mjs')),ts.transpileModule(raw,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText);
@@ -15,6 +15,17 @@ try{
   const {default:AuditReport,REPORT_MENU}=await import(path.join(dir,'audit-report.mjs'));
   const {PageDetail,CategoryExplanation}=await import(path.join(dir,'page-detail.mjs'));
   const report=analyze(SAMPLE,'https://example.com/');
+  const {websiteScores}=await import(path.join(dir,'website-scores.mjs'));
+  assert.equal(websiteScores([]).overall,null);
+  const aggregate=websiteScores([{scores:{SEO:80,AEO:null,GEO:20}},{scores:{SEO:100,AEO:60,GEO:null}}]);
+  assert.deepEqual(aggregate.scores.map(s=>s.score),[90,60,20]);
+  assert.deepEqual(aggregate.scores.map(s=>s.count),[2,1,1]);
+  assert.equal(aggregate.overall,57);
+  const {WebsiteOverview}=await import(path.join(dir,'website-overview.mjs'));
+  const overview=renderToStaticMarkup(React.createElement(WebsiteOverview,{pages:[{status:'completed',report},{status:'failed',report:null}],discovered:10,selected:2}));
+  assert.equal((overview.match(/role="meter"/g)||[]).length,4);
+  assert.match(overview,/10% audited/);
+  assert.match(overview,/Based on 1 audited page of 10 discovered/);
   assert.deepEqual(REPORT_MENU,['All issues','Fix first','SEO','AEO','GEO','Page details']);
   const html=renderToStaticMarkup(React.createElement(AuditReport,{report,onBack:()=>{}}));
   assert.match(html,/aria-selected="true"[^>]*>Fix first/);
