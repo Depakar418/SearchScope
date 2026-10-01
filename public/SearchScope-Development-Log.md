@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.2.0
+Current release: 1.3.0
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -25,6 +25,34 @@ This document is versioned with the application. It records implemented scope an
 | Crawl | Site-wide crawling, broken-link validation and rendered-JavaScript audits | — | Not implemented | Current auditing is single-page initial-source inspection. |
 | AI visibility | Measured mentions, citations and competitor visibility in AI answers | — | Not implemented | Checklist scores do not measure these outcomes. |
 | Projects | Persistent audit history, scheduled audits and automatic site changes | — | Not implemented | Results are in the current browser session. No automatic website edits. |
+| Crawl | Partial discovery fallback and visible pending-page queue | 1.3.0 | Available | Uses sitemap, homepage links and optional WordPress REST URLs; each selected page appears before its report finishes. |
+
+## 1.3.0 — 2026-10-01 — Resilient discovery and clearer issue solutions
+
+### Added
+
+- Homepage-link and optional WordPress REST fallbacks when a readable sitemap is unavailable.
+- Partial inventories returned when robots, sitemap or individual fetches time out.
+- Selected pages are listed immediately with Pending state, per-page URL, type and issue columns.
+- Question-and-answer issue summaries with separate issue, solution, evidence, example and verification sections.
+
+### Changed
+
+- Discovery uses bounded 5-second sitemap requests and a 25-second overall safety window.
+- Progress counts completed and failed reports instead of hiding undiscovered pending pages.
+- Image evidence truncates inline data URIs so the affected element remains readable.
+
+### Removed
+
+None.
+
+### Validation
+
+TypeScript checking, audit fixtures, server-rendered report checks and production build.
+
+### Remaining limits
+
+Fallback discovery only sees public, same-origin links exposed in the homepage or WordPress API. JavaScript-only navigation, private routes and pages omitted from public discovery remain outside the inventory.
 
 ## 1.2.0 — 2026-10-01 — Website discovery and page-wise audit workspace
 
