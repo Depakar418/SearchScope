@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.3.12
+Current release: 1.4.0
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -8,11 +8,12 @@ This document is versioned with the application. It records implemented scope an
 
 | Area | Feature | First release | Status | Scope |
 | --- | --- | --- | --- | --- |
+| Foundation | DOM content extraction, selector evidence and cross-page comparisons | 1.4.0 | Available | Semantic content extraction from initial HTML; explicit evidence and comparison methods. No rendered-browser validation. |
 | Inputs | Public URL, pasted HTML and pasted text audits | 1.0.0 | Available | One page at a time; initial HTML only. |
 | SEO | Page title, description, H1, canonical, robots directives, image alt, language, viewport and target phrase | 1.0.0 | Available | Source markup checks. Does not establish actual index status. |
 | AEO | Sections, audience questions, lists/tables and JSON-LD syntax | 1.0.0 | Available | Editorial signals and JSON syntax; not an answer-engine visibility measurement. |
 | GEO | Attribution, possible supporting links and date signals | 1.0.0 | Available | Heuristics; author expertise, factual claims and source quality require manual review. |
-| Reports | Evidence, suggestions, category filters, finding search and metadata outline | 1.0.0 | Available | Session-only results; no server-side report history. |
+| Reports | Evidence, suggestions, category filters, finding search and metadata outline | 1.0.0 | Available | Saved website runs and revision history; standalone pasted-content reports remain session-only. |
 | Exports | CSV task list and complete JSON report | 1.0.0 | Available | Downloads generated in the browser. |
 | SEO | Duplicate titles/descriptions, canonical syntax/conflicts, empty/skipped headings, image sizing/source hints, link names/destinations, HTTPS and Open Graph metadata | 1.1.0 | Available | 12 additional source checks. Link destinations and rendering are not tested. |
 | AEO | Readable initial-content check | 1.1.0 | Available | Detects empty extracted content; JavaScript rendering remains untested. |
@@ -22,13 +23,43 @@ This document is versioned with the application. It records implemented scope an
 | Data | Keyword volumes, ranking and backlink databases | — | Not implemented | Needs a licensed provider and an integration. |
 | Data | Search Console metrics and actual index coverage | — | Not implemented | Needs verified-site access and an integration. |
 | Performance | PageSpeed Insights, Lighthouse and Core Web Vitals | — | Not implemented | No performance score or field data is currently collected. |
-| Crawl | Site-wide crawling, broken-link validation and rendered-JavaScript audits | — | Not implemented | Current auditing is single-page initial-source inspection. |
+| Crawl | Recursive URL discovery and link response verification | 1.4.0 | Available | Bounded same-origin source crawl and safe HTTP verification. Rendered JavaScript remains unimplemented. |
 | AI visibility | Measured mentions, citations and competitor visibility in AI answers | — | Not implemented | Checklist scores do not measure these outcomes. |
-| Projects | Persistent audit history, scheduled audits and automatic site changes | — | Not implemented | Results are in the current browser session. No automatic website edits. |
+| Projects | Persistent audit revisions | 1.4.0 | Available | Owner-scoped successful and failed page audit attempts. Scheduling and automatic website edits are not implemented. |
 | Crawl | Partial discovery fallback and visible pending-page queue | 1.3.0 | Available | Uses sitemap, homepage links and optional WordPress REST URLs; each selected page appears before its report finishes. |
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.4.0 — 2026-10-02 — Sprint 1 foundation reliability
+
+### Added
+
+- DOM-based main-content extraction with section-aware heading context.
+- Structured element evidence with selectors, HTML snippets and absence/document evidence.
+- Bounded recursive crawling with depth, referring URL, discovery source and crawl status.
+- HTTP link verification with internal/external classification and redirect traces.
+- Cross-page metadata/H1 duplicates and transparent main-content similarity candidates.
+- Append-only audit revisions with saved reports, scores, findings and measured changes.
+
+### Changed
+
+- Content metrics use extracted main content rather than navigation/footer text.
+- Affected-element lists match the specific issue and support incremental display.
+- Current page results remain fast to query while prior attempts are preserved.
+
+### Removed
+
+- Regex-based primary HTML extraction.
+- Overwriting the only saved audit snapshot on re-audit.
+
+### Validation
+
+TypeScript, DOM/evidence fixtures, bounded crawl and link verification fixtures, cross-page comparisons, SQL migration and history-route checks, report regressions and production build.
+
+### Remaining limits
+
+Initial HTML only; external CSS and JavaScript visibility remain untested. Crawling and link checking return explicit partial results at safety budgets. Cross-page observations do not change checklist scores. Legacy results are preserved when next re-audited; earlier overwritten history cannot be recovered.
 
 ## 1.3.12 — 2026-10-02 — Consistent website summary cards
 

@@ -1,0 +1,10 @@
+import type {Report} from './audit';
+export type CrossPageGroup={kind:'Duplicate title'|'Duplicate meta description'|'Duplicate H1'|'Similar content';value:string;urls:string[];similarity?:number};
+const normalize=(s:string)=>s.normalize('NFKC').toLowerCase().replace(/\s+/g,' ').trim();
+export function comparePages(pages:{url:string;report:Report|null}[]){
+ const entries=pages.filter((p):p is {url:string;report:Report}=>!!p.report);const groups:CrossPageGroup[]=[];
+ for(const kind of ['Duplicate title','Duplicate meta description','Duplicate H1'] as const){const index=new Map<string,Set<string>>();for(const p of entries){const values=kind==='Duplicate title'?[p.report.title]:kind==='Duplicate meta description'?[p.report.description]:p.report.headings.filter(h=>h.level===1).map(h=>h.text);for(const value of values){const key=normalize(value);if(!key)continue;const urls=index.get(key)||new Set();urls.add(p.url);index.set(key,urls);}}for(const [value,urls] of index)if(urls.size>1)groups.push({kind,value,urls:[...urls]});}
+ const candidates=entries.filter(p=>p.report.contentText&&p.report.words>=80).slice(0,100).map(p=>{const words=normalize(p.report.contentText!).split(/\s+/).slice(0,2000),shingles=new Set<string>();for(let i=0;i<=words.length-5;i++)shingles.add(words.slice(i,i+5).join(' '));return {url:p.url,shingles};});
+ for(let i=0;i<candidates.length;i++)for(let j=i+1;j<candidates.length;j++){const a=candidates[i],b=candidates[j];if(!a.shingles.size||!b.shingles.size)continue;let shared=0;for(const v of a.shingles)if(b.shingles.has(v))shared++;const score=shared/(a.shingles.size+b.shingles.size-shared);if(score>=0.85)groups.push({kind:'Similar content',value:'Main-content five-word shingle overlap',urls:[a.url,b.url],similarity:Math.round(score*100)});}
+ return {groups,compared:entries.length,similarityCompared:candidates.length,method:'Exact normalized text for metadata/H1. Similarity uses five-word shingle Jaccard overlap ≥85%, at least 80 extracted words, first 2,000 words, up to 100 pages. Candidates require manual review; scores are unchanged.'};
+}

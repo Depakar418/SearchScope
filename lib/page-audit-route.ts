@@ -1,0 +1,27 @@
+import {database} from '../db';
+import {owner,ownedRun,readJSON,routeError} from './history';
+import {classifyPage} from './discovery';
+import {auditURL} from './audit-service';
+import {auditDiff} from './audit-diff';
+import type {Report} from './audit';
+
+export async function GET(request:Request,{params}:{params:Promise<{id:string}>}){
+ try{const {id}=await params;await ownedRun(id,owner(request));const query=new URL(request.url).searchParams;const db=database();const revision=query.get('revision');
+  if(revision){const row=await db.prepare('SELECT id,url,audited,status,error,report FROM audit_revisions WHERE run=? AND id=?').bind(id,revision).first<Record<string,string|null>>();if(!row)throw Error('Revision not found or unavailable.');return Response.json({revision:{...row,report:row.report?JSON.parse(row.report):null}});}
+  const url=query.get('url');if(!url)throw Error('Page URL is required.');const rows=await db.prepare('SELECT id,url,audited,status,error,scores,issues,changes FROM audit_revisions WHERE run=? AND url=? ORDER BY audited DESC,id DESC LIMIT 50').bind(id,url).all<Record<string,string|null>>();return Response.json({revisions:(rows.results||[]).map(r=>({...r,scores:r.scores?JSON.parse(r.scores):null,issues:r.issues?JSON.parse(r.issues):null,changes:r.changes?JSON.parse(r.changes):null}))});
+ }catch(e){return routeError(e);}
+}
+export async function POST(request:Request,{params}:{params:Promise<{id:string}>}){
+ try{const {id}=await params;const user=owner(request);const run=await ownedRun(id,user);const {url,keyword=run.keyword}=await readJSON(request);if(typeof url!=='string'||typeof keyword!=='string'||keyword.length>200)throw Error('Invalid page or target phrase.');const discovered=run.selected.find(p=>p.url===url);if(!discovered)throw Error('This page is not in the selected audit inventory.');
+  const db=database();const previous=await db.prepare('SELECT id,audited,status,error,report FROM page_audits WHERE run=? AND url=?').bind(id,url).first<Record<string,string|null>>();const before:Report|null=previous?.report?JSON.parse(previous.report):null;
+  let report:Report|null=null,error:string|null=null;try{report=await auditURL(url,keyword);}catch(e){error=e instanceof Error?e.message:'Page could not be audited.';}
+  const category=report?classifyPage(url,discovered.source,report.schemas):{type:discovered.type,typeSource:discovered.typeSource};const page={id:crypto.randomUUID(),url,audited:new Date().toISOString(),...category,status:report?'completed':'failed',error,report};
+  const snapshot=(r:Report|null)=>r?JSON.stringify(r):null;const issues=(r:Report|null)=>r?JSON.stringify(r.checks.filter(c=>['error','warning','opportunity'].includes(c.severity)).map(c=>({id:c.id,name:c.name,severity:c.severity,affectedCount:c.affectedCount}))):null;
+  const operations=[];
+  if(previous)operations.push(db.prepare('INSERT OR IGNORE INTO audit_revisions (id,run,url,audited,status,error,scores,issues,changes,report) SELECT ?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM audit_revisions WHERE run=? AND url=?)').bind(`legacy:${id}:${previous.id}`,id,url,previous.audited,previous.status,previous.error,before?JSON.stringify(before.scores):null,issues(before),JSON.stringify({baseline:true,resolved:[],introduced:[],scoreChanges:null}),previous.report,id,url));
+  operations.push(db.prepare('INSERT INTO audit_revisions (id,run,url,audited,status,error,scores,issues,changes,report) VALUES (?,?,?,?,?,?,?,?,?,?)').bind(page.id,id,url,page.audited,page.status,error,report?JSON.stringify(report.scores):null,issues(report),JSON.stringify(auditDiff(before,report)),snapshot(report)));
+  operations.push(db.prepare('INSERT INTO page_audits (id,run,url,audited,type,type_source,status,error,report) VALUES (?,?,?,?,?,?,?,?,?) ON CONFLICT(run,url) DO UPDATE SET audited=excluded.audited,type=excluded.type,type_source=excluded.type_source,status=excluded.status,error=excluded.error,report=excluded.report').bind(page.id,id,url,page.audited,page.type,page.typeSource,page.status,error,snapshot(report)));
+  operations.push(db.prepare(`UPDATE audit_runs SET status=CASE WHEN (SELECT COUNT(*) FROM page_audits WHERE run=?)>=json_array_length(selected) THEN 'complete' WHEN status='paused' THEN 'paused' ELSE 'running' END WHERE id=? AND owner=?`).bind(id,id,user));
+  await db.batch(operations);return Response.json({page});
+ }catch(e){return routeError(e);}
+}

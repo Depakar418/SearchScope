@@ -6,6 +6,7 @@ import {scopedFindings} from '../lib/report-tabs';
 import {reportCSV,reportMarkdown} from '../lib/report-export';
 import {FindingDetails} from './report-panels';
 import {CategoryExplanation,PageDetail,ReportTabButton} from './page-detail';
+import {LinkStatusReport} from './link-status-report';
 import {ScoreGauge} from './score-gauge';
 
 export const REPORT_MENU=['All issues','Fix first','SEO','AEO','GEO','Page details'] as const;
@@ -40,7 +41,7 @@ export default function AuditReport({report,onBack}:{report:Report;onBack?:()=>v
   function categoryCard(category:Category,showAction:boolean){
     const findings=scopedFindings(report,category,true).filter(matches);
     return <section className="unified-category-card" key={category}>
-      <CategoryExplanation report={report} category={category} showAction={showAction}/>
+      <CategoryExplanation report={report} category={category} showAction={showAction}/>{category==='SEO'&&<LinkStatusReport report={report}/>}
       <FindingList key={category+filter+search} report={report} findings={findings} prefix={'category-'+category}/>
     </section>;
   }
