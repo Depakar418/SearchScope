@@ -1,0 +1,6 @@
+import type {Report} from '../lib/audit';
+
+export function HeadingEvidence({report,findingId}:{report:Report;findingId:string}){
+  const headings=report.headings.map((heading,i)=>({heading,index:i+1,issue:report.headingIssues?.find(h=>h.index===i+1),previous:report.headings[i-1]})).filter(row=>findingId==='heading-empty'?!row.heading.text:!!row.issue);
+  return <section className="heading-evidence"><h4>Heading structure · highlighted problems</h4><p>{headings.length} affected headings. Compare each current level with the suggested structure before editing.</p><div className="heading-outline">{headings.map(({heading,index,issue,previous})=><div className="heading-line has-issue" key={index}><span className="heading-number">{index}</span><span className="heading-level">H{heading.level}</span><div><strong>{heading.text||'(Empty heading)'}</strong>{findingId!=='heading-empty'&&issue&&previous&&<p>Found <mark>H{issue.actual}</mark> after H{previous.level}: “{previous.text||'(Empty heading)'}”. Recommended level to review: <b>H{issue.expected}</b>.</p>}{!heading.text&&<p><mark>This heading has no text.</mark> Add a useful label or remove it.</p>}</div><span className="outline-state">Review</span></div>)}</div></section>;
+}

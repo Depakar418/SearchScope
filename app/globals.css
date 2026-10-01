@@ -50,3 +50,11 @@
 .website-stat small{font-size:11px;color:#819198;line-height:1.5}
 @media(max-width:1250px){.website-score-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.website-overview-heading{align-items:flex-start}.website-score-grid{grid-template-columns:1fr}.website-stat-cards .website-stat{padding:16px}.website-coverage{padding:7px 9px}}
+.unified-report .issue-total--all{--summary-accent:#546ca4}
+.unified-report .issue-total--attention{--summary-accent:#916128}
+.unified-report #report-section>.issue-summary{margin:0 0 12px}
+.unified-report #report-section>.issue-summary-note{margin-bottom:20px}
+.heading-inventory{margin:0;padding-left:24px}
+.heading-inventory li{padding:12px 8px;border-bottom:1px solid #e0e8e6;line-height:1.6}
+.heading-inventory li span{display:inline-block;margin-right:12px;font-size:12px;color:#187863}
+.heading-evidence>p{font-size:13px;color:#71858b;line-height:1.6;margin:10px 0 16px}

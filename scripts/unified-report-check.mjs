@@ -6,7 +6,7 @@ import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 const dir=await fs.mkdtemp(path.join(process.cwd(),'.sites-runtime','unified-report-'));
 try{
-  const files=['lib/finding-guides.ts','lib/page-metrics.ts','lib/report-tabs.ts','lib/report-export.ts','lib/audit.ts','lib/releases.ts','lib/website-scores.ts','app/website-overview.tsx','app/page-detail.tsx','app/report-panels.tsx','app/score-gauge.tsx','app/audit-report.tsx'];
+  const files=['lib/finding-guides.ts','lib/page-metrics.ts','lib/report-tabs.ts','lib/report-export.ts','lib/audit.ts','lib/releases.ts','lib/website-scores.ts','app/website-overview.tsx','app/heading-evidence.tsx','app/page-detail.tsx','app/report-panels.tsx','app/score-gauge.tsx','app/audit-report.tsx'];
   for(const file of files){
     const raw=(await fs.readFile(file,'utf8')).replace(/(['"])(?:\.\.\/lib\/|\.\/)([\w-]+)\1/g,(_,quote,name)=>`${quote}./${name}.mjs${quote}`);
     await fs.writeFile(path.join(dir,path.basename(file).replace(/\.tsx?$/,'.mjs')),ts.transpileModule(raw,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText);
@@ -34,6 +34,8 @@ try{
   assert.equal((html.match(/class="issue-total issue-total--/g)||[]).length,5);
   assert.equal((html.match(/aria-pressed="false"/g)||[]).length,5);
   assert.match(html,/Counts represent finding groups/);
+  assert.doesNotMatch(html,/issue-total--opportunity|issue-total--unavailable/);
+  assert.ok(html.indexOf('class="report-navigation"')<html.indexOf('class="issue-summary"'));
   assert.ok(html.indexOf('class="report-navigation"')<html.indexOf('aria-label="Search findings"'));
   assert.ok(html.indexOf('aria-label="Search findings"')<html.indexOf('id="report-section"'));
   assert.equal((html.match(/Open Fix first report in new tab/g)||[]).length,1);
@@ -43,6 +45,12 @@ try{
   assert.equal((details.match(/<details\b/g)||[]).length,4);
   assert.equal((details.match(/<summary>/g)||[]).length,4);
   assert.doesNotMatch(details,/<details[^>]*\bopen\b/);
+  assert.match(details,/Heading inventory/);
+  assert.doesNotMatch(details,/highlighted problems|Recommended level to review|Structure check passed/);
+  const {HeadingEvidence}=await import(path.join(dir,'heading-evidence.mjs'));
+  const headingEvidence=renderToStaticMarkup(React.createElement(HeadingEvidence,{report,findingId:'heading-order'}));
+  assert.match(headingEvidence,/Recommended level to review/);
+  assert.doesNotMatch(headingEvidence,/Structure check passed/);
   const allCategory=renderToStaticMarkup(React.createElement(CategoryExplanation,{report,category:'SEO',showAction:false}));
   assert.doesNotMatch(allCategory,/new tab/);
   const source=await fs.readFile('app/page.tsx','utf8');

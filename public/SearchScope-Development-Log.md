@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.3.10
+Current release: 1.3.11
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -29,6 +29,32 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.3.11 — 2026-10-02 — Finding filters and heading evidence placement
+
+### Added
+
+- All checks and Needs attention summary filters replace Opportunities and Unavailable cards.
+- Heading findings show affected headings with preceding context and suggested level.
+
+### Changed
+
+- Five summary cards sit below the report navigation and are hidden in Page details.
+- Page details contains neutral metadata, phrase usage, heading inventory and meta tags.
+- Heading problems and fix guidance live in SEO findings and priority findings.
+
+### Removed
+
+- Duplicated heading problem highlights and category issue summaries in Page details.
+- Dedicated opportunity and unavailable summary cards.
+
+### Validation
+
+TypeScript checks, audit fixtures, report rendering and production build.
+
+### Remaining limits
+
+Unavailable remains an unmeasured check, not an HTTP error. Suggested improvements remain available through report filters and Needs attention.
 
 ## 1.3.10 — 2026-10-02 — Website score overview
 
