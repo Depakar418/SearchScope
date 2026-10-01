@@ -42,6 +42,9 @@ This document is versioned with the application. It records implemented scope an
 - Progress counts completed and failed reports instead of hiding undiscovered pending pages.
 - Image evidence truncates inline data URIs and previews safe public image URLs when available.
 - Finding details now use severity-colored issue/solution cards, clearer evidence columns and a stronger expanded-row hierarchy.
+- Fix-first findings now open the exact matching report and scroll to its detailed workspace.
+- Single-page re-audits show SEO/AEO/GEO score changes after a page is retested.
+- Issue labels use plain-language names such as Missing image alt text and Incorrect heading hierarchy.
 
 ### Removed
 
