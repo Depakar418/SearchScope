@@ -1,5 +1,13 @@
 {
   "version": "7",
   "dialect": "sqlite",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1790867760767,
+      "tag": "0000_silky_kate_bishop",
+      "breakpoints": true
+    }
+  ]
 }

@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.1.0
+Current release: 1.2.0
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -25,6 +25,38 @@ This document is versioned with the application. It records implemented scope an
 | Crawl | Site-wide crawling, broken-link validation and rendered-JavaScript audits | — | Not implemented | Current auditing is single-page initial-source inspection. |
 | AI visibility | Measured mentions, citations and competitor visibility in AI answers | — | Not implemented | Checklist scores do not measure these outcomes. |
 | Projects | Persistent audit history, scheduled audits and automatic site changes | — | Not implemented | Results are in the current browser session. No automatic website edits. |
+
+## 1.2.0 — 2026-10-01 — Website discovery and page-wise audit workspace
+
+### Added
+
+- Sitemap and sitemap-index discovery with homepage-first inventory.
+- Owner-scoped persistent audit runs with page reports and failed-page records.
+- Page table with Home, Page, Blog / Post, Newsletter, Article, Category, Product and Other filters.
+- SEO, AEO and GEO page-wise rating, quality labels, issue totals and sortable views.
+- Per-page phrase occurrence, descriptive density, title/description/H1 placement and a re-audit phrase control.
+- Highlighted heading/source previews so affected elements are visible in context.
+- Separate category explanations explaining what is measured, what is not measured and how to improve.
+
+### Changed
+
+- Audit workspace now starts with website discovery instead of asking users to enter every URL.
+- Sitemap limits, same-origin checks and page-type confidence labels make discovery bounded and transparent.
+- Failed and pending pages no longer receive scores.
+- Development document now records the page-wise workflow and persistent history.
+
+### Removed
+
+- The requirement to manually submit every discovered URL for a website audit.
+- Empty AEO/GEO result states without an explanation of the measurement boundary.
+
+### Validation
+
+TypeScript checking, audit fixtures, report-render checks and production build. Live sitemap discovery, D1 migrations and browser interaction still require deployment/runtime validation.
+
+### Remaining limits
+
+No guarantee that a sitemap lists every page; no crawling of pages omitted from the sitemap; no JavaScript rendering, Search Console, rankings, backlinks, Core Web Vitals or measured AI citations.
 
 ## 1.1.0 — 2026-10-01 — Detailed issue reports and development tracking
 
