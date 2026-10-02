@@ -50,6 +50,13 @@
       "when": 1790916149325,
       "tag": "0006_loose_warpath",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1790944296644,
+      "tag": "0007_chilly_the_fury",
+      "breakpoints": true
     }
   ]
 }

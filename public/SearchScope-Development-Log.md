@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.5.1
+Current release: 1.6.0
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -8,6 +8,7 @@ This document is versioned with the application. It records implemented scope an
 
 | Area | Feature | First release | Status | Scope |
 | --- | --- | --- | --- | --- |
+| Content intelligence | Versioned page evidence, topic/intent review, question coverage and content opportunities | 1.6.0 | Available | New project-bound page audits only. Initial HTML observations with explicit confidence; no rankings, search volume, AI citations or automated editorial truth claims. |
 | Account & access | Profile, membership roles, recipient-accepted invitations and ownership transfer | 1.5.0 | Available | ChatGPT-managed sign-in. App profiles use stable user IDs. Owner/Admin/Editor/Viewer permissions checked server-side; transfers retain project identity/history. Invitations use shareable links, not email delivery. |
 | Projects | Website projects, scoped audit navigation and run comparisons | 1.4.1 | Available | Owner and project scoped saved data. Explicit legacy import; archived projects retain history. Only Website projects are supported. |
 | Foundation | Normalized page documents, section context and structured fetch evidence | 1.4.1 | Available | Initial HTML with classified heading inventory and attributes. Canonical/link HTTP observations and within-crawl link relationships do not change checklist scores. |
@@ -33,6 +34,32 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.6.0 — 2026-10-02 — Website content intelligence foundation
+
+### Added
+
+- Versioned, project-bound page intelligence snapshots beside existing audit revisions.
+- Content Intelligence, Topics and Content Gaps project views and evidence-backed content opportunities.
+- Persisted opportunity status with server-side Editor permission and project isolation.
+- Content intelligence in the project JSON export.
+
+### Changed
+
+- Existing 29 checks, checklist scores, crawler and saved reports remain intact.
+- Opportunity view includes observed content suggestions separately from checklist opportunities.
+
+### Removed
+
+None.
+
+### Validation
+
+TypeScript, SQLite project and authorization regressions, Sprint 1 extraction/audit fixtures and production build.
+
+### Remaining limits
+
+Page intelligence starts with new successful project audits or re-audits; historical reports remain unchanged. Topic, intent and answer cues are editorial heuristics. ChatGPT manages authentication; direct password/Google flows and simultaneous account switching are unavailable in this integration. No rendered-page or search performance measurements.
 
 ## 1.5.1 — 2026-10-02 — Clear heading issue and fix callouts
 

@@ -5,6 +5,7 @@ import {owner,ownedRun,readJSON,routeError,runPages} from './history';
 import {classifyPage} from './discovery';
 import {auditURL} from './audit-service';
 import {auditDiff} from './audit-diff';
+import {analyzePageIntelligence} from './content-intelligence';
 import type {Report} from './audit';
 
 export async function GET(request:Request,{params}:{params:Promise<{id:string}>}){
@@ -23,6 +24,7 @@ export async function POST(request:Request,{params}:{params:Promise<{id:string}>
   if(previous)operations.push(db.prepare('INSERT OR IGNORE INTO audit_revisions (id,run,url,audited,status,error,scores,issues,changes,report) SELECT ?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM audit_revisions WHERE run=? AND url=?)').bind(`legacy:${id}:${previous.id}`,id,url,previous.audited,previous.status,previous.error,before?JSON.stringify(before.scores):null,issues(before),JSON.stringify({baseline:true,resolved:[],introduced:[],scoreChanges:null}),previous.report,id,url));
   operations.push(db.prepare('INSERT INTO audit_revisions (id,run,url,audited,status,error,fetch,scores,issues,changes,report) VALUES (?,?,?,?,?,?,?,?,?,?,?)').bind(page.id,id,url,page.audited,page.status,error,page.fetch?JSON.stringify(page.fetch):null,report?JSON.stringify(report.scores):null,issues(report),JSON.stringify(auditDiff(before,report)),snapshot(report)));
   operations.push(db.prepare('INSERT INTO page_audits (id,run,url,audited,type,type_source,status,error,fetch,report) VALUES (?,?,?,?,?,?,?,?,?,?) ON CONFLICT(run,url) DO UPDATE SET id=excluded.id,audited=excluded.audited,type=excluded.type,type_source=excluded.type_source,status=excluded.status,error=excluded.error,fetch=excluded.fetch,report=excluded.report').bind(page.id,id,url,page.audited,page.type,page.typeSource,page.status,error,page.fetch?JSON.stringify(page.fetch):null,snapshot(report)));
+  if(report&&run.project){const insight=analyzePageIntelligence(report,page.type);operations.push(db.prepare('INSERT INTO page_intelligence (revision,run,project,page,analyzed,analysis_version,crawl_version,extraction_version,recommendation_version,payload) VALUES (?,?,?,?,?,?,?,?,?,?)').bind(page.id,id,run.project,page.id,page.audited,insight.analysisVersion,insight.crawlVersion,insight.extractionVersion,insight.recommendationVersion,JSON.stringify(insight)));}
   operations.push(db.prepare(`UPDATE audit_runs SET started=COALESCE(started,?),finished=CASE WHEN (SELECT COUNT(*) FROM page_audits WHERE run=?)>=json_array_length(selected) THEN ? ELSE NULL END,status=CASE WHEN (SELECT COUNT(*) FROM page_audits WHERE run=?)>=json_array_length(selected) THEN 'complete' WHEN status='paused' THEN 'paused' ELSE 'running' END WHERE id=?`).bind(page.audited,id,page.audited,id,id));
   await ownedRun(id,user,new URL(request.url).searchParams.get('project'),'edit');operations.push(...snapshotStatements(id));await db.batch(operations);return Response.json({page});
  }catch(e){return routeError(e);}
