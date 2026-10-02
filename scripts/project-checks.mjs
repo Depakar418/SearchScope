@@ -4,7 +4,7 @@ import path from 'node:path';
 import ts from 'typescript';
 import {DatabaseSync} from 'node:sqlite';
 const dir=await fs.mkdtemp(path.join(process.cwd(),'.sites-runtime','projects-'));
-const sources=['lib/audit-snapshot.ts','lib/cross-page.ts','lib/normalized-page.ts','lib/projects.ts','lib/history.ts','lib/url-normalization.ts','lib/discovery.ts','lib/dom-extraction.ts','lib/web-fetch.ts','lib/url-safety.ts','lib/audit.ts','lib/finding-guides.ts','lib/page-metrics.ts','lib/audit-diff.ts','lib/project-analysis.ts','lib/website-scores.ts','lib/link-analysis.ts','lib/page-audit-route.ts','lib/audit-service.ts','lib/report-export.ts','app/api/projects/route.ts','app/api/projects/[id]/route.ts','app/api/runs/route.ts','app/api/runs/[id]/route.ts','app/api/projects/[id]/compare/route.ts'];
+const sources=['lib/app-errors.ts','lib/accounts.ts','lib/project-access.ts','app/api/account/route.ts','app/api/account/invitations/route.ts','app/api/projects/[id]/access/route.ts','lib/audit-snapshot.ts','lib/cross-page.ts','lib/normalized-page.ts','lib/projects.ts','lib/history.ts','lib/url-normalization.ts','lib/discovery.ts','lib/dom-extraction.ts','lib/web-fetch.ts','lib/url-safety.ts','lib/audit.ts','lib/finding-guides.ts','lib/page-metrics.ts','lib/audit-diff.ts','lib/project-analysis.ts','lib/website-scores.ts','lib/link-analysis.ts','lib/page-audit-route.ts','lib/audit-service.ts','lib/report-export.ts','app/api/projects/route.ts','app/api/projects/[id]/route.ts','app/api/runs/route.ts','app/api/runs/[id]/route.ts','app/api/projects/[id]/compare/route.ts'];
 const names=new Map(sources.map((s,i)=>[path.resolve(s),`module-${i}.mjs`]));const fetchOriginal=globalThis.fetch;
 const sql=new DatabaseSync(':memory:');
 try{
@@ -17,7 +17,7 @@ try{
  assert.equal(sql.prepare('SELECT site,project FROM audit_runs WHERE id=?').get('legacy').project,null);
  class Statement{constructor(query){this.query=query;this.args=[];}bind(...args){this.args=args;return this;}async first(){return sql.prepare(this.query).get(...this.args)||null;}async all(){return{results:sql.prepare(this.query).all(...this.args)};}async run(){return sql.prepare(this.query).run(...this.args);}}
  globalThis.__projectDB={prepare:q=>new Statement(q),batch:async statements=>{sql.exec('BEGIN');try{const r=statements.map(s=>sql.prepare(s.query).run(...s.args));sql.exec('COMMIT');return r;}catch(e){sql.exec('ROLLBACK');throw e;}}};
- const request=(url,user='alice',method='GET',body)=>new Request('https://app.local'+url,{method,headers:user?{'oai-authenticated-user-id':user,'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined});
+ const request=(url,user='alice',method='GET',body)=>new Request('https://app.local'+url,{method,headers:user?{'oai-authenticated-user-id':user,'oai-authenticated-user-email':user+'@example.com','Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined});
  const context=id=>({params:Promise.resolve({id})});const projects=await load('app/api/projects/route.ts'),projectRoute=await load('app/api/projects/[id]/route.ts'),runs=await load('app/api/runs/route.ts'),runRoute=await load('app/api/runs/[id]/route.ts'),pageRoute=await load('lib/page-audit-route.ts');
  assert.equal((await projects.GET(request('/api/projects',null))).status,401);
  const create=await projects.POST(request('/api/projects','alice','POST',{name:'Primary',site:'HTTPS://PUBLICSITE.COM:443/path?utm_source=test',description:'Test',type:'website'}));assert.equal(create.status,201);const {project}=await create.json();assert.equal(project.site,'https://publicsite.com');
@@ -59,5 +59,46 @@ try{
  const latest=await(await runRoute.GET(request('/api/runs/'+first.id+'?project='+project.id),context(first.id))).json();assert.ok(latest.pages.some(p=>p.report.title==='Changed after snapshot'));
  assert.equal((await runRoute.GET(request('/api/runs/'+first.id+'?project='+second.id+'&snapshot=1'),context(first.id))).status,404);
  const {normalizedPage}=await load('lib/normalized-page.ts');const normalized=normalizedPage(latest.pages.find(p=>p.report.title==='Changed after snapshot').report);assert.equal(normalized.projectId,project.id);assert.ok(normalized.pageId);assert.ok(normalized.content.paragraphs.length);assert.equal(normalized.links.incoming,null);
+
+ // Account/membership/transfer regression uses the actual route handlers and SQLite transactions.
+ const accountRoute=await load('app/api/account/route.ts'),accessRoute=await load('app/api/projects/[id]/access/route.ts'),invitationRoute=await load('app/api/account/invitations/route.ts');
+ const access=(user,input)=>accessRoute.POST(request('/api/projects/'+project.id+'/access',user,'POST',input),context(project.id));
+ const accept=(user,id,confirm='Renamed')=>invitationRoute.POST(request('/api/account/invitations',user,'POST',{id,confirm}));
+ const invite=async(email,role='viewer',action='invite')=>{const r=await access('alice',{action,email,role,confirm:'Renamed'});assert.equal(r.status,200,await r.clone().text());return (await r.json()).invitation.id;};
+ assert.equal((await accountRoute.GET(request('/api/account',null))).status,401);
+ assert.equal((await accountRoute.GET(request('/api/account','alice'))).status,200);
+ assert.equal((await accountRoute.PATCH(request('/api/account','alice','PATCH',{name:'Alice',company:'Example',timezone:'Asia/Kolkata',image:'javascript:alert(1)'}))).status,400);
+ assert.equal((await accountRoute.PATCH(request('/api/account','alice','PATCH',{name:'Alice',company:'Example',timezone:'Asia/Kolkata'}))).status,200);
+ assert.equal(sql.prepare('SELECT email FROM accounts WHERE id=?').get('alice').email,'alice@example.com');
+ const viewInvite=await invite('bob@example.com');
+ assert.equal((await accept('wrong',viewInvite)).status,404);assert.equal((await accept('bob',viewInvite,'wrong confirmation')).status,400);
+ assert.equal((await accept('bob',viewInvite)).status,200);assert.equal((await accept('bob',viewInvite)).status,400);
+ assert.equal((await runRoute.GET(request('/api/runs/'+first.id+'?project='+project.id,'bob'),context(first.id))).status,200);
+ assert.equal((await runRoute.GET(request('/api/runs/'+first.id+'?project='+project.id+'&snapshot=1','bob'),context(first.id))).status,200);
+ assert.equal((await pageRoute.POST(request('/api/runs/'+first.id+'/page?project='+project.id,'bob','POST',{url:first.selected[0].url}),context(first.id))).status,403);
+ assert.equal((await runRoute.PATCH(request('/api/runs/'+first.id+'?project='+project.id,'bob','PATCH',{status:'paused'}),context(first.id))).status,403);
+ assert.equal((await access('bob',{action:'invite',email:'other@example.com',role:'admin'})).status,403);
+ const editorInvite=await invite('editor@example.com','editor');assert.equal((await accept('editor',editorInvite)).status,200);
+ assert.equal((await runRoute.PATCH(request('/api/runs/'+first.id+'?project='+project.id,'editor','PATCH',{status:'paused'}),context(first.id))).status,200);
+ assert.equal((await projectRoute.PATCH(request('/api/projects/'+project.id,'editor','PATCH',{name:'Unauthorized'}),context(project.id))).status,403);
+ const adminInvite=await invite('admin@example.com','admin');assert.equal((await accept('admin',adminInvite)).status,200);
+ assert.equal((await access('admin',{action:'invite',email:'escalation@example.com',role:'admin'})).status,403);
+ assert.equal((await access('admin',{action:'transfer',email:'admin@example.com',confirm:'Renamed'})).status,403);
+ assert.equal((await access('admin',{action:'role',user:'editor',role:'admin'})).status,403);
+ const expired=await invite('expired@example.com');sql.prepare('UPDATE project_invites SET expires=? WHERE id=?').run('2000-01-01',expired);assert.equal((await accept('expired',expired)).status,400);
+ const revoked=await invite('revoked@example.com');assert.equal((await access('alice',{action:'revoke',invitation:revoked})).status,200);assert.equal((await accept('revoked',revoked)).status,400);
+ const transfer=await invite('bob@example.com','owner','transfer');assert.equal(sql.prepare('SELECT owner FROM projects WHERE id=?').get(project.id).owner,'alice');
+ const pagesBefore=JSON.stringify(sql.prepare('SELECT * FROM page_audits WHERE run=? ORDER BY id').all(first.id));const revisionsBefore=JSON.stringify(sql.prepare('SELECT * FROM audit_revisions WHERE run=? ORDER BY id').all(first.id));const sealedBefore=JSON.stringify(sql.prepare('SELECT * FROM audit_snapshots WHERE run=?').get(first.id));
+ const transferAccepted=await accept('bob',transfer);assert.equal(transferAccepted.status,200,await transferAccepted.clone().text());assert.equal((await transferAccepted.json()).project,project.id);
+ assert.equal(sql.prepare('SELECT owner FROM projects WHERE id=?').get(project.id).owner,'bob');assert.equal(sql.prepare('SELECT role FROM project_members WHERE project=? AND user=?').get(project.id,'alice').role,'admin');
+ assert.equal(JSON.stringify(sql.prepare('SELECT * FROM page_audits WHERE run=? ORDER BY id').all(first.id)),pagesBefore);assert.equal(JSON.stringify(sql.prepare('SELECT * FROM audit_revisions WHERE run=? ORDER BY id').all(first.id)),revisionsBefore);assert.equal(JSON.stringify(sql.prepare('SELECT * FROM audit_snapshots WHERE run=?').get(first.id)),sealedBefore);
+ assert.equal((await accept('bob',transfer)).status,400);assert.equal((await access('alice',{action:'transfer',email:'next@example.com',confirm:'Renamed'})).status,403);
+ assert.equal((await access('bob',{action:'remove',user:'alice'})).status,200);
+ assert.equal((await runRoute.GET(request('/api/runs/'+first.id+'?project='+project.id,'alice'),context(first.id))).status,404);
+ assert.equal((await runRoute.GET(request('/api/runs/'+first.id+'?project='+project.id,'bob'),context(first.id))).status,200);
+ assert.equal(sql.prepare('SELECT COUNT(*) AS n FROM project_events WHERE project=? AND action=?').get(project.id,'ownership_transferred').n,1);
+ const badOrigin=request('/api/account','bob','PATCH',{name:'Bad'});badOrigin.headers.set('Origin','https://attacker.example');assert.equal((await accountRoute.PATCH(badOrigin)).status,403);
+ const {routeError}=await load('lib/history.ts');const log=console.error;console.error=()=>{};const unexpected=routeError(Error('SQLITE_ERROR secret-internal-value'));console.error=log;assert.equal(unexpected.status,500);assert.doesNotMatch(await unexpected.text(),/SQLITE|secret-internal/);
+ console.log('PASS: stable account identity/profile validation; owner/admin/editor/viewer permissions; cross-project and creator-after-removal denial; recipient confirmation; wrong recipient; expiry, revocation and replay rejection; ownership transfer preserves page/revision/snapshot bytes and records one event; CSRF origin denial and internal-error sanitization.');
  console.log('PASS: additive legacy migration; Website project CRUD/duplicates/archive/restore; normalized query URLs; project-bound run creation; missing, wrong-project and wrong-owner access rejection; run/revision retention; 29-check evidence; recurring groups; partial link graph; run comparisons/failure/scope safeguards; latest scores and exports.');
 }finally{sql.close();globalThis.fetch=fetchOriginal;delete globalThis.__projectDB;await fs.rm(dir,{recursive:true,force:true});}

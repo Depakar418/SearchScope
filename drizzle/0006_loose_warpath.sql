@@ -1,0 +1,1 @@
+ALTER TABLE `project_invites` ADD `acceptance` text;

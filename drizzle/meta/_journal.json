@@ -36,6 +36,20 @@
       "when": 1790915015466,
       "tag": "0004_romantic_ultimatum",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1790915970792,
+      "tag": "0005_modern_quentin_quire",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1790916149325,
+      "tag": "0006_loose_warpath",
+      "breakpoints": true
     }
   ]
 }

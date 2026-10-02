@@ -1,3 +1,4 @@
+import {PublicError} from './app-errors';
 import {database} from '../db';
 import type {PageAudit,Run} from './history';
 
@@ -16,16 +17,16 @@ export async function completedSnapshot(run:Run){
  const db=database();
  let row=await db.prepare('SELECT * FROM audit_snapshots WHERE run=?').bind(run.id).first<Record<string,string>>();
  if(!row){
-  if(run.status!=='complete')throw Error('Only completed audits can be compared or opened as snapshots.');
+  if(run.status!=='complete')throw new PublicError('Only completed audits can be compared or opened as snapshots.');
   await db.batch(snapshotStatements(run.id,'Legacy baseline captured from currently stored results; earlier overwritten states cannot be reconstructed.'));
   row=await db.prepare('SELECT * FROM audit_snapshots WHERE run=?').bind(run.id).first<Record<string,string>>();
  }
- if(!row)throw Error('Audit snapshot is temporarily unavailable.');
+ if(!row)throw new PublicError('Audit snapshot is temporarily unavailable.');
  const entries=JSON.parse(row.manifest) as {revision:string;type:string;typeSource:string}[];
  const rows=await db.prepare(`SELECT r.*,json_extract(m.value,'$.type') AS type,json_extract(m.value,'$.typeSource') AS type_source
  FROM audit_snapshots s,json_each(s.manifest) m JOIN audit_revisions r ON r.id=json_extract(m.value,'$.revision') AND r.run=s.run
  WHERE s.run=? ORDER BY r.url`).bind(run.id).all<Record<string,string|null>>();
- if(rows.results.length!==entries.length)throw Error('Stored snapshot is incomplete; historical evidence could not be loaded.');
+ if(rows.results.length!==entries.length)throw new PublicError('Stored snapshot is incomplete; historical evidence could not be loaded.');
  const pages:PageAudit[]=rows.results.map(r=>({id:r.id!,url:r.url!,audited:r.audited!,status:r.status as PageAudit['status'],error:r.error,type:r.type!,typeSource:r.type_source!,fetch:r.fetch?JSON.parse(r.fetch):null,report:r.report?JSON.parse(r.report):null}));
  return {run:{...run,status:'complete',finished:row.sealed,inventory:JSON.parse(row.inventory),selected:JSON.parse(row.selected),config:row.config?JSON.parse(row.config):null},pages,snapshot:{sealed:row.sealed,provenance:row.provenance,immutable:true}};
 }

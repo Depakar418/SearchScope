@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.4.2
+Current release: 1.5.0
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -8,6 +8,7 @@ This document is versioned with the application. It records implemented scope an
 
 | Area | Feature | First release | Status | Scope |
 | --- | --- | --- | --- | --- |
+| Account & access | Profile, membership roles, recipient-accepted invitations and ownership transfer | 1.5.0 | Available | ChatGPT-managed sign-in. App profiles use stable user IDs. Owner/Admin/Editor/Viewer permissions checked server-side; transfers retain project identity/history. Invitations use shareable links, not email delivery. |
 | Projects | Website projects, scoped audit navigation and run comparisons | 1.4.1 | Available | Owner and project scoped saved data. Explicit legacy import; archived projects retain history. Only Website projects are supported. |
 | Foundation | Normalized page documents, section context and structured fetch evidence | 1.4.1 | Available | Initial HTML with classified heading inventory and attributes. Canonical/link HTTP observations and within-crawl link relationships do not change checklist scores. |
 | Foundation | DOM content extraction, selector evidence and cross-page comparisons | 1.4.0 | Available | Semantic content extraction from initial HTML; explicit evidence and comparison methods. No rendered-browser validation. |
@@ -32,6 +33,33 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.5.0 — 2026-10-02 — Account and project access foundation
+
+### Added
+
+- Account profiles with company, timezone, HTTPS avatar URL and provider-managed identity.
+- Owner/Admin/Editor/Viewer project membership and server-side action permissions.
+- Expiring email-bound invitation links, recipient acceptance, ownership transfers and access event history.
+- Reusable application error states and sanitized unexpected API failures.
+
+### Changed
+
+- Project-bound audit access follows current membership, not the original audit creator.
+- Project settings distinguish access management and confirmed ownership transfer.
+- Active account menu, profile/security guidance and read-only viewer controls.
+
+### Removed
+
+None.
+
+### Validation
+
+TypeScript; real SQLite role, invitation, expiry/revocation/replay, transfer-retention and IDOR fixtures; existing audit regressions; server-rendered UI and production build.
+
+### Remaining limits
+
+Identity provider owns signup, password/email changes, verification, recovery, OAuth and sessions. Direct Google connections, simultaneous SearchScope account switching, account-session inventories and email delivery are not exposed by this hosting integration. Live browser/mobile QA remains outstanding.
 
 ## 1.4.2 — 2026-10-02 — Structured content and frozen audit snapshots
 

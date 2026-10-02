@@ -6,7 +6,7 @@ import {DatabaseSync} from 'node:sqlite';
 const dir=await fs.mkdtemp(path.join(process.cwd(),'.sites-runtime','foundation-'));
 const originalFetch=globalThis.fetch;
 try{
- const files=['dom-extraction','audit','page-metrics','finding-guides','web-fetch','url-safety','link-analysis','discovery','cross-page','audit-diff','history','page-audit-route','audit-service','projects','url-normalization','audit-snapshot'];
+ const files=['dom-extraction','audit','page-metrics','finding-guides','web-fetch','url-safety','link-analysis','discovery','cross-page','audit-diff','history','page-audit-route','audit-service','projects','url-normalization','audit-snapshot','app-errors'];
  for(const name of files){const source=(await fs.readFile(`lib/${name}.ts`,'utf8')).replace(/(['"])(?:\.\/|\.\.\/)([\w-]+)\1/g,(_,q,n)=>`${q}./${n}.mjs${q}`);await fs.writeFile(path.join(dir,name+'.mjs'),ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText);}
  await fs.writeFile(path.join(dir,'db.mjs'),'export const database=()=>globalThis.__testDB;');
  const {extractDocument}=await import(path.join(dir,'dom-extraction.mjs'));const {analyze}=await import(path.join(dir,'audit.mjs'));
