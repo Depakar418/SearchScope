@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.5.0
+Current release: 1.5.1
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -33,6 +33,29 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.5.1 — 2026-10-02 — Clear heading issue and fix callouts
+
+### Added
+
+- Issue and suggested-fix callouts beside the exact affected heading in Issues and report evidence.
+
+### Changed
+
+- Affected heading cards highlight the source text, the skipped level and the conditional suggested level.
+- Heading fallback evidence uses the same guidance layout.
+
+### Removed
+
+- Unemphasized inline heading hierarchy advice in source context.
+
+### Validation
+
+TypeScript, targeted rendered heading evidence, existing report rendering and production build.
+
+### Remaining limits
+
+Heading levels are contextual suggestions, not an automatic SEO failure; initial HTML and visual browser QA limitations remain.
 
 ## 1.5.0 — 2026-10-02 — Account and project access foundation
 

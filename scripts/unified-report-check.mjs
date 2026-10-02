@@ -6,7 +6,7 @@ import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 const dir=await fs.mkdtemp(path.join(process.cwd(),'.sites-runtime','unified-report-'));
 try{
-  const files=['lib/dom-extraction.ts','lib/link-analysis.ts','lib/finding-guides.ts','lib/page-metrics.ts','lib/report-tabs.ts','lib/report-export.ts','lib/audit.ts','lib/releases.ts','lib/website-scores.ts','app/website-overview.tsx','app/source-evidence.tsx','app/link-status-report.tsx','app/heading-evidence.tsx','app/page-detail.tsx','app/report-panels.tsx','app/score-gauge.tsx','app/audit-report.tsx'];
+  const files=['lib/dom-extraction.ts','lib/link-analysis.ts','lib/finding-guides.ts','lib/page-metrics.ts','lib/report-tabs.ts','lib/report-export.ts','lib/audit.ts','lib/releases.ts','lib/website-scores.ts','app/website-overview.tsx','app/heading-issue-cue.tsx','app/source-evidence.tsx','app/link-status-report.tsx','app/heading-evidence.tsx','app/page-detail.tsx','app/report-panels.tsx','app/score-gauge.tsx','app/audit-report.tsx'];
   for(const file of files){
     const raw=(await fs.readFile(file,'utf8')).replace(/(['"])(?:\.\.\/lib\/|\.\/)([\w-]+)\1/g,(_,quote,name)=>`${quote}./${name}.mjs${quote}`);
     await fs.writeFile(path.join(dir,path.basename(file).replace(/\.tsx?$/,'.mjs')),ts.transpileModule(raw,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText);
@@ -53,7 +53,7 @@ try{
   assert.doesNotMatch(details,/highlighted problems|Recommended level to review|Structure check passed/);
   const {HeadingEvidence}=await import(path.join(dir,'heading-evidence.mjs'));
   const headingEvidence=renderToStaticMarkup(React.createElement(HeadingEvidence,{report,findingId:'heading-order'}));
-  assert.match(headingEvidence,/Recommended level to review/);
+  assert.match(headingEvidence,/Suggested fix · Review H3/);
   assert.doesNotMatch(headingEvidence,/Structure check passed/);
   const allCategory=renderToStaticMarkup(React.createElement(CategoryExplanation,{report,category:'SEO',showAction:false}));
   assert.doesNotMatch(allCategory,/new tab/);
