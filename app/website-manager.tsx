@@ -10,7 +10,7 @@ import {reportCSV} from '../lib/report-export';
 import {WebsiteQuality} from './website-quality';
 import {AuditHistory} from './audit-history';
 import {WebsiteOverview} from './website-overview';
-const types:PageType[]=['Home','Page','Blog / Post','Newsletter','Article','Category','Product','Other'];
+const types:PageType[]=['Home','Page','Blog / Post','Newsletter','Article','Category','Product','Service','FAQ','Contact','About','Legal','Other'];
 type RunSummary={id:string;site:string;created:string;status:string;selectedCount:number;completed:number;failed:number};
 async function request<T>(url:string,options?:RequestInit):Promise<T>{const r=await fetch(url,{...options,headers:{'Content-Type':'application/json',...options?.headers}});const payload=await r.json() as T&{error?:string};if(!r.ok)throw new Error(payload.error||'Request failed.');return payload;}
 function issueCounts(r:Report|null){return{errors:r?.checks.filter(c=>c.severity==='error').length||0,warnings:r?.checks.filter(c=>c.severity==='warning').length||0,opportunities:r?.checks.filter(c=>c.severity==='opportunity').length||0,affected:r?.checks.filter(c=>['error','warning','opportunity'].includes(c.severity)).reduce((n,c)=>n+c.affectedCount,0)||0};}

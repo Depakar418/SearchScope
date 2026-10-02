@@ -46,8 +46,8 @@ try{
   assert.doesNotMatch(html,/class="action-plan"/);
   assert.doesNotMatch(html,/class="finding-workspace"/); // findings begin collapsed
   const details=renderToStaticMarkup(React.createElement(PageDetail,{report}));
-  assert.equal((details.match(/<details\b/g)||[]).length,4);
-  assert.equal((details.match(/<summary>/g)||[]).length,4);
+  assert.equal((details.match(/<details\b/g)||[]).length,6);
+  assert.equal((details.match(/<summary>/g)||[]).length,6);
   assert.doesNotMatch(details,/<details[^>]*\bopen\b/);
   assert.match(details,/Heading inventory/);
   assert.doesNotMatch(details,/highlighted problems|Recommended level to review|Structure check passed/);
@@ -60,5 +60,5 @@ try{
   const source=await fs.readFile('app/legacy-workspace.tsx','utf8');
   assert.match(source,/function openPageReport\(page:Report\)[^\n]+setSection\('Audit workspace'\)/);
   assert.match(source,/<div hidden=\{!!report\}><WebsiteManager/);
-  console.log('PASS: unified menu order/default, collapsed findings, new-tab button placement, four collapsed Page details accordions and audit navigation wiring. Live browser interaction not validated.');
+  console.log('PASS: unified menu order/default, collapsed findings, new-tab button placement, six collapsed Page details accordions and audit navigation wiring. Live browser interaction not validated.');
 }finally{await fs.rm(dir,{recursive:true,force:true});}

@@ -3,6 +3,15 @@ import type {PageAudit,Run} from './history';
 import {normalizeURL} from './url-normalization';
 import {auditDiff} from './audit-diff';
 import {websiteScores} from './website-scores';
+import {comparePages} from './cross-page';
+function observations(before:Report|null,after:Report|null){
+ if(!before||!after)return null;
+ const metadata=['title','description','canonical','xRobotsTag'] as const;
+ const changes=metadata.filter(key=>(before[key]??null)!==(after[key]??null)).map(key=>({field:key,before:before[key]??null,after:after[key]??null}));
+ const a=new Map((before.linkResults||[]).map(l=>[normalizeURL(l.url),l])),b=new Map((after.linkResults||[]).map(l=>[normalizeURL(l.url),l]));
+ const links=[...b].flatMap(([url,l])=>{const old=a.get(url);return old&&old.state!==l.state?[{url,before:old.state,after:l.state}]:[];});
+ return {metadata:changes,contentChanged:before.version===after.version&&before.contentText!==undefined&&after.contentText!==undefined?before.contentText!==after.contentText:null,links,redirects:{before:before.fetch?.redirects??null,after:after.fetch?.redirects??null},note:'Link states compare observed destinations present in both reports. Missing or unchecked destinations are not verified fixes.'};
+}
 export function issueTopic(id:string){return /title|description|canonical|social-meta/.test(id)?'Metadata':/heading|h1/.test(id)?'Headings':/anchor|link-href|content-sources/.test(id)?'Links':/index|viewport|lang|schema|image/.test(id)?'Technical':'Content';}
 export function aggregateIssues(pages:PageAudit[],opportunities=false){
  const groups=new Map<string,{id:string;name:string;category:string;severity:string;topic:string;pages:{url:string;check:Check;report:Report}[];affected:number}>();
@@ -17,8 +26,9 @@ export function linkGraph(run:Run,pages:PageAudit[]){
 }
 export function compareRuns(before:{run:Run;pages:PageAudit[]},after:{run:Run;pages:PageAudit[]}){
  const old=new Map(before.pages.map(p=>[normalizeURL(p.url),p])),current=new Map(after.pages.map(p=>[normalizeURL(p.url),p]));
- const changes=[...current].map(([url,p])=>{const previous=old.get(url);const diff=auditDiff(previous?.report||null,p.report);return{url,before:previous?.status||'not audited',after:p.status,errorBefore:previous?.error||null,errorAfter:p.error,...diff};});
+ const changes=[...current].map(([url,p])=>{const previous=old.get(url);const diff=auditDiff(previous?.report||null,p.report);return{url,before:previous?.status||'not audited',after:p.status,errorBefore:previous?.error||null,errorAfter:p.error,observations:observations(previous?.report||null,p.report),...diff};});
  const a=new Set(before.run.selected.map(p=>normalizeURL(p.url))),b=new Set(after.run.selected.map(p=>normalizeURL(p.url)));
  const from=websiteScores(before.pages.flatMap(p=>p.report?[p.report]:[])),to=websiteScores(after.pages.flatMap(p=>p.report?[p.report]:[]));const comparable=changes.some(c=>!c.baseline&&!('scopeChanged' in c&&c.scopeChanged)&&c.scoreChanges!==null);
- return{before:before.run.id,after:after.run.id,dates:{before:before.run.created,after:after.run.created},scores:{before:from,after:to},changes,addedToSelection:[...b].filter(u=>!a.has(u)),removedFromSelection:[...a].filter(u=>!b.has(u)),resolved:changes.reduce((n,c)=>n+c.resolved.length,0),introduced:changes.reduce((n,c)=>n+c.introduced.length,0),comparable,note:'Added/removed URLs refer to audit selections, not confirmed website additions or deletions. Fix counts compare successful reports with matching extraction versions and target phrases only; failures and missing reports are not fixes.'};
+ const counts=(pages:PageAudit[])=>Object.fromEntries(['error','warning','pass'].map(s=>[s,pages.reduce((n,p)=>n+(p.report?.checks.filter(c=>c.severity===s).length||0),0)]));
+ return{before:before.run.id,after:after.run.id,dates:{before:before.run.created,after:after.run.created},scores:{before:from,after:to},counts:{before:counts(before.pages),after:counts(after.pages)},discovery:{before:before.run.inventory.pages.length,after:after.run.inventory.pages.length},duplicates:{before:comparePages(before.pages),after:comparePages(after.pages)},changes,addedToSelection:[...b].filter(u=>!a.has(u)),removedFromSelection:[...a].filter(u=>!b.has(u)),resolved:changes.reduce((n,c)=>n+c.resolved.length,0),introduced:changes.reduce((n,c)=>n+c.introduced.length,0),comparable,note:'Added/removed URLs refer to audit selections, not confirmed website additions or deletions. Fix counts compare successful reports with matching extraction versions and target phrases only; failures and missing reports are not fixes. Whole-audit scores and counts describe each snapshot and can change with coverage.'};
 }

@@ -4,7 +4,7 @@ import path from 'node:path';
 import ts from 'typescript';
 import {DatabaseSync} from 'node:sqlite';
 const dir=await fs.mkdtemp(path.join(process.cwd(),'.sites-runtime','projects-'));
-const sources=['lib/projects.ts','lib/history.ts','lib/url-normalization.ts','lib/discovery.ts','lib/dom-extraction.ts','lib/web-fetch.ts','lib/url-safety.ts','lib/audit.ts','lib/finding-guides.ts','lib/page-metrics.ts','lib/audit-diff.ts','lib/project-analysis.ts','lib/website-scores.ts','lib/link-analysis.ts','lib/page-audit-route.ts','lib/audit-service.ts','lib/report-export.ts','app/api/projects/route.ts','app/api/projects/[id]/route.ts','app/api/runs/route.ts','app/api/runs/[id]/route.ts','app/api/projects/[id]/compare/route.ts'];
+const sources=['lib/audit-snapshot.ts','lib/cross-page.ts','lib/normalized-page.ts','lib/projects.ts','lib/history.ts','lib/url-normalization.ts','lib/discovery.ts','lib/dom-extraction.ts','lib/web-fetch.ts','lib/url-safety.ts','lib/audit.ts','lib/finding-guides.ts','lib/page-metrics.ts','lib/audit-diff.ts','lib/project-analysis.ts','lib/website-scores.ts','lib/link-analysis.ts','lib/page-audit-route.ts','lib/audit-service.ts','lib/report-export.ts','app/api/projects/route.ts','app/api/projects/[id]/route.ts','app/api/runs/route.ts','app/api/runs/[id]/route.ts','app/api/projects/[id]/compare/route.ts'];
 const names=new Map(sources.map((s,i)=>[path.resolve(s),`module-${i}.mjs`]));const fetchOriginal=globalThis.fetch;
 const sql=new DatabaseSync(':memory:');
 try{
@@ -48,5 +48,16 @@ try{
  const diff=compareRuns({run:first,pages:[p]},{run:{...first,id:'next'},pages:[{...p,report:good}]});assert.ok(diff.resolved>0);const introduced=compareRuns({run:first,pages:[{...p,report:good}]},{run:{...first,id:'regressed'},pages:[p]});assert.ok(introduced.introduced>0);const failure=compareRuns({run:first,pages:[p]},{run:{...first,id:'failed'},pages:[{...p,status:'failed',report:null,error:'Timeout'}]});assert.equal(failure.resolved,0);assert.equal(failure.changes[0].scoreChanges,null);const changed=compareRuns({run:first,pages:[p]},{run:{...first,id:'changed'},pages:[{...p,report:{...good,keyword:'Different'}}]});assert.equal(changed.resolved,0);
  const comparisonRoute=await load('app/api/projects/[id]/compare/route.ts');assert.equal((await comparisonRoute.GET(request(`/api/projects/${second.id}/compare?before=${first.id}&after=legacy`),context(second.id))).status,404);
  const {reportCSV,reportMarkdown}=await load('lib/report-export.ts');assert.match(reportCSV(bad),/DOM evidence/);assert.match(JSON.stringify(bad),/pageDocument/);assert.match(reportMarkdown(bad),/How to improve/);
+ // Finish all pages, freeze exact revision references, then change the live page.
+ for(const item of first.selected)assert.equal((await pageRoute.POST(request('/api/runs/'+first.id+'/page?project='+project.id,'alice','POST',{url:item.url}),context(first.id))).status,200);
+ const snapshotURL='/api/runs/'+first.id+'?project='+project.id+'&snapshot=1';
+ const frozen=await(await runRoute.GET(request(snapshotURL),context(first.id))).json();assert.equal(frozen.snapshot.immutable,true);assert.equal(frozen.pages.length,first.selected.length);
+ const savedFrozen=JSON.stringify(frozen.pages);const network=globalThis.fetch;
+ globalThis.fetch=async(value,options)=>new URL(String(value)).hostname==='publicsite.com'&&!String(value).includes('robots.txt')?new Response('<title>Changed after snapshot</title><main><h1>New content</h1><p>Changed.</p></main>',{headers:{'content-type':'text/html'}}):network(value,options);
+ assert.equal((await pageRoute.POST(request('/api/runs/'+first.id+'/page?project='+project.id,'alice','POST',{url:first.selected[0].url}),context(first.id))).status,200);
+ const again=await(await runRoute.GET(request(snapshotURL),context(first.id))).json();assert.equal(JSON.stringify(again.pages),savedFrozen);
+ const latest=await(await runRoute.GET(request('/api/runs/'+first.id+'?project='+project.id),context(first.id))).json();assert.ok(latest.pages.some(p=>p.report.title==='Changed after snapshot'));
+ assert.equal((await runRoute.GET(request('/api/runs/'+first.id+'?project='+second.id+'&snapshot=1'),context(first.id))).status,404);
+ const {normalizedPage}=await load('lib/normalized-page.ts');const normalized=normalizedPage(latest.pages.find(p=>p.report.title==='Changed after snapshot').report);assert.equal(normalized.projectId,project.id);assert.ok(normalized.pageId);assert.ok(normalized.content.paragraphs.length);assert.equal(normalized.links.incoming,null);
  console.log('PASS: additive legacy migration; Website project CRUD/duplicates/archive/restore; normalized query URLs; project-bound run creation; missing, wrong-project and wrong-owner access rejection; run/revision retention; 29-check evidence; recurring groups; partial link graph; run comparisons/failure/scope safeguards; latest scores and exports.');
 }finally{sql.close();globalThis.fetch=fetchOriginal;delete globalThis.__projectDB;await fs.rm(dir,{recursive:true,force:true});}

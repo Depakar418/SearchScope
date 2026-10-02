@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.4.1
+Current release: 1.4.2
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -32,6 +32,32 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.4.2 — 2026-10-02 — Structured content and frozen audit snapshots
+
+### Added
+
+- Source-located sections, paragraphs, lists, tables and contextual heading relationships.
+- Immutable completion manifests referencing page revisions; frozen snapshot viewing and export.
+- Crawl coverage, page provenance and stored metadata/content/link comparison observations.
+
+### Changed
+
+- Grouped project navigation and internal-link-first validation.
+- CSV and Markdown include fetch records, crawl provenance and destination validation.
+- Empty or JavaScript navigation controls are no longer called broken links.
+
+### Removed
+
+None.
+
+### Validation
+
+TypeScript, DOM and HTTP fixtures, SQLite immutable snapshot regression, existing audit and report regression checks; production build.
+
+### Remaining limits
+
+Initial HTML only; link/crawl budgets remain bounded. Legacy snapshots capture the currently available baseline, not lost historical states. Live interactive/mobile browser QA remains outstanding; Sprint 2 analysis is not implemented.
 
 ## 1.4.1 — 2026-10-02 — Project-scoped foundation and richer evidence
 
