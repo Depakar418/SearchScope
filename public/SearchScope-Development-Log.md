@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.6.0
+Current release: 1.6.1
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -34,6 +34,32 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.6.1 — 2026-10-02 — Sprint 3 audit accuracy corrections
+
+### Added
+
+- Explicit PASS, FAIL, REVIEW, NOT_APPLICABLE and NOT_MEASURED result mapping in report exports and shared summaries.
+- Regression fixtures for misleading script, navigation-link, and date signals and partial website coverage.
+
+### Changed
+
+- Attribution and date checks require validated metadata, JSON-LD or visible main-content evidence.
+- Possible supporting links use external links in main content; their presence remains a review signal rather than proof of factual support.
+- Website overview and per-page totals share the same count model and explain failed, blocked and pending pages.
+- HTTP X-Robots changes recalculate category scores through the common scoring function.
+
+### Removed
+
+- Automatic GEO pass for arbitrary author/date strings in source markup or a navigation-only external link.
+
+### Validation
+
+TypeScript, audit fixtures, foundation/project/report rendering checks and production build.
+
+### Remaining limits
+
+This is an accuracy correction, not a complete Sprint 3 hardening release. Prior saved audit snapshots retain their original score; re-audit to use revised signals. Initial HTML only; link relevance, author expertise, search performance and AI citations remain unmeasured.
 
 ## 1.6.0 — 2026-10-02 — Website content intelligence foundation
 

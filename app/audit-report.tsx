@@ -2,6 +2,7 @@
 import {useState} from 'react';
 import {Check,ChevronDown,CircleAlert,Code,Download,FileText,Search} from 'lucide-react';
 import type {Category,Check as Finding,Report} from '../lib/audit';
+import {checkCounts} from '../lib/audit-result';
 import {scopedFindings} from '../lib/report-tabs';
 import {reportCSV,reportMarkdown} from '../lib/report-export';
 import {FindingDetails} from './report-panels';
@@ -29,8 +30,9 @@ export default function AuditReport({report,onBack}:{report:Report;onBack?:()=>v
   const [tab,setTab]=useState<ReportTab>('Fix first');
   const [filter,setFilter]=useState('Needs attention');
   const [search,setSearch]=useState('');
-  const passed=report.checks.filter(c=>c.status==='pass').length;
-  const summaryCards=[{key:'error',label:'Errors',filter:'Errors',count:report.checks.filter(c=>c.severity==='error').length},{key:'warning',label:'Warnings',filter:'Warnings',count:report.checks.filter(c=>c.severity==='warning').length},{key:'pass',label:'Passed',filter:'Passed',count:passed},{key:'all',label:'All checks',filter:'All checks',count:report.checks.length},{key:'attention',label:'Needs attention',filter:'Needs attention',count:report.checks.filter(c=>['error','warning','opportunity'].includes(c.severity)).length}];
+  const counts=checkCounts(report);
+  const passed=counts.PASS;
+  const summaryCards=[{key:'error',label:'Errors',filter:'Errors',count:counts.FAIL},{key:'warning',label:'Warnings',filter:'Warnings',count:report.checks.filter(c=>c.severity==='warning').length},{key:'pass',label:'Passed',filter:'Passed',count:passed},{key:'all',label:'All checks',filter:'All checks',count:Object.values(counts).reduce((a,b)=>a+b,0)},{key:'attention',label:'Needs attention',filter:'Needs attention',count:report.checks.filter(c=>['error','warning','opportunity'].includes(c.severity)).length}];
   function download(kind:'md'|'csv'|'json'){
     const data=kind==='md'?reportMarkdown(report):kind==='csv'?reportCSV(report):JSON.stringify(report,null,2);
     const url=URL.createObjectURL(new Blob([data],{type:kind==='json'?'application/json':kind==='md'?'text/markdown':'text/csv'}));
@@ -49,7 +51,7 @@ export default function AuditReport({report,onBack}:{report:Report;onBack?:()=>v
   return <div className="results unified-report">
     {onBack&&<button className="secondary report-back" onClick={onBack}>Back to website pages</button>}
     <div className="report-heading"><div><div className="eyebrow">AUDIT REPORT {report.label.startsWith('Sample')&&<span className="sample-tag">SAMPLE DATA</span>}</div><h2>{report.label}</h2><p>{new Date(report.date).toLocaleString()} · {report.words.toLocaleString()} extracted words {report.status&&` · HTTP ${report.status}`}</p></div><div className="export"><button className="secondary" onClick={()=>download('md')}><FileText size={16}/> Full report</button><button className="secondary" onClick={()=>download('csv')}><Download size={16}/> Export CSV</button><button className="icon-button" aria-label="Export JSON" onClick={()=>download('json')}><Code size={18}/></button></div></div>
-    <div className="score-grid">{categories.map(c=><div className="score-card" key={c}><div><span className="score-label">{c} checklist</span><div className="score-number">{report.scores[c]??'—'}<small>/100</small></div><p>{c==='SEO'?'Page fundamentals':c==='AEO'?'Answer structure':'Credibility signals'}</p></div><ScoreGauge score={report.scores[c]} category={c}/></div>)}<div className="score-card summary-card"><span className="score-label">Checks completed</span><div className="score-number">{report.checks.filter(c=>c.status!=='na').length}<small>/{report.checks.length}</small></div><p>{passed} passed · {report.checks.filter(c=>['review','fail'].includes(c.status)).length} need attention</p></div></div>
+    <div className="score-grid">{categories.map(c=><div className="score-card" key={c}><div><span className="score-label">{c} checklist</span><div className="score-number">{report.scores[c]??'—'}<small>/100</small></div><p>{c==='SEO'?'Page fundamentals':c==='AEO'?'Answer structure':'Credibility signals'}</p></div><ScoreGauge score={report.scores[c]} category={c}/></div>)}<div className="score-card summary-card"><span className="score-label">Checks completed</span><div className="score-number">{counts.PASS+counts.FAIL+counts.REVIEW}<small>/{report.checks.length}</small></div><p>{passed} passed · {counts.REVIEW+counts.FAIL} need attention</p></div></div>
     <section className="unified-report-body"><div className="report-navigation"><div className="report-tabs" role="tablist" aria-label="Report sections">{REPORT_MENU.map(name=><button key={name} role="tab" aria-selected={tab===name} aria-controls="report-section" className={tab===name?'selected':''} onClick={()=>{setTab(name);setFilter('Needs attention');setSearch('');}}>{name}</button>)}</div>
         {tab!=='Page details'&&<div className="unified-controls"><div className="search-field"><Search size={16}/><input aria-label="Search findings" placeholder="Search findings" value={search} onChange={e=>setSearch(e.target.value)}/></div><select aria-label="Filter findings" value={filter} onChange={e=>setFilter(e.target.value)}>{['Needs attention','All checks','Errors','Warnings','Opportunities','Passed','Unavailable'].map(item=><option key={item}>{item}</option>)}</select></div>}
       </div><div id="report-section" role="tabpanel" aria-label={tab}>
