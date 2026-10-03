@@ -1,6 +1,6 @@
 # SearchScope — Development log and feature inventory
 
-Current release: 1.6.1
+Current release: 1.7.0
 
 This document is versioned with the application. It records implemented scope and changes; future items below are not implemented features.
 
@@ -8,6 +8,8 @@ This document is versioned with the application. It records implemented scope an
 
 | Area | Feature | First release | Status | Scope |
 | --- | --- | --- | --- | --- |
+| Cross-page Analysis | Dedicated relationship view with traceable duplicate metadata, H1, main-content similarity, internal-link and canonical observations | 1.7.0 | Available | Captured source only. Recurrent paragraph exclusion reduces template matches; similarity is heuristic and not proof of duplication or cannibalization. |
+| Audit setup | Configurable 200-page testing limit and explicit selected-versus-discovered coverage | 1.7.0 | Available | No billing or subscription provider is connected. Safety caps, crawl deadlines, robots policy and per-page fetch limits remain enforced. |
 | Content intelligence | Versioned page evidence, topic/intent review, question coverage and content opportunities | 1.6.0 | Available | New project-bound page audits only. Initial HTML observations with explicit confidence; no rankings, search volume, AI citations or automated editorial truth claims. |
 | Account & access | Profile, membership roles, recipient-accepted invitations and ownership transfer | 1.5.0 | Available | ChatGPT-managed sign-in. App profiles use stable user IDs. Owner/Admin/Editor/Viewer permissions checked server-side; transfers retain project identity/history. Invitations use shareable links, not email delivery. |
 | Projects | Website projects, scoped audit navigation and run comparisons | 1.4.1 | Available | Owner and project scoped saved data. Explicit legacy import; archived projects retain history. Only Website projects are supported. |
@@ -34,6 +36,136 @@ This document is versioned with the application. It records implemented scope an
 | Reports | Sticky guidance panel and check-mark improvement steps | 1.3.1 | Available | Desktop guidance remains visible beside evidence; mobile layouts return to normal flow. |
 | Reports | Lazy-loaded image source resolution and inspection links | 1.3.2 | Available | Prefers public data-src and lazy-source URLs over inline placeholders so image evidence can be opened directly. |
 | Reports | Finding toggles, deep links and persistent fix-guide context | 1.3.3 | Available | Finding rows expand inline, the selected issue name remains visible in the guide, and hashes reopen the same finding. |
+
+## 1.7.0 — 2026-10-03 — Audit overview and dedicated Cross-page Analysis
+
+### Added
+
+- Audits now summarizes the selected run, category scores, check definitions, coverage and audit areas without duplicating the Pages inventory.
+- Dedicated Cross-page Analysis route and navigation with measured metadata, H1, content, link and canonical views, search, filters, sort, pagination and method/evidence disclosure.
+- Central 200-page testing limit used by audit setup, validation and recursive discovery.
+
+### Changed
+
+- Cross-page content comparison uses current main-content paragraphs, excludes blocks repeated across the audited inventory, and compares candidates from shared five-word sequences across up to 200 pages.
+- Comparison groups include source URLs, page IDs where available, method, confidence, evidence, snapshot date and analysis version.
+- Pages now lists all discovered URLs, including those outside the audit selection, with crawl status, HTTP status and extracted word counts where measured; Issues remains the finding list and internal relationships move to Cross-page Analysis.
+
+### Removed
+
+- The embedded Pages table and finding-group list from the project Audits overview.
+- The first-100-pages similarity cap and separate 100-page audit limit in the UI and API.
+
+### Validation
+
+TypeScript, 200-page synthetic comparison and 127-of-164 coverage fixtures, DOM/evidence, project history and report regressions, production build.
+
+### Remaining limits
+
+No subscription enforcement, external SEO measurements, rendered screenshots or live 127-page SucceedLEARN run. External site fetch was blocked by DNS in this execution environment. The client still audits one selected page per request and requires an open tab; large live-run timing and mobile visual QA await an accessible deployment.
+
+## 1.6.5 — 2026-10-03 — Readable affected-element context across finding types
+
+### Added
+
+- DOM-derived location paths, accessible names for buttons/inputs, captured-element fingerprints and concise nearby text in shared evidence records.
+- Type-specific evidence fields for links, images, headings, inputs, metadata, canonical links and JSON-LD.
+- DOM context fallback and on-page fragment navigation where the captured element or section has an ID.
+
+### Changed
+
+- Affected-element cards lead with readable identity and page location; selectors, source order, fingerprint and actual HTML sit under collapsed Technical details.
+- Image findings show a safe source thumbnail when available; missing visual capture is explicitly stated.
+
+### Removed
+
+- Unhelpful primary `(No text)` label and open technical HTML block in affected-element cards.
+
+### Validation
+
+TypeScript, eight finding-type evidence fixtures, existing audit/foundation/project/report checks and production build.
+
+### Remaining limits
+
+No browser screenshot service or rendered-page viewer is available in the current audit pipeline. Fragment navigation does not highlight an element and may change when the live page changes. Current source-only score and finding logic remain unchanged.
+
+## 1.6.4 — 2026-10-02 — Website finding counts and audit coverage
+
+### Added
+
+- Website overview shows unique actionable finding groups, affected pages and explicit audited/pending/failed coverage.
+- Expandable finding groups list affected pages and open the corresponding page report.
+- Website and project JSON exports include the same summarized website findings; history comparisons include before/after finding-group counts.
+- Technical check evaluations remain available under a labeled disclosure.
+
+### Changed
+
+- Project Issues and Overview use the same check ID, category and severity grouping across the latest page attempts.
+- Website summary cards distinguish unique groups from per-page evaluations and count each affected page once.
+
+### Removed
+
+- Raw per-page check totals as primary website issue cards.
+
+### Validation
+
+TypeScript, deterministic website aggregation fixtures, existing audit/foundation/project/report regressions and production build.
+
+### Remaining limits
+
+Element counts include distinct extracted selectors where available, not a guarantee of unique live DOM elements. Failed and pending pages are excluded from finding counts; scores remain unchanged. Browser visual validation and deployment are pending.
+
+## 1.6.3 — 2026-10-02 — Compact audit report header and summaries
+
+### Added
+
+- Compact project breadcrumb, page identity, audit coverage bar and audit selector in the existing page report.
+- Responsive two-column mobile score summary retains the checklist label when gauges are visually hidden.
+
+### Changed
+
+- Project report view hides duplicate workspace title, selected-audit block and topbar site action, while preserving the wide content area.
+- Existing export, open-site, search, filter and report-tab controls remain functional in a denser arrangement.
+- Page score cards, tab toolbar and interactive finding-group summary are shorter and closer to Fix first.
+
+### Removed
+
+- Standalone full-width back-to-pages row on the page report.
+- Duplicate project name and URL blocks above the report in the project audit view.
+
+### Validation
+
+TypeScript, report rendering and project-workspace regressions, unchanged audit fixtures and production build.
+
+### Remaining limits
+
+Visual browser QA and deployment are pending; report data, scores, findings and audit history were not modified in this release.
+
+## 1.6.2 — 2026-10-02 — Readable affected-element evidence
+
+### Added
+
+- Human-readable element identity, visible text, accessible-name source, href/src, section, nearest heading, nearby context, stable IDs and source order in affected-element reports.
+- Safe audited-page links use an element or section fragment when an ID exists; otherwise they open the page without a false scroll promise.
+- Actual extracted HTML snippets are shown as escaped text; image previews are shown only when a public asset URL is available.
+
+### Changed
+
+- Technical selectors move behind a disclosure and are identified as snapshot-only evidence.
+- Link-name detection accounts for aria-label, resolved aria-labelledby references, image alt, SVG title and title attributes; invalid references do not imply a name.
+- Empty/JavaScript href findings remain contextual review and explain the button-versus-navigation decision.
+
+### Removed
+
+- Long generated CSS selectors as the primary identification label for affected items.
+
+### Validation
+
+TypeScript, accessible-name/section/HTML fixtures, report rendering, project regressions and production build.
+
+### Remaining limits
+
+No browser screenshot or cross-origin highlight is captured. Fragment scrolling requires an ID in the audited markup and may change after the live page changes. External CSS and JavaScript rendering remain unmeasured.
 
 ## 1.6.1 — 2026-10-02 — Sprint 3 audit accuracy corrections
 

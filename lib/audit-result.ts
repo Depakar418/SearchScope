@@ -1,4 +1,6 @@
 import type {Category,Check,Report} from './audit';
+import type {PageAudit} from './history';
+import {currentPageAttempts,websiteFindingGroups} from './website-findings';
 
 export type ResultState='PASS'|'FAIL'|'REVIEW'|'NOT_APPLICABLE'|'NOT_MEASURED'|'BLOCKED'|'ERROR';
 const entityDependent=new Set(['canonical-valid','canonical-count','description-duplicates','heading-empty','heading-order','image-dimensions','image-src','anchor-text','link-href']);
@@ -23,10 +25,13 @@ export function checkCounts(report:Report){
  for(const check of report.checks)counts[resultState(check,report)]++;
  return counts;
 }
-export function websiteAuditSummary(pages:{status:string;report:Report|null;fetch?:{errorType?:string|null;status?:number|null}|null}[],discovered:number,selected:number){
- const completed=pages.filter(p=>p.status==='completed'&&p.report);const failed=pages.filter(p=>p.status==='failed');
+export function websiteAuditSummary(pages:PageAudit[],discovered:number,selected:number){
+ const current=currentPageAttempts(pages);const completed=current.filter(p=>p.status==='completed'&&p.report);const failed=current.filter(p=>p.status==='failed');
  const checks:Record<ResultState,number>={PASS:0,FAIL:0,REVIEW:0,NOT_APPLICABLE:0,NOT_MEASURED:0,BLOCKED:0,ERROR:0};
  for(const page of completed){const counts=checkCounts(page.report!);for(const key of Object.keys(checks) as ResultState[])checks[key]+=counts[key];}
  const blocked=failed.filter(p=>p.fetch?.errorType==='robots'||[401,403,429].includes(p.fetch?.status??0)).length;
- return{discovered,selected,completed:completed.length,failed:failed.length,blocked,remaining:Math.max(0,selected-completed.length-failed.length),pagesWithFindings:completed.filter(p=>p.report!.checks.some(c=>c.status==='fail'||c.status==='review')).length,checks,note:'Check counts describe groups per audited page. Blocked pages are included in failed attempts, not treated as check failures.'};
+ const actionable=websiteFindingGroups(current).filter(g=>['error','warning','opportunity'].includes(g.severity));
+ const errors=actionable.filter(g=>g.severity==='error'),warnings=actionable.filter(g=>g.severity==='warning');
+ const affected=(groups:typeof actionable)=>new Set(groups.flatMap(g=>g.affectedPages)).size;
+ return{discovered,selected,completed:completed.length,failed:failed.length,blocked,remaining:Math.max(0,selected-completed.length-failed.length),pagesWithFindings:affected(actionable),findings:{errors:errors.length,warnings:warnings.length,needsAttention:actionable.length,affectedPages:affected(actionable),errorPages:affected(errors),warningPages:affected(warnings),groups:actionable.map(g=>({id:g.id,name:g.name,category:g.category,severity:g.severity,affectedPageCount:g.affectedPageCount,affectedElementCount:g.affectedElementCount,affectedPages:g.affectedPages}))},technical:{evaluations:Object.values(checks).reduce((n,value)=>n+value,0),checksPerCurrentPage:completed.map(p=>p.report!.checks.length),checks},checks,note:'Overview findings group the same check ID, category and severity across current successful pages. Each page counts once per group. Affected-element totals count distinct extracted selectors within each group; page-level absences have no element total. Evaluations remain technical counts. Blocked attempts are failed pages, not finding errors.'};
 }

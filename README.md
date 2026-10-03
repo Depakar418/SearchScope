@@ -1,39 +1,31 @@
 # SearchScope
 
-A private, single-page SEO/AEO/GEO audit workspace built with React, TypeScript, Vinext and a Cloudflare Workers-compatible API.
+SearchScope is a project-based SEO/AEO/GEO audit workspace built with React, TypeScript, Vinext and a Cloudflare Workers-compatible API. It audits captured initial HTML, stores project-bound audit runs and page revisions, and presents source evidence for findings.
 
 ## Use
 
-1. Open the published application and choose **Try a sample audit**.
-2. Expand a finding to inspect its evidence and suggested action.
-3. Enter a public website URL or select **Paste HTML** / **Paste text**.
-4. Optionally set a target phrase, run the analysis and filter **Needs attention**.
-5. Export CSV for a task list or JSON for the full report. Reports are session-only; export before leaving.
+1. Sign in with the configured ChatGPT identity and create or open a Website project.
+2. Enter its public website URL, choose a page limit and crawl depth, then start an audit. SearchScope discovers URLs from sitemaps and bounded same-origin crawling.
+3. Use **Audits** for the selected run's scores, status and coverage; **Pages** for the discovered inventory; **Issues** for findings; and **Cross-page Analysis** for measured page relationships.
+4. Open a page report to inspect grouped findings and affected-element evidence. Re-audit one selected page after making a change.
+5. Export a report or use History to compare saved runs. Pasted HTML and text reports are session-only.
 
-## Release 1.1.0
+## Current scope
 
-The app now exposes 29 applicable/conditional checks, separate error/warning/opportunity totals, a fix-first plan, detailed per-finding guidance and detailed CSV/Markdown/JSON exports.
-
-The feature inventory and release history live in `lib/releases.ts` and the application’s **Features & development** view. Update that source for each release and run `node scripts/generate-development-doc.mjs` to refresh the downloadable `public/SearchScope-Development-Log.md`. Record added, changed, removed, validation and remaining limitations honestly.
-
-## Current capabilities
-
-- Public single-page initial-HTML retrieval, with robots.txt handling, timeouts, public-DNS validation, redirect checks and bounded response bodies.
-- HTML/text analysis; metadata, headings, image alt attributes, robots directives, JSON-LD syntax, content structure, attribution/source/date signals.
-- Transparent evidence and equal-weight checklist scores (pass=1, review=.5, fail=0; unavailable excluded).
-- Responsive interface, category filtering, finding search, heading outline, CSV and JSON exports.
-- Optional browser WebMCP action `run_page_audit` when the browser exposes the API. Browser/WebMCP integration could not be exercised in the build session.
+- The current testing entitlement offers 10, 25, 50, 100 and 200 selected pages. There is no billing integration or paid-plan enforcement.
+- Audits use initial HTML. DOM extraction separates main content from navigation, footer, sidebar and hidden content where identifiable. Evidence includes readable identity, section context, source snippets and selectors in technical details.
+- The 29 source checks cover metadata, headings, images, links, structured-data syntax and editorial SEO/AEO/GEO signals. Checklist scores describe these measured checks, not rankings, search visibility or AI citations.
+- Cross-page Analysis compares duplicate metadata and H1 values, heuristic main-content similarity, internal link relationships and observed canonical destinations. Similarity is a review candidate, not proof of duplicate content or keyword cannibalization.
+- Project membership and authorization use stable account IDs and server-side access checks. Hosting and sign-in depend on the configured Sites environment.
 
 ## Limits
 
-This is an initial audit release, not feature parity with Semrush, Ahrefs, Screaming Frog or GTmetrix. It does not crawl a whole site, render JavaScript, verify links, access private pages, persist project history, or modify websites. Extraction uses a lightweight HTML scan and can misinterpret unusual or malformed markup. Plain text cannot establish page metadata or technical SEO status. JSON-LD parsing does not validate schema semantics or rich-result eligibility. AEO/GEO checks are editorial heuristics and require human judgment. No rank, AI inclusion or citation guarantee is made.
+There is no rendered JavaScript audit or screenshot service. A URL fragment can locate an element only when its captured ID still exists on the live page. Search volume, backlinks, rankings, Search Console, Core Web Vitals and measured AI visibility need external data sources. Live 127-page SucceedLEARN and mobile visual checks have not been completed in this execution environment. A large audit currently requires the browser tab to remain open while the client submits page requests. Publishing the current local build remains subject to the Sites approval workflow.
 
-Keyword volumes, backlinks, ranks, Search Console data, field performance, and measured AI citations require separate providers and integrations. Fetch duration is not a Core Web Vitals measurement. Public-DNS preflight rejects known private/reserved destinations; deployment fetch protections remain part of the security boundary.
+## Development and validation
 
-## Validate
+The versioned feature inventory and added/changed/removed history are in `lib/releases.ts`. Run `node scripts/generate-development-doc.mjs` to refresh `public/SearchScope-Development-Log.md` after updating the inventory.
 
-- `node scripts/audit-checks.mjs`
-- `node node_modules/typescript/bin/tsc --noEmit`
-- Sites build workflow (Cloudflare Worker bundle)
+The proposed Git/Vercel production and Sites demo split, including authentication and data migration requirements, is documented in `docs/DUAL-HOST-PLAN.md`.
 
-The fixture tests include successful URL audits with mocked public responses, text exclusions, invalid and graph JSON-LD, robots groups, unsafe URLs/DNS, indexing headers, redirects, oversized pages and invalid input. They do not prove that every remote website is reachable. Live results depend on the website's access controls and connectivity.
+Run `node node_modules/typescript/bin/tsc --noEmit`, `node scripts/audit-checks.mjs`, `node scripts/foundation-checks.mjs`, `node scripts/project-checks.mjs`, `node scripts/project-view-check.mjs`, `node scripts/report-render-check.mjs`, `node scripts/unified-report-check.mjs`, `node scripts/website-aggregation-check.mjs`, `node scripts/evidence-context-check.mjs`, `node scripts/cross-page-dashboard-check.mjs`, and `node scripts/run-framework.mjs build` before publishing.

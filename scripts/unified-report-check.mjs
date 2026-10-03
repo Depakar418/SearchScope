@@ -6,7 +6,7 @@ import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 const dir=await fs.mkdtemp(path.join(process.cwd(),'.sites-runtime','unified-report-'));
 try{
-  const files=['lib/dom-extraction.ts','lib/link-analysis.ts','lib/finding-guides.ts','lib/page-metrics.ts','lib/report-tabs.ts','lib/report-export.ts','lib/audit-result.ts','lib/audit.ts','lib/releases.ts','lib/website-scores.ts','app/website-overview.tsx','app/heading-issue-cue.tsx','app/source-evidence.tsx','app/link-status-report.tsx','app/heading-evidence.tsx','app/page-detail.tsx','app/report-panels.tsx','app/score-gauge.tsx','app/audit-report.tsx'];
+  const files=['lib/dom-extraction.ts','lib/link-analysis.ts','lib/finding-guides.ts','lib/page-metrics.ts','lib/report-tabs.ts','lib/report-export.ts','lib/website-findings.ts','lib/audit-result.ts','lib/audit.ts','lib/releases.ts','lib/website-scores.ts','app/website-overview.tsx','app/heading-issue-cue.tsx','app/source-evidence.tsx','app/link-status-report.tsx','app/heading-evidence.tsx','app/page-detail.tsx','app/report-panels.tsx','app/score-gauge.tsx','app/audit-report.tsx'];
   for(const file of files){
     const raw=(await fs.readFile(file,'utf8')).replace(/(['"])(?:\.\.\/lib\/|\.\/)([\w-]+)\1/g,(_,quote,name)=>`${quote}./${name}.mjs${quote}`);
     await fs.writeFile(path.join(dir,path.basename(file).replace(/\.tsx?$/,'.mjs')),ts.transpileModule(raw,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText);
@@ -15,6 +15,7 @@ try{
   const {default:AuditReport,REPORT_MENU}=await import(path.join(dir,'audit-report.mjs'));
   const {PageDetail,CategoryExplanation}=await import(path.join(dir,'page-detail.mjs'));
   const report=analyze(SAMPLE,'https://example.com/');
+  const baseline=JSON.stringify(report);
   const {websiteScores}=await import(path.join(dir,'website-scores.mjs'));
   assert.equal(websiteScores([]).overall,null);
   const aggregate=websiteScores([{scores:{SEO:80,AEO:null,GEO:20}},{scores:{SEO:100,AEO:60,GEO:null}}]);
@@ -22,18 +23,19 @@ try{
   assert.deepEqual(aggregate.scores.map(s=>s.count),[2,1,1]);
   assert.equal(aggregate.overall,57);
   const {WebsiteOverview}=await import(path.join(dir,'website-overview.mjs'));
-  const overview=renderToStaticMarkup(React.createElement(WebsiteOverview,{pages:[{status:'completed',report},{status:'failed',report:null}],discovered:10,selected:2}));
+  const overview=renderToStaticMarkup(React.createElement(WebsiteOverview,{pages:[{url:'https://example.com/',status:'completed',report},{url:'https://example.com/blocked',status:'failed',report:null}],discovered:10,selected:2}));
   assert.equal((overview.match(/role="meter"/g)||[]).length,4);
   assert.match(overview,/10% audited/);
-  assert.match(overview,/Based on 1 audited page · 2 selected · 10 discovered/);
+  assert.match(overview,/Audit coverage: 1 of 10 discovered pages successfully audited · 2 selected/);
   assert.equal((overview.match(/class="website-stat website-stat--/g)||[]).length,5);
   assert.doesNotMatch(overview,/website-stat--opportunity|website-stat--unavailable/);
-  assert.match(overview,/Source checks that passed/);
-  assert.match(overview,/Includes unmeasured checks/);
+  assert.match(overview,/Website finding groups/);
+  assert.match(overview,/Technical audit details/);
   assert.deepEqual(REPORT_MENU,['All issues','Fix first','SEO','AEO','GEO','Page details']);
   const html=renderToStaticMarkup(React.createElement(AuditReport,{report,onBack:()=>{}}));
   assert.match(html,/aria-selected="true"[^>]*>Fix first/);
-  assert.match(html,/Back to website pages/);
+  assert.match(html,/Website pages/);assert.doesNotMatch(html,/class="report-back"/);
+  const contextual=renderToStaticMarkup(React.createElement(AuditReport,{report,onBack:()=>{},projectName:'Example project',projectSite:'https://example.com',auditRun:{id:'run1',created:'2026-10-02T12:00:00Z',status:'complete',attempted:68,selected:100},availableRuns:[{id:'run1',created:'2026-10-02T12:00:00Z',status:'complete',selectedCount:100},{id:'run0',created:'2026-09-01T12:00:00Z',status:'complete',selectedCount:50}],onChangeAudit:()=>{},onExportAudit:()=>{}}));assert.equal(JSON.stringify(report),baseline,'rendering must not mutate audit data');assert.equal(report.checks.length,29);for(const category of ['SEO','AEO','GEO'])assert.match(contextual,new RegExp(report.scores[category]+'<small>/100</small>'));assert.match(contextual,/Example project/);assert.match(contextual,/Audit coverage: 68 of 100 pages attempted/);assert.match(contextual,/aria-label="Change audit"/);assert.match(contextual,/Export audit/);assert.match(contextual,/Open site/);assert.equal((contextual.match(/class="score-card/g)||[]).length,4);assert.ok(contextual.indexOf('class="audit-meta-bar"')<contextual.indexOf('class="score-grid"'));assert.ok(contextual.indexOf('class="score-grid"')<contextual.indexOf('class="report-navigation"'));assert.ok(contextual.indexOf('class="issue-summary"')<contextual.indexOf('>Fix first</h3>'));
   assert.equal((html.match(/role="tab"/g)||[]).length,6);
   assert.equal((html.match(/class="issue-total issue-total--/g)||[]).length,5);
   assert.equal((html.match(/aria-pressed="false"/g)||[]).length,5);
