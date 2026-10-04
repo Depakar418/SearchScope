@@ -1,6 +1,6 @@
 'use client';
 import {useEffect,useState} from 'react';
-import {projectRequest} from './page';
+import {projectRequest} from './project-request';
 type Access={project:{name:string;owner:string;role:string};members:{user:string;role:string;name:string|null;email:string|null}[];invitations:{id:string;email:string;role:string;kind:string;status:string;expires:string}[];events:{actor:string;action:string;created:string;details:string}[]};
 export function ProjectAccessPanel({project}:{project:string}){
  const[data,setData]=useState<Access|null>(null),[error,setError]=useState(''),[message,setMessage]=useState(''),[link,setLink]=useState(''),[busy,setBusy]=useState(false);
