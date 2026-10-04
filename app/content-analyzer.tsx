@@ -2,7 +2,7 @@
 import {useState} from 'react';
 import {analyze,SAMPLE,type Report} from '../lib/audit';
 import AuditReport from './audit-report';
-import {projectRequest} from './page';
+import {projectRequest} from './project-request';
 export function ContentAnalyzer({project}:{project:string}){
  const[mode,setMode]=useState('text'),[input,setInput]=useState(''),[keyword,setKeyword]=useState(''),[report,setReport]=useState<Report|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState('');
  async function run(event:React.FormEvent){event.preventDefault();setBusy(true);setError('');try{if(new TextEncoder().encode(input).length>1000000)throw Error('Content must be under 1 MB.');if(!input.trim())throw Error('Enter a URL or paste content.');setReport(mode==='url'?await projectRequest<Report>('/api/audit',{method:'POST',body:JSON.stringify({url:/^https?:\/\//.test(input)?input:'https://'+input,keyword,project})}):analyze(input,mode==='html'?'Pasted HTML':'Pasted text',keyword,mode));}catch(e){setError(e instanceof Error?e.message:'Analysis failed.');}finally{setBusy(false);}}

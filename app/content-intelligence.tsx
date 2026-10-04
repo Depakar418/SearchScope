@@ -1,7 +1,7 @@
 'use client';
 import {useEffect,useState} from 'react';
 import type {WebsiteIntelligence,Opportunity} from '../lib/content-intelligence';
-import {projectRequest} from './page';
+import {projectRequest} from './project-request';
 type View='Content Intelligence'|'Topics'|'Content Gaps'|'Opportunities';
 const GAP_TYPES=['All','Topic','Question','Content','Internal Linking','Answer Readiness','Support'];
 
