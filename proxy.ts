@@ -1,29 +1,20 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest, type NextFetchEvent } from "next/server";
 import { auth } from "./auth";
+import { identityHeaders, localTestingEnabled, localRequestAllowed, LOCAL_TEST_USER } from "./lib/local-testing";
 
-// All Sites identity headers supplied by clients are discarded at the Vercel edge.
-// Existing API and server components only see values derived from the verified session.
-export const proxy = auth((request) => {
-  const headers = new Headers(request.headers);
-  for (const header of [
-    "oai-authenticated-user-id",
-    "oai-authenticated-user-email",
-    "oai-authenticated-user-full-name",
-    "oai-authenticated-user-full-name-encoding",
-  ]) headers.delete(header);
-
+// Discard client-supplied identity headers, then use only the verified session.
+const authenticatedProxy = auth((request, _event: NextFetchEvent) => {
+  void _event;
   const user = request.auth?.user;
-  if (user?.id?.startsWith("github:")) {
-    headers.set("oai-authenticated-user-id", user.id);
-    if (user.email) headers.set("oai-authenticated-user-email", user.email);
-    if (user.name) {
-      headers.set("oai-authenticated-user-full-name", encodeURIComponent(user.name));
-      headers.set("oai-authenticated-user-full-name-encoding", "percent-encoded-utf-8");
-    }
-  }
+  const headers = identityHeaders(request.headers, user?.id?.startsWith("github:") ? user : undefined);
   return NextResponse.next({ request: { headers } });
 });
-
+export function proxy(request: NextRequest, event: NextFetchEvent) {
+  if (localTestingEnabled() && localRequestAllowed(request.url)) {
+    return NextResponse.next({ request: { headers: identityHeaders(request.headers, LOCAL_TEST_USER) } });
+  }
+  return authenticatedProxy(request, event);
+}
 export const config = {
   matcher: ["/((?!api/auth(?:/|$)|_next/static|_next/image|favicon.ico).*)"],
 };

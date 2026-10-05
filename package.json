@@ -14,7 +14,12 @@
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate",
     "db:migrate:vercel": "node scripts/migrate-turso.mjs",
-    "test:vercel-db": "node --import tsx tests/vercel-db.test.ts"
+    "test:phase2": "node --import tsx tests/phase2-quality.test.ts",
+    "test:phase2-performance": "node --import tsx tests/phase2-performance.test.ts",
+    "test:vercel-db": "node --import tsx tests/vercel-db.test.ts",
+    "test:completion": "node --import tsx --test tests/completion.test.ts",
+    "dev:local": "node --import tsx scripts/dev-local.ts",
+    "test:local-auth": "node --import tsx --test tests/local-testing.test.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

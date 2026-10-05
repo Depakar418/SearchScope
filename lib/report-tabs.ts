@@ -15,10 +15,12 @@ export function openReportTab(report:Report,scope:ReportScope){
   sessionStorage.removeItem(key);
 }
 
+export function findingPriorityReason(check:Report['checks'][number],affectedPages=1){return `${check.severity} severity · ${check.priority} guide priority · ${affectedPages} affected page${affectedPages===1?'':'s'} · ${check.affectedCount} affected occurrences · ${check.confidence==='observed'?'High':'Medium'} detection confidence. Ordered from captured scope and source evidence; no traffic, ranking or revenue impact is predicted.`;}
+
 export function scopedFindings(report:Report,scope:ReportScope,allChecks=false){
   const severity={error:0,warning:1,opportunity:2,pass:3,unavailable:4};
   const priority={High:0,Medium:1,Low:2};
   return report.checks.filter(c=>(scope==='fix-first'||c.category===scope)&&
     (scope!=='fix-first'&&allChecks||['error','warning','opportunity'].includes(c.severity)))
-    .sort((a,b)=>severity[a.severity]-severity[b.severity]||priority[a.priority]-priority[b.priority]);
+    .sort((a,b)=>severity[a.severity]-severity[b.severity]||priority[a.priority]-priority[b.priority]||b.affectedCount-a.affectedCount||Number(b.confidence==='observed')-Number(a.confidence==='observed')||a.id.localeCompare(b.id));
 }

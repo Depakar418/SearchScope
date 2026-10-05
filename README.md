@@ -29,3 +29,14 @@ The versioned feature inventory and added/changed/removed history are in `lib/re
 The proposed Git/Vercel production and Sites demo split, including authentication and data migration requirements, is documented in `docs/DUAL-HOST-PLAN.md`.
 
 Run `node node_modules/typescript/bin/tsc --noEmit`, `node scripts/audit-checks.mjs`, `node scripts/foundation-checks.mjs`, `node scripts/project-checks.mjs`, `node scripts/project-view-check.mjs`, `node scripts/report-render-check.mjs`, `node scripts/unified-report-check.mjs`, `node scripts/website-aggregation-check.mjs`, `node scripts/evidence-context-check.mjs`, `node scripts/cross-page-dashboard-check.mjs`, and `node scripts/run-framework.mjs build` before publishing.
+
+
+## Local testing without sign-in
+
+Run `npm run dev:local`, then open http://127.0.0.1:3000. No GitHub account or cloud database credentials are needed. This command applies the existing database migrations to `.searchscope-local/testing.db` and starts the native Next.js development server on loopback with a fixed local test account. The yellow banner identifies test mode. Projects, audit history and profile changes persist in this local database between restarts.
+
+Stop the server with Ctrl+C. The normal development/build/deployment commands do not enable this mode. Test access requires both development mode and the explicit local flag, is restricted to loopback request hosts, and is disabled when a Vercel environment marker is present. Client-supplied identity headers are always replaced. This is one test account; it does not simulate separate users or OAuth sign-in.
+
+If port 3000 is occupied, set `SEARCHSCOPE_LOCAL_PORT` to a free port between 1024 and 65535 before running the command. Local test data is ignored by git and is never copied to a deployment. Google/email sign-in and Supabase have not been configured; the deployed application retains GitHub authentication and its existing Turso adapter.
+
+See [LOCAL-FEATURE-TEST-RESULTS.md](LOCAL-FEATURE-TEST-RESULTS.md) for verification and remaining test gaps.

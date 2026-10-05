@@ -1,6 +1,7 @@
 import type {Report} from './audit';
+import {currentPageAttempts} from './website-findings';
 
-export const CROSS_PAGE_VERSION='2.0';
+export const CROSS_PAGE_VERSION='2.1';
 export type CrossPageGroup={kind:'Duplicate title'|'Duplicate meta description'|'Duplicate H1'|'Similar content';value:string;urls:string[];similarity?:number;method:string;why:string;confidence:'observed'|'heuristic';evidence:string[];wordsCompared?:[number,number];sharedShingles?:number;projectId?:string|null;auditId?:string|null;pageIds?:Array<string|null>;finalUrls?:Array<string|null>;analysisVersion:string;measuredAt:string|null};
 const normalize=(s:string)=>s.normalize('NFKC').toLowerCase().replace(/\s+/g,' ').trim();
 const words=(s:string)=>normalize(s).split(/\s+/).filter(Boolean);
@@ -8,9 +9,9 @@ const shingles=(tokens:string[])=>{const result=new Set<string>();for(let i=0;i<
 type Entry={url:string;id?:string;report:Report};
 function trace(entries:Entry[]){return {projectId:entries[0]?.report.auditContext?.projectId??null,auditId:entries[0]?.report.auditContext?.auditId??null,pageIds:entries.map(e=>e.id||e.report.auditContext?.pageId||null),finalUrls:entries.map(e=>e.report.fetch?.finalURL||null),analysisVersion:CROSS_PAGE_VERSION,measuredAt:entries.map(e=>e.report.date).filter(Boolean).sort().at(-1)||null};}
 /** Source snapshot relationships only. Never infer rankings, index status or intentional duplication. */
-export function comparePages(pages:{url:string;id?:string;report:Report|null;status?:string}[]){
- const current=new Map<string,Entry>();for(const p of pages){if(p.report&&p.status!=='failed'&&!current.has(p.url))current.set(p.url,{url:p.url,id:p.id,report:p.report});}
- const entries=[...current.values()],groups:CrossPageGroup[]=[];
+export function comparePages(pages:{url:string;id?:string;report:Report|null;status?:string;audited?:string}[]){
+ const latest=currentPageAttempts(pages.map(p=>({...p,audited:p.audited??p.report?.date})));
+ const entries:Entry[]=latest.filter(p=>p.report&&(!p.status||p.status==='completed')).map(p=>({url:p.url,id:p.id,report:p.report!})),groups:CrossPageGroup[]=[];
  for(const kind of ['Duplicate title','Duplicate meta description','Duplicate H1'] as const){const index=new Map<string,{value:string;pages:Entry[]}>();for(const p of entries){const values=kind==='Duplicate title'?[p.report.title]:kind==='Duplicate meta description'?[p.report.description]:p.report.headings.filter(h=>h.level===1).map(h=>h.text);for(const value of values){const key=normalize(value);if(!key)continue;const found=index.get(key)||{value,pages:[]};if(!found.pages.some(other=>other.url===p.url))found.pages.push(p);index.set(key,found);}}for(const matched of index.values())if(matched.pages.length>1)groups.push({kind,value:matched.value,urls:matched.pages.map(e=>e.url),method:'Exact normalized '+(kind==='Duplicate H1'?'content H1':'metadata')+' comparison',why:'The captured '+(kind==='Duplicate H1'?'main-content H1':'metadata value')+' matches after case and whitespace normalization.',confidence:'observed',evidence:[matched.value],...trace(matched.pages)});}
  // Reuse normalized main-content paragraph blocks. Repeated site-wide blocks are excluded only
  // when they occur on at least three pages and account for at least 30% of this snapshot.

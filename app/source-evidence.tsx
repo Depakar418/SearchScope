@@ -2,6 +2,8 @@
 import {useState} from 'react';
 import type {Report} from '../lib/audit';
 import type {EvidenceItem} from '../lib/dom-extraction';
+import {canonicalVerification,linkVerification} from '../lib/link-analysis';
+import {normalizeURL} from '../lib/url-normalization';
 import {HeadingIssueCue} from './heading-issue-cue';
 
 const elementName=(tag:string)=>({a:'Link',img:'Image',button:'Button',input:'Input',meta:'Meta tag',link:'Canonical / link tag',time:'Time',script:'Structured data',title:'Page title'} as Record<string,string>)[tag]||(/^h[1-6]$/.test(tag)?`H${tag[1]} heading`:tag.toUpperCase());
@@ -9,7 +11,12 @@ const locationName=(e:EvidenceItem)=>e.classification==='content'?'Main content'
 const safeURL=(raw:string,base:string)=>{try{const url=new URL(raw,base);return ['http:','https:'].includes(url.protocol)&&!url.username&&!url.password?url.href:null;}catch{return null;}};
 // Snippets are rendered as escaped React text, never inserted as live HTML.
 const snippetText=(value:string)=>value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'').slice(0,2000);
-const schemaType=(snippet:string)=>{const match=snippet.match(/<script\b[^>]*>([\s\S]*?)<\/script>/i);if(!match)return null;try{const data=JSON.parse(match[1]);const type=Array.isArray(data)?data[0]?.['@type']:data?.['@type'];return typeof type==='string'?type:null;}catch{return null;}};
+const schemaDetails=(snippet:string,truncated=false)=>{
+ const match=snippet.match(/<script\b[^>]*>([\s\S]*?)<\/script>/i);
+ if(!match)return {status:truncated?'NOT_MEASURED (captured snippet truncated)':'NOT_MEASURED',types:[] as string[],contexts:[] as string[]};
+ const types:string[]=[],contexts:string[]=[];
+ try{const visit=(value:unknown,depth=0):void=>{if(depth>8||types.length>100)return;if(Array.isArray(value))value.forEach(v=>visit(v,depth+1));else if(value&&typeof value==='object'){const node=value as Record<string,unknown>;for(const t of Array.isArray(node['@type'])?node['@type']:[node['@type']])if(typeof t==='string'&&t.trim())types.push(t);if(typeof node['@context']==='string')contexts.push(node['@context']);if(node['@graph'])visit(node['@graph'],depth+1);}};visit(JSON.parse(match[1]));return {status:'VALID_JSON',types:[...new Set(types)],contexts:[...new Set(contexts)]};}catch{return {status:'INVALID_JSON',types,contexts};}
+};
 
 export function SourceEvidence({items,report,findingId}:{items:EvidenceItem[];report:Report;findingId:string}){
  const [limit,setLimit]=useState(20);
@@ -24,6 +31,9 @@ export function SourceEvidence({items,report,findingId}:{items:EvidenceItem[];re
    const pageLink=pageURL?(anchored?`${pageURL.split('#')[0]}#${encodeURIComponent(anchored)}`:pageURL):null;
    const isLink=e.element==='a',isImage=e.element==='img',isHeading=/^h[1-6]$/.test(e.element),isHead=e.classification==='head';
    const identity=e.text||e.accessibleName||e.attributes?.alt||e.attributes?.content||e.attributes?.href||e.asset||e.attributes?.src||e.attributes?.name||e.attributes?.property||e.attributes?.type||e.attributes?.placeholder||e.attributes?.value||e.attributes?.title||(e.kind==='absence'?'Expected element not found':'No visible text');
+   let destination:string|null=null;try{if(isLink&&e.attributes?.href)destination=normalizeURL(e.attributes.href,report.pageDocument?.baseURL||report.label);}catch{}
+   const verified=destination?report.linkResults?.find(r=>r.url===destination):null;
+   const canonical=e.element==='link'&&findingId.startsWith('canonical')?canonicalVerification(report):null;
    const path=e.sectionPath?.length?e.sectionPath.join(' → '):locationName(e);
    return <article className={'element-preview'+(issue?' element-preview--heading-problem':'')} key={(e.selector||e.element)+'-'+i}>
     <div className="element-preview-label"><span>Affected element · {elementName(e.element)}</span><strong>{issue?'Heading structure to review':locationName(e)}</strong></div>
@@ -31,12 +41,12 @@ export function SourceEvidence({items,report,findingId}:{items:EvidenceItem[];re
     <dl className="evidence-facts">
      {(isLink||e.element==='button'||e.element==='input')&&<><div><dt>Visible text</dt><dd>{e.text||'No visible text'}</dd></div><div><dt>Accessible name</dt><dd>{e.accessibleName?`${e.accessibleName} (${e.nameSource||'detected'})`:'None detected in initial HTML'}</dd></div></>}
      {isLink&&<div><dt>Destination</dt><dd><code>{e.attributes?.href??'Not present'}</code></dd></div>}
-     {isImage&&<><div><dt>Alt text</dt><dd>{e.attributes&&'alt' in e.attributes?e.attributes.alt||'Empty alt attribute':'Missing alt attribute'}</dd></div><div><dt>Source</dt><dd><code>{e.asset||e.attributes?.src||'Not present'}</code></dd></div><div><dt>Declared dimensions</dt><dd>{e.attributes?.width&&e.attributes?.height?`${e.attributes.width} × ${e.attributes.height}`:'Not detected in HTML'}</dd></div></>}
+     {isLink&&<><div><dt>Resolved destination</dt><dd>{destination||"Not resolved"}</dd></div><div><dt>HTTP observation</dt><dd>{verified?linkVerification(verified).state+" · "+(verified.status??"No HTTP response"):"NOT_VERIFIED"}</dd></div></>}{isImage&&<><div><dt>Alt text</dt><dd>{e.attributes&&'alt' in e.attributes?e.attributes.alt||'Empty alt attribute':'Missing alt attribute'}</dd></div><div><dt>Source</dt><dd><code>{e.asset||e.attributes?.src||'Not present'}</code></dd></div><div><dt>Declared dimensions</dt><dd>{e.attributes?.width&&e.attributes?.height?`${e.attributes.width} × ${e.attributes.height}`:'Not detected in HTML'}</dd></div></>}
      {isHeading&&<div><dt>Heading</dt><dd>{e.element.toUpperCase()}: {e.text||'Empty heading'}</dd></div>}
      {e.element==='input'&&<div><dt>Input identity</dt><dd>{e.attributes?.name||e.attributes?.placeholder||e.attributes?.type||'Not detected'}</dd></div>}
      {e.element==='meta'&&<><div><dt>Meta tag</dt><dd>{e.attributes?.name||e.attributes?.property||e.attributes?.['http-equiv']||'Not detected'}</dd></div><div><dt>Current value</dt><dd>{e.attributes?.content||'Empty or not detected'}</dd></div></>}
      {e.element==='link'&&<><div><dt>Relationship</dt><dd>{e.attributes?.rel||'Not detected'}</dd></div><div><dt>URL</dt><dd>{e.attributes?.href||'Empty or not detected'}</dd></div></>}
-     {e.element==='script'&&<><div><dt>Structured data format</dt><dd>{e.attributes?.type||'Not detected'}</dd></div><div><dt>Schema type</dt><dd>{schemaType(e.snippet)||'Not detected in captured JSON-LD'}</dd></div></>}
+     {canonical&&<><div><dt>Resolved canonical</dt><dd>{canonical.resolved||'Not resolved'}</dd></div><div><dt>Target status</dt><dd>{canonical.state} · {canonical.httpStatus??'No HTTP response'}</dd></div></>}{e.element==='script'&&<><div><dt>Structured data format</dt><dd>{e.attributes?.type||'Not detected'}</dd></div><div><dt>Parse status</dt><dd>{schemaDetails(e.snippet,e.snippetTruncated).status}</dd></div><div><dt>Context</dt><dd>{schemaDetails(e.snippet,e.snippetTruncated).contexts.join(", ")||"Not detected"}</dd></div><div><dt>Schema type</dt><dd>{schemaDetails(e.snippet,e.snippetTruncated).types.join(', ')||'Not detected in captured JSON-LD'}</dd></div></>}
      <div><dt>Location</dt><dd>{path}</dd></div>
      <div><dt>Nearest heading</dt><dd>{e.nearestHeading?`H${e.nearestHeading.level}: ${e.nearestHeading.text}`:'Not determined'}</dd></div>
      {e.context&&e.context!==e.text&&<div><dt>Nearby context</dt><dd>{e.context}</dd></div>}

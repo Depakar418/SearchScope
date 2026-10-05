@@ -7,7 +7,7 @@ import {renderToStaticMarkup} from 'react-dom/server';
 
 const dir=await fs.mkdtemp(path.join(process.cwd(),'.sites-runtime','website-aggregation-'));
 try{
- const files=['lib/dom-extraction.ts','lib/link-analysis.ts','lib/finding-guides.ts','lib/page-metrics.ts','lib/audit-result.ts','lib/website-findings.ts','lib/audit.ts','lib/website-scores.ts','app/score-gauge.tsx','app/website-overview.tsx'];
+ const files=['lib/source-signals.ts','app/source-signal-report.tsx','lib/web-fetch.ts','lib/url-safety.ts','lib/url-normalization.ts','lib/audit-diff.ts','lib/dom-extraction.ts','lib/link-analysis.ts','lib/finding-guides.ts','lib/page-metrics.ts','lib/audit-result.ts','lib/website-findings.ts','lib/audit.ts','lib/website-scores.ts','app/score-gauge.tsx','app/website-overview.tsx'];
  for(const file of files){const raw=(await fs.readFile(file,'utf8')).replace(/(['"])(?:\.\.\/lib\/|\.\/)([\w-]+)\1/g,(_,q,n)=>`${q}./${n}.mjs${q}`);await fs.writeFile(path.join(dir,path.basename(file).replace(/\.tsx?$/,'.mjs')),ts.transpileModule(raw,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText);}
  const {analyze}=await import(path.join(dir,'audit.mjs'));
  const {websiteFindingGroups}=await import(path.join(dir,'website-findings.mjs'));

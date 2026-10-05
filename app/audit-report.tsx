@@ -1,10 +1,11 @@
 'use client';
+import {SourceSignalReport} from './source-signal-report';
 import {useState} from 'react';
 import {ArrowLeft,Check,ChevronDown,CircleAlert,Code,Download,FileText,Search} from 'lucide-react';
 import type {Category,Check as Finding,Report} from '../lib/audit';
 import {checkCounts} from '../lib/audit-result';
 import {scopedFindings} from '../lib/report-tabs';
-import {reportCSV,reportMarkdown} from '../lib/report-export';
+import {reportCSV,reportMarkdown,reportJSON} from '../lib/report-export';
 import {FindingDetails} from './report-panels';
 import {CategoryExplanation,PageDetail,ReportTabButton} from './page-detail';
 import {LinkStatusReport} from './link-status-report';
@@ -42,7 +43,7 @@ export default function AuditReport({report,onBack,projectName,projectSite,audit
   const selectableRuns=auditRun&&!auditOptions.some(r=>r.id===auditRun.id)?[{id:auditRun.id,created:auditRun.created,status:auditRun.status,selectedCount:auditRun.selected},...auditOptions]:auditOptions;
   const summaryCards=[{key:'error',label:'Errors',filter:'Errors',count:counts.FAIL},{key:'warning',label:'Warnings',filter:'Warnings',count:report.checks.filter(c=>c.severity==='warning').length},{key:'pass',label:'Passed',filter:'Passed',count:passed},{key:'all',label:'All checks',filter:'All checks',count:Object.values(counts).reduce((a,b)=>a+b,0)},{key:'attention',label:'Needs attention',filter:'Needs attention',count:attention}];
   function download(kind:'md'|'csv'|'json'){
-    const data=kind==='md'?reportMarkdown(report):kind==='csv'?reportCSV(report):JSON.stringify(report,null,2);
+    const data=kind==='md'?reportMarkdown(report):kind==='csv'?reportCSV(report):reportJSON(report);
     const url=URL.createObjectURL(new Blob([data],{type:kind==='json'?'application/json':kind==='md'?'text/markdown':'text/csv'}));
     const link=document.createElement('a');link.href=url;link.download='searchscope-audit.'+kind;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
@@ -51,7 +52,7 @@ export default function AuditReport({report,onBack,projectName,projectSite,audit
   function categoryCard(category:Category,showAction:boolean){
     const findings=scopedFindings(report,category,true).filter(matches);
     return <section className="unified-category-card" key={category}>
-      <CategoryExplanation report={report} category={category} showAction={showAction}/>{category==='SEO'&&<LinkStatusReport report={report}/>}
+      <CategoryExplanation report={report} category={category} showAction={showAction}/>{category!=="SEO"&&<SourceSignalReport report={report} category={category}/>}{category==='SEO'&&<LinkStatusReport report={report}/>}
       <FindingList key={category+filter+search} report={report} findings={findings} prefix={'category-'+category}/>
     </section>;
   }
