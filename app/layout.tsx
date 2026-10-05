@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { localTestingEnabled } from "../lib/local-testing";
 
 export const metadata: Metadata = {
   title: "SearchScope — SEO, AEO & GEO audits",
@@ -17,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">{localTestingEnabled() && <aside role="status" style={{padding:"12px 24px",background:"#fff3cd",color:"#533f03",borderBottom:"1px solid #e6cf7e"}}>Local testing · Sign-in is disabled. You are using a test account and local test data.</aside>}{children}</body>
     </html>
   );
 }

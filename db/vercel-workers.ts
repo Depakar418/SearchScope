@@ -2,11 +2,17 @@
 // The shared audit code still speaks D1's small prepared-statement interface.
 import { createClient, type Client, type InStatement, type ResultSet } from "@libsql/client";
 
+import { localTestingEnabled } from "../lib/local-testing";
+
 let client: Client | undefined;
 function connection(): Client {
   if (client) return client;
   const url = process.env.TURSO_DATABASE_URL;
   const authToken = process.env.TURSO_AUTH_TOKEN;
+  if (localTestingEnabled() && url?.startsWith("file:")) {
+    client = createClient({ url });
+    return client;
+  }
   if (!url || !authToken || !url.startsWith("libsql://")) {
     throw new Error("SearchScope database is not configured for this deployment.");
   }

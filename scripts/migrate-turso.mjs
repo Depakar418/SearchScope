@@ -3,10 +3,11 @@ import { createClient } from "@libsql/client";
 
 const url = process.env.TURSO_DATABASE_URL;
 const token = process.env.TURSO_AUTH_TOKEN;
-if (!url || !url.startsWith("libsql://") || !token) {
+const local = process.env.SEARCHSCOPE_LOCAL_TESTING === "1" && process.env.NODE_ENV === "development" && !process.env.VERCEL && url?.startsWith("file:");
+if (!local && (!url || !url.startsWith("libsql://") || !token)) {
   throw new Error("Set TURSO_DATABASE_URL (libsql://...) and TURSO_AUTH_TOKEN for an empty target database.");
 }
-const client = createClient({ url, authToken: token });
+const client = createClient({ url, ...(local ? {} : { authToken: token }) });
 try {
   const existing = await client.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'");
   const tables = existing.rows.map((row) => String(row.name));

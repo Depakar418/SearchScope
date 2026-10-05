@@ -1,3 +1,5 @@
+import Link from "next/link";
 import { signOut } from "../../auth";
+import { localTestingEnabled } from "../../lib/local-testing";
 
-export default function SignOutPage(){return <main className="project-hub"><section className="panel system-error"><h1>Sign out of SearchScope</h1><form action={async()=>{"use server";await signOut({redirectTo:"/"});}}><button className="primary">Sign out</button></form></section></main>;}
+export default function SignOutPage(){if(localTestingEnabled())return <main className="project-hub"><section className="panel"><h1>Local testing account</h1><p>Stop the local server to end testing. Sign-in remains disabled while local test mode is running.</p><Link href="/">Return to projects</Link></section></main>;return <main className="project-hub"><section className="panel system-error"><h1>Sign out of SearchScope</h1><form action={async()=>{"use server";await signOut({redirectTo:"/"});}}><button className="primary">Sign out</button></form></section></main>;}

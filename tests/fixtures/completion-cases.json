@@ -1,0 +1,112 @@
+[
+  {
+    "id": "A",
+    "name": "Perfect page",
+    "html": "<html lang=\"en\"><head><title>Training guide</title><meta name=\"description\" content=\"Practical training\"><meta name=\"viewport\" content=\"width=device-width\"><link rel=\"canonical\" href=\"https://example.com/training\"><script type=\"application/ld+json\">{\"@type\":\"Article\",\"author\":{\"@type\":\"Person\",\"name\":\"Alice\"},\"dateModified\":\"2026-09-18\"}</script></head><body><main><h1>Training guide</h1><h2>What is training?</h2><p>Training is a practical learning process that helps people develop useful skills and understand their responsibilities.</p><ol><li>Learn</li><li>Practice</li></ol><img src=\"/team.webp\" alt=\"Team learning\" width=\"600\" height=\"400\"></main></body></html>"
+  },
+  {
+    "id": "B",
+    "name": "Missing metadata",
+    "html": "<main><h1>Training</h1><p>Useful source content.</p></main>"
+  },
+  {
+    "id": "C",
+    "name": "Missing alt",
+    "html": "<main><img src=\"/team.webp\"></main>"
+  },
+  {
+    "id": "D",
+    "name": "Broken link",
+    "html": "<main><a href=\"https://example.com/notfound\">Reference</a></main>"
+  },
+  {
+    "id": "E",
+    "name": "Redirected link",
+    "html": "<main><a href=\"https://example.com/redirect\">Moved reference</a></main>"
+  },
+  {
+    "id": "F",
+    "name": "Timeout/unverified link",
+    "html": "<main><a href=\"https://example.com/timeout\">Slow reference</a></main>"
+  },
+  {
+    "id": "G",
+    "name": "Canonical 200",
+    "html": "<link rel=\"canonical\" href=\"https://example.com/target\">"
+  },
+  {
+    "id": "H",
+    "name": "Canonical redirect",
+    "html": "<link rel=\"canonical\" href=\"https://example.com/redirect\">"
+  },
+  {
+    "id": "I",
+    "name": "Canonical 404",
+    "html": "<link rel=\"canonical\" href=\"https://example.com/notfound\">"
+  },
+  {
+    "id": "J",
+    "name": "Missing freshness",
+    "html": "<main><p>Evergreen information without a declared date.</p></main>"
+  },
+  {
+    "id": "K",
+    "name": "Conflicting freshness",
+    "html": "<meta property=\"article:modified_time\" content=\"2026-09-18\"><script type=\"application/ld+json\">{\"dateModified\":\"2026-09-20\"}</script>"
+  },
+  {
+    "id": "L",
+    "name": "Question/direct answer",
+    "html": "<main><h2>What is training?</h2><p>Training is a structured learning activity that provides relevant knowledge and opportunities to practice important skills.</p><p>Practical exercises support learning. <a href=\"https://example.com/reference\">Reference</a></p></main>"
+  },
+  {
+    "id": "M",
+    "name": "Question/weak answer",
+    "html": "<main><h2>What is training?</h2><p>Read more.</p></main>"
+  },
+  {
+    "id": "N",
+    "name": "Question/no answer",
+    "html": "<main><h2>What is training?</h2><h2>Next section</h2></main>"
+  },
+  {
+    "id": "O",
+    "name": "JSON-LD entity",
+    "html": "<script type=\"Application/LD+JSON\">{\"@graph\":[{\"@type\":\"Organization\",\"name\":\"SucceedLEARN\"},{\"@type\":\"Service\",\"name\":\"Compliance training\"},{\"@type\":\"Product\",\"name\":\"SearchScope\"},{\"@type\":\"Person\",\"name\":\"Alice\"},{\"@type\":\"PostalAddress\",\"addressLocality\":\"Bengaluru\"}]}</script>"
+  },
+  {
+    "id": "P",
+    "name": "Visible context",
+    "html": "<main><h1>WordPress compliance training</h1><p>WordPress supports DPDPA employee training for healthcare organizations.</p></main>"
+  },
+  {
+    "id": "Q",
+    "name": "Duplicate titles",
+    "html": "<title>Repeated training title</title><main><h1>Shared heading</h1><p>Training content.</p></main>"
+  },
+  {
+    "id": "R",
+    "name": "Similar content",
+    "html": "<title>Similar content</title><main><h1>Training</h1><p>topic0 topic1 topic2 topic3 topic4 topic5 topic6 topic7 topic8 topic9 topic10 topic11 topic12 topic13 topic14 topic15 topic16 topic17 topic18 topic19 topic20 topic21 topic22 topic23 topic24 topic25 topic26 topic27 topic28 topic29 topic30 topic31 topic32 topic33 topic34 topic35 topic36 topic37 topic38 topic39 topic40 topic41 topic42 topic43 topic44 topic45 topic46 topic47 topic48 topic49 topic50 topic51 topic52 topic53 topic54 topic55 topic56 topic57 topic58 topic59 topic60 topic61 topic62 topic63 topic64 topic65 topic66 topic67 topic68 topic69 topic70 topic71 topic72 topic73 topic74 topic75 topic76 topic77 topic78 topic79 topic80 topic81 topic82 topic83 topic84 topic85 topic86 topic87 topic88 topic89 topic90 topic91 topic92 topic93 topic94 topic95 topic96 topic97 topic98 topic99 topic100 topic101 topic102 topic103 topic104 topic105 topic106 topic107 topic108 topic109 topic110 topic111 topic112 topic113 topic114 topic115 topic116 topic117 topic118 topic119 topic120 topic121 topic122 topic123 topic124 topic125 topic126 topic127 topic128 topic129 topic130 topic131 topic132 topic133 topic134 topic135 topic136 topic137 topic138 topic139 topic140 topic141 topic142 topic143 topic144 topic145 topic146 topic147 topic148 topic149 topic150 topic151 topic152 topic153 topic154 topic155 topic156 topic157 topic158 topic159</p></main>"
+  },
+  {
+    "id": "S",
+    "name": "Partial crawl",
+    "html": "<title>Analyzed page</title><main><p>Captured page content.</p></main>"
+  },
+  {
+    "id": "T",
+    "name": "Blocked page",
+    "html": ""
+  },
+  {
+    "id": "U",
+    "name": "Failed page",
+    "html": ""
+  },
+  {
+    "id": "V",
+    "name": "Mixed states",
+    "html": "<title>Page</title><meta name=\"description\" content=\"\"><script type=\"application/ld+json\">{invalid}</script><main><h1>Heading</h1><img src=\"/x.webp\"></main>"
+  }
+]

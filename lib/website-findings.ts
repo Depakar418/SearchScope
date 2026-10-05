@@ -1,12 +1,12 @@
 import type {Check,Report} from './audit';
 import type {PageAudit} from './history';
 
-export type WebsiteFindingGroup={id:string;name:string;category:Check['category'];severity:Check['severity'];pages:{url:string;check:Check;report:Report}[];affectedPageCount:number;affectedElementCount:number|null;affectedPages:string[]};
+export type WebsiteFindingGroup={id:string;name:string;category:Check['category'];severity:Check['severity'];pages:{url:string;check:Check;report:Report}[];affectedPageCount:number;affectedElementCount:number|null;affectedPages:string[];priorityReason?:string};
 
-/** Keep only the latest saved attempt per exact URL. A later failed re-audit is not a successful finding. */
-export function currentPageAttempts(pages:PageAudit[]):PageAudit[]{
- const latest=new Map<string,PageAudit>();
- for(const page of pages){const previous=latest.get(page.url);const currentTime=Date.parse(page.audited||''),previousTime=Date.parse(previous?.audited||'');if(!previous||(!Number.isNaN(currentTime)&&!Number.isNaN(previousTime)?currentTime>=previousTime:true))latest.set(page.url,page);}
+/** Keep only the latest saved attempt per exact URL. Valid timestamps outrank unknown timestamps; equal/unknown ties use the last record. A later failed re-audit suppresses stale success. */
+export function currentPageAttempts<T extends {url:string;audited?:string}>(pages:T[]):T[]{
+ const latest=new Map<string,T>();
+ for(const page of pages){const previous=latest.get(page.url);const currentTime=Date.parse(page.audited||''),previousTime=Date.parse(previous?.audited||'');if(!previous||(!Number.isNaN(currentTime)?Number.isNaN(previousTime)||currentTime>=previousTime:Number.isNaN(previousTime)))latest.set(page.url,page);}
  return [...latest.values()];
 }
 
@@ -28,5 +28,7 @@ export function websiteFindingGroups(pages:PageAudit[]):WebsiteFindingGroup[]{
   }
  }
  const order={error:0,warning:1,opportunity:2,unavailable:3,pass:4};
- return [...groups.values()].sort((a,b)=>order[a.severity]-order[b.severity]||b.affectedPageCount-a.affectedPageCount||a.name.localeCompare(b.name));
+ const priority={High:0,Medium:1,Low:2};
+ for(const g of groups.values())g.priorityReason=`${g.severity} severity · ${g.pages[0].check.priority} guide priority · ${g.affectedPageCount} affected pages · ${g.affectedElementCount??0} identified elements · ${g.pages[0].check.confidence==='observed'?'High':'Medium'} detection confidence${g.affectedPageCount>1?' · pattern across audited pages':''}. No ranking or traffic impact is predicted.`;
+ return [...groups.values()].sort((a,b)=>order[a.severity]-order[b.severity]||priority[a.pages[0].check.priority]-priority[b.pages[0].check.priority]||b.affectedPageCount-a.affectedPageCount||(b.affectedElementCount??0)-(a.affectedElementCount??0)||Number(b.pages[0].check.confidence==='observed')-Number(a.pages[0].check.confidence==='observed')||a.id.localeCompare(b.id));
 }

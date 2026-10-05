@@ -6,7 +6,7 @@ import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 const dir=await fs.mkdtemp(path.join(process.cwd(),'.sites-runtime','project-view-'));
 try{
- const files=[...(await fs.readdir('lib')).filter(f=>f.endsWith('.ts')).map(f=>'lib/'+f),...(await fs.readdir('app')).filter(f=>f.endsWith('.tsx')&&!['legacy-workspace.tsx','layout.tsx'].includes(f)).map(f=>'app/'+f)];
+ const files=[...(await fs.readdir('lib')).filter(f=>f.endsWith('.ts')).map(f=>'lib/'+f),...(await fs.readdir('app')).filter(f=>/\.tsx?$/.test(f)&&!['legacy-workspace.tsx','layout.tsx'].includes(f)).map(f=>'app/'+f)];
  const names=new Map(files.map((f,i)=>[path.resolve(f),`module-${i}.mjs`]));
  for(const f of files){const raw=(await fs.readFile(f,'utf8')).replace(/(['"])(\.[^'"]+)\1/g,(m,q,p)=>{const target=path.resolve(path.dirname(f),p);const entry=names.get(target+'.ts')||names.get(target+'.tsx');return entry?`${q}./${entry}${q}`:m;});await fs.writeFile(path.join(dir,names.get(path.resolve(f))),ts.transpileModule(raw,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText);}
  const load=f=>import(path.join(dir,names.get(path.resolve(f))));

@@ -1,0 +1,3062 @@
+{
+  "complete": {
+    "version": "1.6.0",
+    "scores": {
+      "SEO": 100,
+      "AEO": 100,
+      "GEO": 83
+    },
+    "counts": {
+      "PASS": 28,
+      "FAIL": 0,
+      "REVIEW": 1,
+      "NOT_APPLICABLE": 0,
+      "NOT_MEASURED": 0,
+      "BLOCKED": 0,
+      "ERROR": 0
+    },
+    "checks": [
+      {
+        "id": "title",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "14 characters · Training guide",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "title",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > title:nth-of-type(1)",
+            "snippet": "<title>Training guide</title>",
+            "snippetTruncated": false,
+            "text": "Training guide",
+            "context": "Training guide",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 3,
+            "fingerprint": "{\"tag\":\"title\",\"text\":\"Training guide\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":3}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "description",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "27 characters · A practical training guide.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "meta",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > meta:nth-of-type(1)",
+            "snippet": "<meta name=\"description\" content=\"A practical training guide.\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Training guide",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "name": "description",
+              "content": "A practical training guide."
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 4,
+            "fingerprint": "{\"tag\":\"meta\",\"text\":\"\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":4}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "h1",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "1 H1 headings detected.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "h1",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > main:nth-of-type(1) > h1:nth-of-type(1)",
+            "snippet": "<h1>Training guide</h1>",
+            "snippetTruncated": false,
+            "text": "Training guide",
+            "context": "Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Read the original research",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 16,
+            "fingerprint": "{\"tag\":\"h1\",\"text\":\"Training guide\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":16}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "canonical",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "https://example.com/training",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "link",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > link:nth-of-type(1)",
+            "snippet": "<link rel=\"canonical\" href=\"https://example.com/training\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Training guide",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "rel": "canonical",
+              "href": "https://example.com/training"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 10,
+            "fingerprint": "{\"tag\":\"link\",\"text\":\"\",\"target\":\"https://example.com/training\",\"section\":[\"Document head\"],\"order\":10}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "index",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "No restrictive robots meta detected. HTTP headers and actual index status are separate checks.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "No restrictive robots meta detected. HTTP headers and actual index status are separate checks.",
+            "context": "Page-level observation; no individual source element is required.",
+            "section": "Document",
+            "pageURL": "https://example.com/training",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "alt",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "0 of 1 images lack an alt attribute.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "0 of 1 images lack an alt attribute.",
+            "context": "Page-level observation; no individual source element is required.",
+            "section": "Document",
+            "pageURL": "https://example.com/training",
+            "classification": "document",
+            "attributes": {},
+            "expectedSelector": "img"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "lang",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "en",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "html",
+            "selector": "html:nth-of-type(1)",
+            "snippet": "<html lang=\"en\">",
+            "snippetTruncated": false,
+            "text": "Training guide Home Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Read the original research",
+            "context": "Training guide Home Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Read the original research",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {
+              "lang": "en"
+            },
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 1,
+            "fingerprint": "{\"tag\":\"html\",\"text\":\"Training guide Home Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Pra\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":1}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "viewport",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "width=device-width, initial-scale=1 · Responsive device-width detected. Rendered mobile usability is not measured.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "meta",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > meta:nth-of-type(2)",
+            "snippet": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Training guide",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "name": "viewport",
+              "content": "width=device-width, initial-scale=1"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 5,
+            "fingerprint": "{\"tag\":\"meta\",\"text\":\"\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":5}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-keyword",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "Target phrase “training” appears in the extracted text.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "main",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > main:nth-of-type(1)",
+            "snippet": "<main>",
+            "snippetTruncated": false,
+            "text": "Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Read the original research",
+            "context": "Home Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Read the original research",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 15,
+            "fingerprint": "{\"tag\":\"main\",\"text\":\"Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Re\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":15}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-structure",
+        "category": "AEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "1 H2 headings detected.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "h2",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > main:nth-of-type(1) > h2:nth-of-type(1)",
+            "snippet": "<h2>How do we train?</h2>",
+            "snippetTruncated": false,
+            "text": "How do we train?",
+            "context": "Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Read the original research",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "nearestHeading": {
+              "level": 1,
+              "text": "Training guide"
+            },
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 18,
+            "fingerprint": "{\"tag\":\"h2\",\"text\":\"How do we train?\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":18}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-question",
+        "category": "AEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "1 question signals detected.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "h2",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > main:nth-of-type(1) > h2:nth-of-type(1)",
+            "snippet": "<h2>How do we train?</h2>",
+            "snippetTruncated": false,
+            "text": "How do we train?",
+            "context": "Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Read the original research",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "nearestHeading": {
+              "level": 1,
+              "text": "Training guide"
+            },
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 18,
+            "fingerprint": "{\"tag\":\"h2\",\"text\":\"How do we train?\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":18}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-list",
+        "category": "AEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "A list or table structure was detected.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "ol",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > main:nth-of-type(1) > ol:nth-of-type(1)",
+            "snippet": "<ol><li>Choose a goal.</li><li>Practice and review.</li></ol>",
+            "snippetTruncated": false,
+            "text": "Choose a goal. Practice and review.",
+            "context": "Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Read the original research",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 19,
+            "fingerprint": "{\"tag\":\"ol\",\"text\":\"Choose a goal. Practice and review.\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":19}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "schema",
+        "category": "AEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "Types: Article. Syntax only; eligibility not validated.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "script",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > script:nth-of-type(1)",
+            "snippet": "<script type=\"application/ld+json\">{\"@type\":\"Article\",\"author\":{\"@type\":\"Person\",\"name\":\"Alice\"},\"datePublished\":\"2026-09-01\"}</script>",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Training guide",
+            "section": "hidden",
+            "sectionPath": [
+              "Not determined"
+            ],
+            "classification": "hidden",
+            "attributes": {
+              "type": "application/ld+json"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 11,
+            "fingerprint": "{\"tag\":\"script\",\"text\":\"\",\"target\":\"\",\"section\":[\"Not determined\"],\"order\":11}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-attribution",
+        "category": "GEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "Observed attribution signal: Alice · author: Alice. Identity and expertise are not verified.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "meta",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > meta:nth-of-type(3)",
+            "snippet": "<meta name=\"author\" content=\"Alice\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Training guide",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "name": "author",
+              "content": "Alice"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 6,
+            "fingerprint": "{\"tag\":\"meta\",\"text\":\"\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":6}",
+            "pageURL": "https://example.com/training"
+          },
+          {
+            "kind": "element",
+            "element": "script",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > script:nth-of-type(1)",
+            "snippet": "<script type=\"application/ld+json\">{\"@type\":\"Article\",\"author\":{\"@type\":\"Person\",\"name\":\"Alice\"},\"datePublished\":\"2026-09-01\"}</script>",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Training guide",
+            "section": "hidden",
+            "sectionPath": [
+              "Not determined"
+            ],
+            "classification": "hidden",
+            "attributes": {
+              "type": "application/ld+json"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 11,
+            "fingerprint": "{\"tag\":\"script\",\"text\":\"\",\"target\":\"\",\"section\":[\"Not determined\"],\"order\":11}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-sources",
+        "category": "GEO",
+        "status": "REVIEW",
+        "severity": "opportunity",
+        "summary": "1 external links in extracted main content. Link destinations and factual support are not established.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "a",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > main:nth-of-type(1) > a:nth-of-type(1)",
+            "snippet": "<a href=\"https://primary.example/research\">Read the original research</a>",
+            "snippetTruncated": false,
+            "text": "Read the original research",
+            "context": "Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Read the original research",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {
+              "href": "https://primary.example/research"
+            },
+            "nearestHeading": {
+              "level": 2,
+              "text": "How do we train?"
+            },
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 23,
+            "accessibleName": "Read the original research",
+            "nameSource": "visible text",
+            "fingerprint": "{\"tag\":\"a\",\"text\":\"Read the original research\",\"target\":\"https://primary.example/research\",\"section\":[\"Main content\"],\"order\":23}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 0.5
+        }
+      },
+      {
+        "id": "content-date",
+        "category": "GEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "Observed date signal: meta article:published_time: 2026-09-01 · JSON-LD datePublished: 2026-09-01. Freshness is not verified.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "meta",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > meta:nth-of-type(4)",
+            "snippet": "<meta property=\"article:published_time\" content=\"2026-09-01\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Training guide",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "property": "article:published_time",
+              "content": "2026-09-01"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 7,
+            "fingerprint": "{\"tag\":\"meta\",\"text\":\"\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":7}",
+            "pageURL": "https://example.com/training"
+          },
+          {
+            "kind": "element",
+            "element": "script",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > script:nth-of-type(1)",
+            "snippet": "<script type=\"application/ld+json\">{\"@type\":\"Article\",\"author\":{\"@type\":\"Person\",\"name\":\"Alice\"},\"datePublished\":\"2026-09-01\"}</script>",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Training guide",
+            "section": "hidden",
+            "sectionPath": [
+              "Not determined"
+            ],
+            "classification": "hidden",
+            "attributes": {
+              "type": "application/ld+json"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 11,
+            "fingerprint": "{\"tag\":\"script\",\"text\":\"\",\"target\":\"\",\"section\":[\"Not determined\"],\"order\":11}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "title-duplicates",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "1 title elements found.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "title",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > title:nth-of-type(1)",
+            "snippet": "<title>Training guide</title>",
+            "snippetTruncated": false,
+            "text": "Training guide",
+            "context": "Training guide",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 3,
+            "fingerprint": "{\"tag\":\"title\",\"text\":\"Training guide\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":3}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "description-duplicates",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "1 description tags found.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "meta",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > meta:nth-of-type(1)",
+            "snippet": "<meta name=\"description\" content=\"A practical training guide.\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Training guide",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "name": "description",
+              "content": "A practical training guide."
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 4,
+            "fingerprint": "{\"tag\":\"meta\",\"text\":\"\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":4}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "canonical-valid",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "Canonical URL syntax is usable; destination and selected canonical are not verified.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "link",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > link:nth-of-type(1)",
+            "snippet": "<link rel=\"canonical\" href=\"https://example.com/training\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Training guide",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "rel": "canonical",
+              "href": "https://example.com/training"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 10,
+            "fingerprint": "{\"tag\":\"link\",\"text\":\"\",\"target\":\"https://example.com/training\",\"section\":[\"Document head\"],\"order\":10}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "canonical-count",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "1 declarations · no conflict detected in HTML.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "link",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > link:nth-of-type(1)",
+            "snippet": "<link rel=\"canonical\" href=\"https://example.com/training\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Training guide",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "rel": "canonical",
+              "href": "https://example.com/training"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 10,
+            "fingerprint": "{\"tag\":\"link\",\"text\":\"\",\"target\":\"https://example.com/training\",\"section\":[\"Document head\"],\"order\":10}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "heading-empty",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "0 empty heading elements detected.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "0 empty heading elements detected.",
+            "context": "Page-level observation; no individual source element is required.",
+            "section": "Document",
+            "pageURL": "https://example.com/training",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "heading-order",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "0 skipped-level transitions detected.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "0 skipped-level transitions detected.",
+            "context": "Page-level observation; no individual source element is required.",
+            "section": "Document",
+            "pageURL": "https://example.com/training",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "image-dimensions",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "0 of 1 images have no positive numeric width/height pair or valid inline aspect-ratio. External CSS is not inspected.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "0 of 1 images have no positive numeric width/height pair or valid inline aspect-ratio. External CSS is not inspected.",
+            "context": "Page-level observation; no individual source element is required.",
+            "section": "Document",
+            "pageURL": "https://example.com/training",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "image-src",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "0 images lack src/srcset/lazy-source attributes. 0 picture containers require manual source review.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "0 images lack src/srcset/lazy-source attributes. 0 picture containers require manual source review.",
+            "context": "Page-level observation; no individual source element is required.",
+            "section": "Document",
+            "pageURL": "https://example.com/training",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "anchor-text",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "0 links have no detected text or accessible-name signal.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "0 links have no detected text or accessible-name signal.",
+            "context": "Page-level observation; no individual source element is required.",
+            "section": "Document",
+            "pageURL": "https://example.com/training",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "link-href",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "0 anchors have empty or JavaScript href values. These may be scripted controls; targets are not fetched.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "0 anchors have empty or JavaScript href values. These may be scripted controls; targets are not fetched.",
+            "context": "Page-level observation; no individual source element is required.",
+            "section": "Document",
+            "pageURL": "https://example.com/training",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "transport",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "https://example.com/training",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "main",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > main:nth-of-type(1)",
+            "snippet": "<main>",
+            "snippetTruncated": false,
+            "text": "Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Read the original research",
+            "context": "Home Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Read the original research",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 15,
+            "fingerprint": "{\"tag\":\"main\",\"text\":\"Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Re\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":15}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-visible",
+        "category": "AEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "24 readable words extracted. Word count alone is not a quality criterion.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "main",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > main:nth-of-type(1)",
+            "snippet": "<main>",
+            "snippetTruncated": false,
+            "text": "Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Read the original research",
+            "context": "Home Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Read the original research",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 15,
+            "fingerprint": "{\"tag\":\"main\",\"text\":\"Training guide A training guide helps teams learn useful skills. How do we train? Choose a goal. Practice and review. Re\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":15}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "social-meta",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "Open Graph title: present · description: present.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "meta",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > meta:nth-of-type(5)",
+            "snippet": "<meta property=\"og:title\" content=\"Training guide\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Training guide",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "property": "og:title",
+              "content": "Training guide"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 8,
+            "fingerprint": "{\"tag\":\"meta\",\"text\":\"\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":8}",
+            "pageURL": "https://example.com/training"
+          },
+          {
+            "kind": "element",
+            "element": "meta",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > meta:nth-of-type(6)",
+            "snippet": "<meta property=\"og:description\" content=\"A practical training guide.\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Training guide",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "property": "og:description",
+              "content": "A practical training guide."
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 9,
+            "fingerprint": "{\"tag\":\"meta\",\"text\":\"\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":9}",
+            "pageURL": "https://example.com/training"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      }
+    ]
+  },
+  "sample": {
+    "version": "1.6.0",
+    "scores": {
+      "SEO": 80,
+      "AEO": 80,
+      "GEO": 50
+    },
+    "counts": {
+      "PASS": 17,
+      "FAIL": 2,
+      "REVIEW": 8,
+      "NOT_APPLICABLE": 0,
+      "NOT_MEASURED": 2,
+      "BLOCKED": 0,
+      "ERROR": 0
+    },
+    "checks": [
+      {
+        "id": "title",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "46 characters · Workplace compliance training | Sample company",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "title",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > title:nth-of-type(1)",
+            "snippet": "<title>Workplace compliance training | Sample company</title>",
+            "snippetTruncated": false,
+            "text": "Workplace compliance training | Sample company",
+            "context": "Workplace compliance training | Sample company Duplicate sample title",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 3,
+            "fingerprint": "{\"tag\":\"title\",\"text\":\"Workplace compliance training | Sample company\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":3}",
+            "pageURL": "Sample"
+          },
+          {
+            "kind": "element",
+            "element": "title",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > title:nth-of-type(2)",
+            "snippet": "<title>Duplicate sample title</title>",
+            "snippetTruncated": false,
+            "text": "Duplicate sample title",
+            "context": "Workplace compliance training | Sample company Duplicate sample title",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 4,
+            "fingerprint": "{\"tag\":\"title\",\"text\":\"Duplicate sample title\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":4}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "description",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "119 characters · Practical compliance training for teams. Learn how to choose a course and make workplace policies easier to understand.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "meta",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > meta:nth-of-type(1)",
+            "snippet": "<meta name=\"description\" content=\"Practical compliance training for teams. Learn how to choose a course and make workplace policies easier to understand.\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Workplace compliance training | Sample company Duplicate sample title",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "name": "description",
+              "content": "Practical compliance training for teams. Learn how to choose a course and make workplace policies easier to understand."
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 5,
+            "fingerprint": "{\"tag\":\"meta\",\"text\":\"\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":5}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "h1",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "1 H1 headings detected.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "h1",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > h1:nth-of-type(1)",
+            "snippet": "<h1>Workplace compliance training</h1>",
+            "snippetTruncated": false,
+            "text": "Workplace compliance training",
+            "context": "Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. S",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 10,
+            "fingerprint": "{\"tag\":\"h1\",\"text\":\"Workplace compliance training\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":10}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "canonical",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "https://example.com/training",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "link",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > link:nth-of-type(1)",
+            "snippet": "<link rel=\"canonical\" href=\"https://example.com/training\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Workplace compliance training | Sample company Duplicate sample title",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "rel": "canonical",
+              "href": "https://example.com/training"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 7,
+            "fingerprint": "{\"tag\":\"link\",\"text\":\"\",\"target\":\"https://example.com/training\",\"section\":[\"Document head\"],\"order\":7}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "index",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "No restrictive robots meta detected. HTTP headers and actual index status are separate checks.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "No restrictive robots meta detected. HTTP headers and actual index status are separate checks.",
+            "context": "Page-level observation; no individual source element is required.",
+            "section": "Document",
+            "pageURL": "Sample",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "alt",
+        "category": "SEO",
+        "status": "REVIEW",
+        "severity": "warning",
+        "summary": "1 of 1 images lack an alt attribute.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "img",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > img:nth-of-type(1)",
+            "snippet": "<img src=\"team.webp\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. S",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {
+              "src": "team.webp"
+            },
+            "asset": "team.webp",
+            "nearestHeading": {
+              "level": 4,
+              "text": "(Empty heading)"
+            },
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 20,
+            "fingerprint": "{\"tag\":\"img\",\"text\":\"\",\"target\":\"team.webp\",\"section\":[\"Main content\"],\"order\":20}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 0.5
+        }
+      },
+      {
+        "id": "lang",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "en",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "html",
+            "selector": "html:nth-of-type(1)",
+            "snippet": "<html lang=\"en\">",
+            "snippetTruncated": false,
+            "text": "Workplace compliance training | Sample company Duplicate sample title Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. Start with the risks and responsibilities relevant to each role. Choose a course for your team Identify learning goals. Choose relevant scenarios. Review feedback and update content. Explore courses",
+            "context": "Workplace compliance training | Sample company Duplicate sample title Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps ",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {
+              "lang": "en"
+            },
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 1,
+            "fingerprint": "{\"tag\":\"html\",\"text\":\"Workplace compliance training | Sample company Duplicate sample title Workplace compliance training Help your team under\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":1}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "viewport",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "width=device-width,initial-scale=1 · Responsive device-width detected. Rendered mobile usability is not measured.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "meta",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > meta:nth-of-type(2)",
+            "snippet": "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Workplace compliance training | Sample company Duplicate sample title",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "name": "viewport",
+              "content": "width=device-width,initial-scale=1"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 6,
+            "fingerprint": "{\"tag\":\"meta\",\"text\":\"\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":6}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-keyword",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "Target phrase “compliance training” appears in the extracted text.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "body",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1)",
+            "snippet": "<body>",
+            "snippetTruncated": false,
+            "text": "Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. Start with the risks and responsibilities relevant to each role. Choose a course for your team Identify learning goals. Choose relevant scenarios. Review feedback and update content. Explore courses",
+            "context": "Workplace compliance training | Sample company Duplicate sample title Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps ",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 9,
+            "fingerprint": "{\"tag\":\"body\",\"text\":\"Workplace compliance training Help your team understand workplace policies through practical examples and clear learning\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":9}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-structure",
+        "category": "AEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "2 H2 headings detected.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "h2",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > h2:nth-of-type(1)",
+            "snippet": "<h2>Why does compliance training matter?</h2>",
+            "snippetTruncated": false,
+            "text": "Why does compliance training matter?",
+            "context": "Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. S",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "nearestHeading": {
+              "level": 1,
+              "text": "Workplace compliance training"
+            },
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 12,
+            "fingerprint": "{\"tag\":\"h2\",\"text\":\"Why does compliance training matter?\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":12}",
+            "pageURL": "Sample"
+          },
+          {
+            "kind": "element",
+            "element": "h2",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > h2:nth-of-type(2)",
+            "snippet": "<h2>Choose a course for your team</h2>",
+            "snippetTruncated": false,
+            "text": "Choose a course for your team",
+            "context": "Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. S",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "nearestHeading": {
+              "level": 2,
+              "text": "Why does compliance training matter?"
+            },
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 14,
+            "fingerprint": "{\"tag\":\"h2\",\"text\":\"Choose a course for your team\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":14}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-question",
+        "category": "AEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "1 question signals detected.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "h2",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > h2:nth-of-type(1)",
+            "snippet": "<h2>Why does compliance training matter?</h2>",
+            "snippetTruncated": false,
+            "text": "Why does compliance training matter?",
+            "context": "Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. S",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "nearestHeading": {
+              "level": 1,
+              "text": "Workplace compliance training"
+            },
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 12,
+            "fingerprint": "{\"tag\":\"h2\",\"text\":\"Why does compliance training matter?\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":12}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-list",
+        "category": "AEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "A list or table structure was detected.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "ol",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > ol:nth-of-type(1)",
+            "snippet": "<ol><li>Identify learning goals.</li><li>Choose relevant scenarios.</li><li>Review feedback and update content.</li></ol>",
+            "snippetTruncated": false,
+            "text": "Identify learning goals. Choose relevant scenarios. Review feedback and update content.",
+            "context": "Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. S",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 15,
+            "fingerprint": "{\"tag\":\"ol\",\"text\":\"Identify learning goals. Choose relevant scenarios. Review feedback and update content.\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":15}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "schema",
+        "category": "AEO",
+        "status": "FAIL",
+        "severity": "error",
+        "summary": "1 JSON-LD blocks failed JSON parsing.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "script",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > script:nth-of-type(1)",
+            "snippet": "<script type=\"application/ld+json\">{\"@type\":\"Article\",}</script>",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Workplace compliance training | Sample company Duplicate sample title",
+            "section": "hidden",
+            "sectionPath": [
+              "Not determined"
+            ],
+            "classification": "hidden",
+            "attributes": {
+              "type": "application/ld+json"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 8,
+            "fingerprint": "{\"tag\":\"script\",\"text\":\"\",\"target\":\"\",\"section\":[\"Not determined\"],\"order\":8}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 0
+        }
+      },
+      {
+        "id": "content-attribution",
+        "category": "GEO",
+        "status": "REVIEW",
+        "severity": "opportunity",
+        "summary": "No author or publisher signal found in metadata, valid JSON-LD or a main-content byline.",
+        "evidence": [
+          {
+            "kind": "absence",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "No author or publisher signal found in metadata, valid JSON-LD or a main-content byline.",
+            "context": "No matching affected element located in supplied HTML.",
+            "section": "Document",
+            "pageURL": "Sample",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 0.5
+        }
+      },
+      {
+        "id": "content-sources",
+        "category": "GEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "0 external links in extracted main content. Link destinations and factual support are not established.",
+        "evidence": [
+          {
+            "kind": "absence",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "0 external links in extracted main content. Link destinations and factual support are not established.",
+            "context": "No matching affected element located in supplied HTML.",
+            "section": "Document",
+            "pageURL": "Sample",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "content-date",
+        "category": "GEO",
+        "status": "REVIEW",
+        "severity": "opportunity",
+        "summary": "No freshness signal detected.",
+        "evidence": [
+          {
+            "kind": "absence",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "No freshness signal detected.",
+            "context": "No matching affected element located in supplied HTML.",
+            "section": "Document",
+            "pageURL": "Sample",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 0.5
+        }
+      },
+      {
+        "id": "title-duplicates",
+        "category": "SEO",
+        "status": "FAIL",
+        "severity": "error",
+        "summary": "2 title elements found.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "title",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > title:nth-of-type(1)",
+            "snippet": "<title>Workplace compliance training | Sample company</title>",
+            "snippetTruncated": false,
+            "text": "Workplace compliance training | Sample company",
+            "context": "Workplace compliance training | Sample company Duplicate sample title",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 3,
+            "fingerprint": "{\"tag\":\"title\",\"text\":\"Workplace compliance training | Sample company\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":3}",
+            "pageURL": "Sample"
+          },
+          {
+            "kind": "element",
+            "element": "title",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > title:nth-of-type(2)",
+            "snippet": "<title>Duplicate sample title</title>",
+            "snippetTruncated": false,
+            "text": "Duplicate sample title",
+            "context": "Workplace compliance training | Sample company Duplicate sample title",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 4,
+            "fingerprint": "{\"tag\":\"title\",\"text\":\"Duplicate sample title\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":4}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 0
+        }
+      },
+      {
+        "id": "description-duplicates",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "1 description tags found.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "meta",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > meta:nth-of-type(1)",
+            "snippet": "<meta name=\"description\" content=\"Practical compliance training for teams. Learn how to choose a course and make workplace policies easier to understand.\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Workplace compliance training | Sample company Duplicate sample title",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "name": "description",
+              "content": "Practical compliance training for teams. Learn how to choose a course and make workplace policies easier to understand."
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 5,
+            "fingerprint": "{\"tag\":\"meta\",\"text\":\"\",\"target\":\"\",\"section\":[\"Document head\"],\"order\":5}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "canonical-valid",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "Canonical URL syntax is usable; destination and selected canonical are not verified.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "link",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > link:nth-of-type(1)",
+            "snippet": "<link rel=\"canonical\" href=\"https://example.com/training\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Workplace compliance training | Sample company Duplicate sample title",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "rel": "canonical",
+              "href": "https://example.com/training"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 7,
+            "fingerprint": "{\"tag\":\"link\",\"text\":\"\",\"target\":\"https://example.com/training\",\"section\":[\"Document head\"],\"order\":7}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "canonical-count",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "1 declarations · no conflict detected in HTML.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "link",
+            "selector": "html:nth-of-type(1) > head:nth-of-type(1) > link:nth-of-type(1)",
+            "snippet": "<link rel=\"canonical\" href=\"https://example.com/training\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Workplace compliance training | Sample company Duplicate sample title",
+            "section": "Document head",
+            "sectionPath": [
+              "Document head"
+            ],
+            "classification": "head",
+            "attributes": {
+              "rel": "canonical",
+              "href": "https://example.com/training"
+            },
+            "nearestHeading": null,
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 7,
+            "fingerprint": "{\"tag\":\"link\",\"text\":\"\",\"target\":\"https://example.com/training\",\"section\":[\"Document head\"],\"order\":7}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "heading-empty",
+        "category": "SEO",
+        "status": "REVIEW",
+        "severity": "warning",
+        "summary": "1 empty heading elements detected.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "h4",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > h4:nth-of-type(1)",
+            "snippet": "<h4></h4>",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. S",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "nearestHeading": {
+              "level": 2,
+              "text": "Choose a course for your team"
+            },
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 19,
+            "fingerprint": "{\"tag\":\"h4\",\"text\":\"\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":19}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 0.5
+        }
+      },
+      {
+        "id": "heading-order",
+        "category": "SEO",
+        "status": "REVIEW",
+        "severity": "warning",
+        "summary": "1 skipped-level transitions detected.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "h4",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > h4:nth-of-type(1)",
+            "snippet": "<h4></h4>",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. S",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "nearestHeading": {
+              "level": 2,
+              "text": "Choose a course for your team"
+            },
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 19,
+            "fingerprint": "{\"tag\":\"h4\",\"text\":\"\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":19}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 0.5
+        }
+      },
+      {
+        "id": "image-dimensions",
+        "category": "SEO",
+        "status": "REVIEW",
+        "severity": "warning",
+        "summary": "1 of 1 images have no positive numeric width/height pair or valid inline aspect-ratio. External CSS is not inspected.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "img",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > img:nth-of-type(1)",
+            "snippet": "<img src=\"team.webp\">",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. S",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {
+              "src": "team.webp"
+            },
+            "asset": "team.webp",
+            "nearestHeading": {
+              "level": 4,
+              "text": "(Empty heading)"
+            },
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 20,
+            "fingerprint": "{\"tag\":\"img\",\"text\":\"\",\"target\":\"team.webp\",\"section\":[\"Main content\"],\"order\":20}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 0.5
+        }
+      },
+      {
+        "id": "image-src",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "0 images lack src/srcset/lazy-source attributes. 0 picture containers require manual source review.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "0 images lack src/srcset/lazy-source attributes. 0 picture containers require manual source review.",
+            "context": "Page-level observation; no individual source element is required.",
+            "section": "Document",
+            "pageURL": "Sample",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "anchor-text",
+        "category": "SEO",
+        "status": "REVIEW",
+        "severity": "warning",
+        "summary": "1 links have no detected text or accessible-name signal.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "a",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1) > a:nth-of-type(1)",
+            "snippet": "<a href=\"/contact\"></a>",
+            "snippetTruncated": false,
+            "text": "",
+            "context": "Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. S",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {
+              "href": "/contact"
+            },
+            "nearestHeading": {
+              "level": 4,
+              "text": "(Empty heading)"
+            },
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 21,
+            "accessibleName": "",
+            "nameSource": "none",
+            "fingerprint": "{\"tag\":\"a\",\"text\":\"\",\"target\":\"/contact\",\"section\":[\"Main content\"],\"order\":21}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 0.5
+        }
+      },
+      {
+        "id": "link-href",
+        "category": "SEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "0 anchors have empty or JavaScript href values. These may be scripted controls; targets are not fetched.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "0 anchors have empty or JavaScript href values. These may be scripted controls; targets are not fetched.",
+            "context": "Page-level observation; no individual source element is required.",
+            "section": "Document",
+            "pageURL": "Sample",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "transport",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Cannot establish HTTPS from pasted content.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "body",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1)",
+            "snippet": "<body>",
+            "snippetTruncated": false,
+            "text": "Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. Start with the risks and responsibilities relevant to each role. Choose a course for your team Identify learning goals. Choose relevant scenarios. Review feedback and update content. Explore courses",
+            "context": "Workplace compliance training | Sample company Duplicate sample title Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps ",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 9,
+            "fingerprint": "{\"tag\":\"body\",\"text\":\"Workplace compliance training Help your team understand workplace policies through practical examples and clear learning\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":9}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "content-visible",
+        "category": "AEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "62 readable words extracted. Word count alone is not a quality criterion.",
+        "evidence": [
+          {
+            "kind": "element",
+            "element": "body",
+            "selector": "html:nth-of-type(1) > body:nth-of-type(1)",
+            "snippet": "<body>",
+            "snippetTruncated": false,
+            "text": "Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps employees understand expectations and know where to ask for support. Start with the risks and responsibilities relevant to each role. Choose a course for your team Identify learning goals. Choose relevant scenarios. Review feedback and update content. Explore courses",
+            "context": "Workplace compliance training | Sample company Duplicate sample title Workplace compliance training Help your team understand workplace policies through practical examples and clear learning paths. Why does compliance training matter? Training helps ",
+            "section": "Main content",
+            "sectionPath": [
+              "Main content"
+            ],
+            "classification": "content",
+            "attributes": {},
+            "stableId": null,
+            "stableHint": null,
+            "sectionAnchor": null,
+            "sourceOrder": 9,
+            "fingerprint": "{\"tag\":\"body\",\"text\":\"Workplace compliance training Help your team understand workplace policies through practical examples and clear learning\",\"target\":\"\",\"section\":[\"Main content\"],\"order\":9}",
+            "pageURL": "Sample"
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "social-meta",
+        "category": "SEO",
+        "status": "REVIEW",
+        "severity": "opportunity",
+        "summary": "Open Graph title: absent · description: absent.",
+        "evidence": [
+          {
+            "kind": "absence",
+            "element": "document",
+            "selector": null,
+            "snippet": "",
+            "text": "Open Graph title: absent · description: absent.",
+            "context": "No matching affected element located in supplied HTML.",
+            "section": "Document",
+            "pageURL": "Sample",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 0.5
+        }
+      }
+    ]
+  },
+  "text": {
+    "version": "1.6.0",
+    "scores": {
+      "SEO": null,
+      "AEO": 100,
+      "GEO": 100
+    },
+    "counts": {
+      "PASS": 6,
+      "FAIL": 0,
+      "REVIEW": 0,
+      "NOT_APPLICABLE": 1,
+      "NOT_MEASURED": 22,
+      "BLOCKED": 0,
+      "ERROR": 0
+    },
+    "checks": [
+      {
+        "id": "title",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "description",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "h1",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "canonical",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "index",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "alt",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "lang",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "viewport",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "content-keyword",
+        "category": "SEO",
+        "status": "NOT_APPLICABLE",
+        "severity": "unavailable",
+        "summary": "Set an optional target phrase to check its presence.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Set an optional target phrase to check its presence.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "content-structure",
+        "category": "AEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "Paragraph breaks checked.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Paragraph breaks checked.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-question",
+        "category": "AEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "1 question signals detected.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "1 question signals detected.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-list",
+        "category": "AEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "A list or table structure was detected.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "A list or table structure was detected.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "schema",
+        "category": "AEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "content-attribution",
+        "category": "GEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "Observed attribution signal: Attribution phrase in supplied text. Identity and expertise are not verified.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Observed attribution signal: Attribution phrase in supplied text. Identity and expertise are not verified.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "content-sources",
+        "category": "GEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "0 external links in extracted main content. Link destinations and factual support are not established.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "0 external links in extracted main content. Link destinations and factual support are not established.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "content-date",
+        "category": "GEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "Observed date signal: 2026-09-01. Freshness is not verified.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Observed date signal: 2026-09-01. Freshness is not verified.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "title-duplicates",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "description-duplicates",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "canonical-valid",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "canonical-count",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "heading-empty",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "heading-order",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "image-dimensions",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "image-src",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "anchor-text",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "link-href",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "transport",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      },
+      {
+        "id": "content-visible",
+        "category": "AEO",
+        "status": "PASS",
+        "severity": "pass",
+        "summary": "9 readable words extracted. Word count alone is not a quality criterion.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "9 readable words extracted. Word count alone is not a quality criterion.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "heuristic",
+        "scoreContribution": {
+          "included": true,
+          "weight": 1,
+          "points": 1
+        }
+      },
+      {
+        "id": "social-meta",
+        "category": "SEO",
+        "status": "NOT_MEASURED",
+        "severity": "unavailable",
+        "summary": "Not measurable from plain text.",
+        "evidence": [
+          {
+            "kind": "document",
+            "element": "plain text",
+            "selector": null,
+            "snippet": "",
+            "text": "Not measurable from plain text.",
+            "context": "No DOM available for plain-text input.",
+            "section": "Document",
+            "pageURL": "Text",
+            "classification": "document",
+            "attributes": {}
+          }
+        ],
+        "confidence": "observed",
+        "scoreContribution": {
+          "included": false,
+          "weight": 0,
+          "points": 0
+        }
+      }
+    ]
+  }
+}

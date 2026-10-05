@@ -6,7 +6,7 @@ import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 const dir=await fs.mkdtemp(path.join(process.cwd(),'.sites-runtime','unified-report-'));
 try{
-  const files=['lib/dom-extraction.ts','lib/link-analysis.ts','lib/finding-guides.ts','lib/page-metrics.ts','lib/report-tabs.ts','lib/report-export.ts','lib/website-findings.ts','lib/audit-result.ts','lib/audit.ts','lib/releases.ts','lib/website-scores.ts','app/website-overview.tsx','app/heading-issue-cue.tsx','app/source-evidence.tsx','app/link-status-report.tsx','app/heading-evidence.tsx','app/page-detail.tsx','app/report-panels.tsx','app/score-gauge.tsx','app/audit-report.tsx'];
+  const files=['lib/source-signals.ts','app/source-signal-report.tsx','lib/web-fetch.ts','lib/url-safety.ts','lib/url-normalization.ts','lib/audit-diff.ts','lib/dom-extraction.ts','lib/link-analysis.ts','lib/finding-guides.ts','lib/page-metrics.ts','lib/report-tabs.ts','lib/report-export.ts','lib/website-findings.ts','lib/audit-result.ts','lib/audit.ts','lib/releases.ts','lib/website-scores.ts','app/website-overview.tsx','app/heading-issue-cue.tsx','app/source-evidence.tsx','app/link-status-report.tsx','app/heading-evidence.tsx','app/page-detail.tsx','app/report-panels.tsx','app/score-gauge.tsx','app/audit-report.tsx'];
   for(const file of files){
     const raw=(await fs.readFile(file,'utf8')).replace(/(['"])(?:\.\.\/lib\/|\.\/)([\w-]+)\1/g,(_,quote,name)=>`${quote}./${name}.mjs${quote}`);
     await fs.writeFile(path.join(dir,path.basename(file).replace(/\.tsx?$/,'.mjs')),ts.transpileModule(raw,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText);
@@ -25,7 +25,7 @@ try{
   const {WebsiteOverview}=await import(path.join(dir,'website-overview.mjs'));
   const overview=renderToStaticMarkup(React.createElement(WebsiteOverview,{pages:[{url:'https://example.com/',status:'completed',report},{url:'https://example.com/blocked',status:'failed',report:null}],discovered:10,selected:2}));
   assert.equal((overview.match(/role="meter"/g)||[]).length,4);
-  assert.match(overview,/10% audited/);
+  assert.match(overview,/50% of selected analyzed/);
   assert.match(overview,/Audit coverage: 1 of 10 discovered pages successfully audited · 2 selected/);
   assert.equal((overview.match(/class="website-stat website-stat--/g)||[]).length,5);
   assert.doesNotMatch(overview,/website-stat--opportunity|website-stat--unavailable/);
@@ -48,10 +48,10 @@ try{
   assert.doesNotMatch(html,/class="action-plan"/);
   assert.doesNotMatch(html,/class="finding-workspace"/); // findings begin collapsed
   const details=renderToStaticMarkup(React.createElement(PageDetail,{report}));
-  assert.equal((details.match(/<details\b/g)||[]).length,6);
-  assert.equal((details.match(/<summary>/g)||[]).length,6);
+  assert.equal((details.match(/<details\b/g)||[]).length,16);
+  assert.equal((details.match(/<summary>/g)||[]).length,16);
   assert.doesNotMatch(details,/<details[^>]*\bopen\b/);
-  assert.match(details,/Heading inventory/);
+  for(const heading of ['Answer signals','Entity/context signals','Freshness signals','Canonical target','Heading inventory'])assert.ok(details.includes(heading));
   assert.doesNotMatch(details,/highlighted problems|Recommended level to review|Structure check passed/);
   const {HeadingEvidence}=await import(path.join(dir,'heading-evidence.mjs'));
   const headingEvidence=renderToStaticMarkup(React.createElement(HeadingEvidence,{report,findingId:'heading-order'}));
@@ -62,5 +62,5 @@ try{
   const source=await fs.readFile('app/legacy-workspace.tsx','utf8');
   assert.match(source,/function openPageReport\(page:Report\)[^\n]+setSection\('Audit workspace'\)/);
   assert.match(source,/<div hidden=\{!!report\}><WebsiteManager/);
-  console.log('PASS: unified menu order/default, collapsed findings, new-tab button placement, six collapsed Page details accordions and audit navigation wiring. Live browser interaction not validated.');
+  console.log('PASS: unified menu order/default, collapsed findings, new-tab button placement, ten primary Page details accordions with collapsed source-evidence disclosures and audit navigation wiring. Live browser interaction not validated.');
 }finally{await fs.rm(dir,{recursive:true,force:true});}
